@@ -35,19 +35,19 @@ public class EmployeeController {
 	@PostMapping("/loginEmployee")
 	public Boolean loginEmployee(@Validated @RequestBody Employee E) throws ResourceNotFoundException
 	{
-		Boolean a=false;
-		Long id=E.getEmployeeid();
+		Boolean userExists=false;
+		String email=E.getEmail();
 		String password=E.getPassword();
 		
-		Employee foundEmployee = eservice.findEmployee(id).orElseThrow(() ->
+		Employee foundEmployee = eservice.findEmployee(email).orElseThrow(() ->
 		new ResourceNotFoundException("Employee not found for this id :: "));
 		
-		if(id.equals(foundEmployee.getEmployeeid()) && password.equals(foundEmployee.getPassword()))
+		if(email.equals(foundEmployee.getEmail()) && password.equals(foundEmployee.getPassword()))
 		{
-			a=true;
+			userExists=true;
 		}
 		
 		
-		return a;
+		return userExists;
 	}
 }

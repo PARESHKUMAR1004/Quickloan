@@ -25,6 +25,8 @@ public class AdminController {
 	@PostMapping("/registerAdmin")
 	public ResponseEntity<String> createAdmin(@Validated @RequestBody Admin A)
 	{
+
+		
 		Admin registeredAdmin=aservice.registerAdmin(A);
 		 if (registeredAdmin!= null) {
 	            return ResponseEntity.ok("Registration successful");
@@ -38,31 +40,24 @@ public class AdminController {
 	@PostMapping("/loginAdmin")
 	public Boolean loginAdmin(@Validated @RequestBody Admin A) throws ResourceNotFoundException
 	{
-		Boolean a=false;
-		Long id=A.getAdminid();
+		Boolean userExists=false;
+		String email=A.getEmail();
 		String password=A.getPassword();
 		
 		
-		Admin foundAdmin = aservice.findAdmin(id).orElseThrow(() ->
+		Admin foundAdmin = aservice.findAdmin(email).orElseThrow(() ->
 		new ResourceNotFoundException("Admin not found for this id :: "));
 		
 		
-		System.out.println(foundAdmin.getAdminid());
-		System.out.println(id);
-		System.out.println(foundAdmin.getPassword());
-		System.out.println(password);
 		
 		
-//		if(id==admin.getAdminid() && password==admin.getPassword()) {
-//			a=true;
-//			
-//		}
+
 		
-		if(id.equals(foundAdmin.getAdminid()) && password.equals(foundAdmin.getPassword()))
+		if(email.equals(foundAdmin.getEmail()) && password.equals(foundAdmin.getPassword()))
 		{
-			a=true;
+			userExists=true;
 		}
-		return a;
+		return userExists;
 		
 	
 		

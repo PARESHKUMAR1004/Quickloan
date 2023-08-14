@@ -19,9 +19,9 @@ public class EmployeeService {
 		
 	}
 	
-	public Optional<Employee> findEmployee(Long id) {
+	public Optional<Employee> findEmployee(String email) {
 		
-		return erepo.findById(id);
+		return erepo.findByEmail(email);
 		
 	}
 	

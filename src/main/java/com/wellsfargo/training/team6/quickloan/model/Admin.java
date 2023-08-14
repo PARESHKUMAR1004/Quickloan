@@ -1,5 +1,8 @@
 package com.wellsfargo.training.team6.quickloan.model;
 
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -13,7 +16,8 @@ public class Admin {
 	
 	private String password;
 	
-	
+	@Column(nullable=false)
+	private String email;
 	
 	
 	
@@ -56,7 +60,13 @@ public class Admin {
 
 
 	public void setPassword(String password) {
-		this.password = password;
+//		this.password = password;
+		
+		Base64.Encoder encoder = Base64.getEncoder();  
+        String normalString = password;
+        String encodedString = encoder.encodeToString(   // encrypt password in database field
+        normalString.getBytes(StandardCharsets.UTF_8) );
+        this.password = encodedString;
 	}
 
 
@@ -100,10 +110,35 @@ public class Admin {
 
 
 
-	public Admin(Long adminid, String password, String fname, String lname) {
+	
+
+
+
+
+
+	public String getEmail() {
+		return email;
+	}
+
+
+
+
+
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+
+
+
+
+
+	public Admin(Long adminid, String password, String email, String fname, String lname) {
 		super();
 		this.adminid = adminid;
 		this.password = password;
+		this.email = email;
 		this.fname = fname;
 		this.lname = lname;
 	}
