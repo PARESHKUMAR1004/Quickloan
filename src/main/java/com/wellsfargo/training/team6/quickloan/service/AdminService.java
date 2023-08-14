@@ -18,8 +18,8 @@ public class AdminService {
 		return arepo.save(A);
 	}
 	
-	public Optional<Admin> findAdmin(Long id) {
-		return arepo.findById(id);
+	public Optional<Admin> findAdmin(String Email) {
+		return arepo.findByEmail(Email);
 	}
 
 }

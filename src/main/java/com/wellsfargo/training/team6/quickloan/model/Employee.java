@@ -1,6 +1,8 @@
 package com.wellsfargo.training.team6.quickloan.model;
 
+import java.nio.charset.StandardCharsets;
 import java.sql.Date;
+import java.util.Base64;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -21,7 +23,10 @@ public class Employee {
 	private Long employeeid;
 	
 	@Column(nullable=false)
-	private String employeename;
+	private String fname;
+	
+	@Column(nullable=false)
+	private String lname;
 	
 	@Column(nullable=false)
 	private String designation;
@@ -52,11 +57,18 @@ public class Employee {
 	
 
 
-	public Employee(Long employeeid, String employeename, String designation, String department, String phoneno,
+	
+
+
+
+
+
+	public Employee(Long employeeid, String fname, String lname, String designation, String department, String phoneno,
 			String email, char gender, Date date_of_birth, Date date_of_joining, String password) {
 		super();
 		this.employeeid = employeeid;
-		this.employeename = employeename;
+		this.fname = fname;
+		this.lname = lname;
 		this.designation = designation;
 		this.department = department;
 		this.phoneno = phoneno;
@@ -82,7 +94,11 @@ public class Employee {
 
 
 	public void setPassword(String password) {
-		this.password = password;
+		Base64.Encoder encoder = Base64.getEncoder();  
+        String normalString = password;
+        String encodedString = encoder.encodeToString(   // encrypt password in database field
+        normalString.getBytes(StandardCharsets.UTF_8) );
+        this.password = encodedString;
 	}
 
 
@@ -108,8 +124,10 @@ public class Employee {
 
 
 
-	public String getEmployeename() {
-		return employeename;
+
+
+	public String getFname() {
+		return fname;
 	}
 
 
@@ -117,8 +135,26 @@ public class Employee {
 
 
 
-	public void setEmployeename(String employeename) {
-		this.employeename = employeename;
+	public void setFname(String fname) {
+		this.fname = fname;
+	}
+
+
+
+
+
+
+	public String getLname() {
+		return lname;
+	}
+
+
+
+
+
+
+	public void setLname(String lname) {
+		this.lname = lname;
 	}
 
 
