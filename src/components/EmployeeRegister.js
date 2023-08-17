@@ -2,6 +2,7 @@ import React,{Component} from 'react'
 import {Link} from 'react-router-dom'
 
 import '../style/NavBar.css'
+import EmployeeRegistration from './EmployeeRegistration';
 
 export default class EmployeeRegister extends Component{
     render(){
@@ -17,7 +18,7 @@ export default class EmployeeRegister extends Component{
                         </li>
                     </ul>
                 </nav>
-                <h1>Employee Registration</h1>
+                <EmployeeRegistration></EmployeeRegistration>
             </div>
         );
     }
