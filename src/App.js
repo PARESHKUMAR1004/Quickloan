@@ -8,7 +8,7 @@ import EmployeeLogin from './components/EmployeeLogin';
 import AdminLogin from './components/AdminLogin';
 import AdminRegister from './components/AdminRegister';
 import NavBar from './components/NavBar';
-import Loan from './components/Loan';
+import Items from './components/Items';
 
 /*
 	React Router is a standard library for routing in React. 
@@ -42,7 +42,7 @@ function App() {
               <Route path='/login/employee' Component={EmployeeLogin}></Route>
               <Route path='/register/admin' Component={AdminRegister}></Route>
               <Route path='/login/admin' Component={AdminLogin}></Route>
-              <Route path='/loans' Component={Loan}></Route>
+              <Route path='/items' Component={Items}></Route>
             </Routes>
           </Router>
         </div>

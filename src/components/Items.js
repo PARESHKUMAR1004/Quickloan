@@ -1,10 +1,10 @@
 import React,{Component} from 'react'
 
-export default class Loan extends Component{
+export default class Items extends Component{
     render(){
         return(
             <div>
-                <h1>Apply for Loans</h1>
+                <h1>Items List</h1>
             </div>
         );
     }
