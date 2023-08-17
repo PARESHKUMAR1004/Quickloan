@@ -2,6 +2,7 @@ import React,{Component} from 'react'
 import {Link} from 'react-router-dom'
 
 import '../style/NavBar.css'
+import AdminRegistration from './AdminRegistration';
 
 export default class AdminRegister extends Component{
     render(){
@@ -17,7 +18,7 @@ export default class AdminRegister extends Component{
                         </li>
                     </ul>
                 </nav>
-                <h1>Admin Registration</h1>
+                <AdminRegistration></AdminRegistration>
             </div>
         );
     }

@@ -12,6 +12,16 @@ class AuthenticationService{
         }
     }
     
+    static async registerAdmin(Admin) {
+        try {
+          const response = await axios.post('http://localhost:8085/quickloan/api/registerAdmin', Admin); // Adjust the API endpoint
+          return response.data;
+        } catch (error) {
+          console.error('Registration error', error);
+          throw new Error('An error occurred during registration.');
+        }
+    }
+
     static async login(user, path) {
         try {
           const response = await axios.post('http://localhost:8085/quickloan/api/'+path, user);

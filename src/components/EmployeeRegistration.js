@@ -59,7 +59,7 @@ const EmployeeRegistration=()=>{
         await AuthenticationService.registerEmployee(employee);
         setSuccessMessage('Registration successful!');
         setTimeout(()=>{
-            history("/login");
+            history("/login/employee");
         },2000)
         // Clear form or navigate to another page
       } catch (error) {
@@ -146,17 +146,7 @@ const EmployeeRegistration=()=>{
       <h2>Employee Registration</h2>
       {successMessage && <p className="success-message">{successMessage}</p>}
       <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label>Email:</label>
-          <input
-            type="email"
-            name="email"
-            value={employee.email}
-            onChange={handleChange}
-            className={errors.email && 'error'}
-          />
-          {errors.email && <p className="error-message">{errors.email}</p>}
-        </div>
+        
         <div className="form-group">
           <label>First Name:</label>
           <input
@@ -182,7 +172,17 @@ const EmployeeRegistration=()=>{
           />
           {errors.lname && <p className="error-message">{errors.lname}</p>}
         </div>
-
+        <div className="form-group">
+          <label>Email:</label>
+          <input
+            type="email"
+            name="email"
+            value={employee.email}
+            onChange={handleChange}
+            className={errors.email && 'error'}
+          />
+          {errors.email && <p className="error-message">{errors.email}</p>}
+        </div>
 
         
         <div className="form-group">
