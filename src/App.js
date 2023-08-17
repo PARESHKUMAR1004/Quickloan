@@ -6,9 +6,18 @@ import Home from './components/Home';
 import EmployeeRegister from './components/EmployeeRegister';
 import EmployeeLogin from './components/EmployeeLogin';
 import AdminLogin from './components/AdminLogin';
-import AdminRegister from './components/AdminRegister';
+
 import NavBar from './components/NavBar';
+<<<<<<< Updated upstream
 import Items from './components/Items';
+=======
+<<<<<<< HEAD
+import Loan from './components/Loan';
+import AdminRegistration from './components/AdminRegistration';
+=======
+import Items from './components/Items';
+>>>>>>> 26c7d7fddd0d1b6f67db8b3abc587b681eb18d7c
+>>>>>>> Stashed changes
 
 /*
 	React Router is a standard library for routing in React. 
@@ -40,7 +49,8 @@ function App() {
               <Route path='/' exact Component={Home}></Route>
               <Route path='/register/employee' Component={EmployeeRegister}></Route>
               <Route path='/login/employee' Component={EmployeeLogin}></Route>
-              <Route path='/register/admin' Component={AdminRegister}></Route>
+              <Route path='/register/admin' Component={AdminRegistration}></Route>
+    
               <Route path='/login/admin' Component={AdminLogin}></Route>
               <Route path='/items' Component={Items}></Route>
             </Routes>

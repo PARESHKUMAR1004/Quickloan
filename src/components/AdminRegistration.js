@@ -43,7 +43,6 @@ const AdminRegistration=()=>{
     }
   };
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validateForm();
@@ -63,7 +62,6 @@ const AdminRegistration=()=>{
       setErrors(validationErrors);
     }
   };
-
 
   const validateForm = () => {
     let validationErrors = {};
