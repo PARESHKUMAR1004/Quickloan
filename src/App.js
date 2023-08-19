@@ -1,14 +1,16 @@
-import logo from './logo.svg';
-import './App.css';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-
-import Home from './components/Home';
-import EmployeeRegister from './components/EmployeeRegister';
-import EmployeeLogin from './components/EmployeeLogin';
-import AdminLogin from './components/AdminLogin';
-import AdminRegister from './components/AdminRegister'
-import NavBar from './components/NavBar';
-import Items from './components/Items';
+import "./App.css";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { ThemeProvider } from "@mui/material";
+import theme from "./style/themes/theme";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Home from "./components/Home";
+import EmployeeRegister from "./components/EmployeeRegister";
+import Login from "./components/Login";
+import Items from "./components/Items";
+import NavBar from "./components/NavBar";
+import Loans from "./components/Loans";
+import FAQ from "./components/FAQ";
 
 /*
 	React Router is a standard library for routing in React. 
@@ -25,7 +27,36 @@ import Items from './components/Items';
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
+      <Router>
+        <ThemeProvider theme={theme}>
+          <NavBar />
+          <Routes>
+            <Route path="/" exact Component={Home}></Route>
+            <Route path="/register" Component={EmployeeRegister}></Route>
+            <Route path="/login" Component={Login}></Route>
+            {/* <Route path='/register/admin' Component={AdminRegister}></Route>
+    
+              <Route path='/login/admin' Component={AdminLogin}></Route> */}
+            <Route path="/items" Component={Items}></Route>
+            <Route path="/loans" Component={Loans}></Route>
+            <Route path="/faqs" Component={FAQ}></Route>
+          </Routes>
+          <Box
+            component="footer"
+            sx={{
+              backgroundColor: "primary.main",
+              py: { xs: 2, md: 1 },
+              color: "primary.contrastText",
+            }}
+          >
+            <Typography variant="subtitle1" sx={{ letterSpacing: 1, mb: 2 }}>
+              &copy; All Rights Reserved to Wells Fargo
+            </Typography>
+          </Box>
+        </ThemeProvider>
+      </Router>
+
+      {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <h1>Quickloans</h1>
       </header>
@@ -49,9 +80,7 @@ function App() {
         </div>
       </section>
 
-      <footer className="App-footer">
-        <p>&copy; All Rights Reserved to Wells Fargo</p>
-      </footer>
+      */}
     </div>
   );
 }
