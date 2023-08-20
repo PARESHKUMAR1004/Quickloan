@@ -3,6 +3,7 @@ package com.wellsfargo.training.team6.quickloan.model;
 import java.nio.charset.StandardCharsets;
 import java.sql.Date;
 import java.util.Base64;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -11,6 +12,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 
@@ -54,6 +56,13 @@ public class Employee {
 	
 	
 	private String password;
+	
+	@OneToMany(mappedBy="Employee")
+	private Set<IssueDetail> issues;
+	
+	@OneToMany(mappedBy="Employee")
+	private Set<EmployeeCard> EmployeeCard;
+	
 	
 
 

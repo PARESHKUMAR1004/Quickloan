@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,8 @@ import com.wellsfargo.training.team6.quickloan.exception.ResourceNotFoundExcepti
 import com.wellsfargo.training.team6.quickloan.model.Admin;
 import com.wellsfargo.training.team6.quickloan.service.AdminService;
 
+
+@CrossOrigin(origins="http://localhost:3000")
 @RestController
 @RequestMapping(value="/api")
 public class AdminController {
@@ -46,7 +49,7 @@ public class AdminController {
 		
 		
 		Admin foundAdmin = aservice.findAdmin(email).orElseThrow(() ->
-		new ResourceNotFoundException("Admin not found for this id :: "));
+		new ResourceNotFoundException("Admin not found for this email :: "));
 		
 		
 		
