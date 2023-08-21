@@ -1,263 +1,276 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../style/EmployeeRegistration.css";
-import AuthenticationService from "../service/AuthenticationService";
+
+import AuthenticationService from "../service/AuthenticationService"
+
+import Avatar from '@mui/material/Avatar';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+
+import { Stack } from "@mui/material";
+
+import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import Button from '@mui/material/Button';
+import { LockOpen } from "@mui/icons-material";
+
+import { RadioGroup, Radio, FormControlLabel, FormControl, FormLabel} from "@mui/material"
+
+
 
 const EmployeeRegister = () => {
   const history = useNavigate();
 
-  const [employee, setEmployee] = useState({
-    fname: "",
-    lname: "",
-    designation: "",
-    department: "",
-    password: "",
-    date_of_birth: "",
-    date_of_joining: "",
-    phoneno: "",
-    email: "",
-    gender: "",
-  });
 
-  const [errors, setErrors] = useState({});
+  const [fname, setFirstName] = useState('');
+  const [lname, setLastName] = useState('');
+  const [designation, setDesignation] = useState('');
+  const [department, setDepartment] = useState('');
+  const [password, setPassword] = useState('');
+  const [date_of_birth, setDOB] = useState('');
+  const [date_of_joining, setDOJ] = useState('');
+  const [phoneno, setPhone] = useState('');
+  const [email, setEmail] = useState('');
+  const [gender, setGender] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    if (name.includes(".")) {
-      const [parent, child] = name.split(".");
-      setEmployee((prevEmployee) => ({
-        ...prevEmployee,
-        [parent]: {
-          ...prevEmployee[parent],
-          [child]: value,
-        },
-      }));
-    } else {
-      setEmployee((prevEmployee) => ({
-        ...prevEmployee,
-        [name]: value,
-      }));
+  const handleRegister= async () => {
+    /*
+    if (!email || !password) {
+      setErrorMessage("Please enter both email and password.");
+      return;
     }
-  };
+    */
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const validationErrors = validateForm();
-    if (Object.keys(validationErrors).length === 0) {
-      try {
-        await AuthenticationService.registerEmployee(employee);
-        setSuccessMessage("Registration successful!");
+    const user = {
+      fname,
+      lname,
+      designation,
+      department,
+      password,
+      date_of_birth,
+      date_of_joining,
+      phoneno,
+      email,
+      gender
+    };
+    try {
+      console.log(user);
+      const registerSuccess = await AuthenticationService.registerEmployee(user);
+      console.log("API response:", registerSuccess.data);
+      if (registerSuccess) {
+        setErrorMessage("");
+        setSuccessMessage("Registration successful. Redirecting...");
         setTimeout(() => {
-          history("/login/employee");
+          history("/items");
         }, 2000);
-        // Clear form or navigate to another page
-      } catch (error) {
-        console.error("Registration error", error);
-        setSuccessMessage("An error occurred during registration.");
+      } else {
+        setErrorMessage("Invalid email or password.");
       }
-    } else {
-      setErrors(validationErrors);
+    } catch (error) {
+      console.error("Registration error", error);
+      setErrorMessage("An error occurred during registration.");
     }
-  };
-
-  const validateForm = () => {
-    let validationErrors = {};
-
-    if (!employee.email) {
-      validationErrors.email = "Email is required.";
-    }
-
-    if (!employee.fname) {
-      validationErrors.fname = "First Name is required";
-    } else if (!/^[a-zA-Z]*$/.test(employee.fname)) {
-      validationErrors.fname = "Enter alphabets only";
-    }
-
-    if (!employee.lname) {
-      validationErrors.lname = "Last Name is required";
-    }
-
-    if (!employee.department) {
-      validationErrors.department = "DEpartment is required";
-    }
-
-    if (!employee.designation) {
-      validationErrors.designation = "Designation is required";
-    }
-
-    if (!employee.gender) {
-      validationErrors.gender = "Gender is required";
-    }
-
-    if (!employee.password) {
-      validationErrors.password = "Password is required.";
-    } else if (employee.password.length < 6) {
-      validationErrors.password = "Password must be at least 6 characters.";
-    }
-
-    if (!employee.date_of_birth) {
-      validationErrors.date_of_birth = "Date of Birth is required.";
-    }
-    if (!employee.date_of_joining) {
-      validationErrors.date_of_joining = "Date of Joining is required.";
-    }
-
-    if (!employee.phoneno) {
-      validationErrors.phoneno = "Phone number is required.";
-    } else if (!/^\d{10}$/.test(employee.phoneno)) {
-      validationErrors.phoneno =
-        "Invalid phone number. Please enter a 10-digit number.";
-    }
-
-    // Add more validation rules for other fields
-
-    return validationErrors;
   };
 
   return (
-    <div className="registration-container">
-      <h2>Employee Registration</h2>
-      {successMessage && <p className="success-message">{successMessage}</p>}
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label>First Name:</label>
-          <input
-            type="text"
+    
+    
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <Box
+        sx={{
+          marginTop: 8,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          padding:'25px',
+          bgcolor:'white',
+          boxShadow:'2',
+          margin:'10px',
+          borderRadius:'5px'
+        }}
+      >
+        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <LockOpen />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+         Employee Sign Up 
+        </Typography>
+        <br></br>
+        <Box component="form" sm={{ mt: 1 }}>
+        <Stack spacing={2} direction="row" sx={{marginBottom: 1}}>
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="fname"
+            label="First Name"
             name="fname"
-            value={employee.fname}
-            onChange={handleChange}
-            className={errors.fname && "error"}
+            
+            autoFocus
+            value={fname}
+            onChange={(e)=>setFirstName(e.target.value)}
           />
-          {errors.fname && <p className="error-message">{errors.fname}</p>}
-        </div>
-
-        <div className="form-group">
-          <label>Last Name:</label>
-          <input
-            type="text"
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="lname"
+            label="Last Name"
             name="lname"
-            value={employee.lname}
-            onChange={handleChange}
-            className={errors.lname && "error"}
+            
+            autoFocus
+            value={lname}
+            onChange={(e)=>setLastName(e.target.value)}
           />
-          {errors.lname && <p className="error-message">{errors.lname}</p>}
-        </div>
-        <div className="form-group">
-          <label>Email:</label>
-          <input
-            type="email"
+          </Stack>
+         
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="Email Address"
             name="email"
-            value={employee.email}
-            onChange={handleChange}
-            className={errors.email && "error"}
+            autoComplete="email"
+            autoFocus
+            value={email}
+            onChange={(e)=>setEmail(e.target.value)}
           />
-          {errors.email && <p className="error-message">{errors.email}</p>}
-        </div>
-
-        <div className="form-group">
-          <label>Department:</label>
-          <input
-            type="text"
-            name="department"
-            value={employee.department}
-            onChange={handleChange}
-            className={errors.department && "error"}
-          />
-          {errors.department && (
-            <p className="error-message">{errors.department}</p>
-          )}
-        </div>
-
-        <div className="form-group">
-          <label>Designation:</label>
-          <input
-            type="text"
-            name="designation"
-            value={employee.designation}
-            onChange={handleChange}
-            className={errors.designation && "error"}
-          />
-          {errors.designation && (
-            <p className="error-message">{errors.designation}</p>
-          )}
-        </div>
-
-        <div className="form-group">
-          <label>Gender:</label>
-          <input
-            type="text"
-            name="gender"
-            value={employee.gender}
-            onChange={handleChange}
-            className={errors.gender && "error"}
-          />
-          {errors.gender && <p className="error-message">{errors.gender}</p>}
-        </div>
-
-        <div className="form-group">
-          <label>Password:</label>
-          <input
-            type="password"
+          <TextField
+            margin="normal"
+            required
+            fullWidth
             name="password"
-            value={employee.password}
-            onChange={handleChange}
-            className={errors.password && "error"}
+            label="Password"
+            type="password"
+            id="password"
+            autoComplete="current-password"
+            value={password}
+            onChange={(e)=>setPassword(e.target.value)}
           />
-          {errors.password && (
-            <p className="error-message">{errors.password}</p>
-          )}
-        </div>
-
-        <div className="form-group">
-          <label>Date of Birth:</label>
-          <input
-            type="date"
-            name="date_of_birth"
-            value={employee.date_of_birth}
-            onChange={handleChange}
-            className={errors.dob && "error"}
+         
+         <Stack spacing={2} direction="row" sx={{marginBottom: 2, marginTop:1}}>
+           <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="designation"
+            label="Designation"
+            name="designation"
+            autoComplete="designation"
+            autoFocus
+            value={designation}
+            onChange={(e)=>setDesignation(e.target.value)}
           />
-          {errors.date_of_birth && (
-            <p className="error-message">{errors.date_of_birth}</p>
-          )}
-        </div>
-
-        <div className="form-group">
-          <label>Date of Joining:</label>
-          <input
-            type="date"
-            name="date_of_joining"
-            value={employee.date_of_joining}
-            onChange={handleChange}
-            className={errors.dob && "error"}
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="department"
+            label="Department"
+            name="department"
+            autoComplete="department"
+            autoFocus
+            value={department}
+            onChange={(e)=>setDepartment(e.target.value)}
           />
-          {errors.date_of_joining && (
-            <p className="error-message">{errors.date_of_joining}</p>
-          )}
-        </div>
+         </Stack>
+          <Stack spacing={2} direction="row" sx={{marginBottom: 1, marginTop: 1}}>
+          <TextField
+          label="Date of Birth"
+          id="date_of_birth"
+          name="date_of_birth"
+          type="date"
+          autoFocus
+          value={date_of_birth}
+          onChange={(e) => setDOB(e.target.value)}
+          fullWidth
+          margin="normal"
+          required
+          
+          InputLabelProps={{
+            shrink: true,
+          }}
+        />
+        <TextField
+           label="Date of Joining"
+           id="date_of_joining"
+           name="date_of_joining"
+           type="date"
+           autoFocus
+           value={date_of_joining}
+           onChange={(e) => setDOJ(e.target.value)}
+           fullWidth
+           margin="normal"
+           required
+           
+           InputLabelProps={{
+             shrink: true,
+           }}
+        />
+         </Stack>
+        <TextField
+          label="Phone Number"
+          value={phoneno}
+          id="phoneno"
+          name="phoneno"
+          onChange={(e) => setPhone(e.target.value)}
+          fullWidth
+          margin="normal"
+          autoFocus
+          required
+        />
+     
+          <FormControl component="fieldset">
+          <FormLabel component="legend">Gender</FormLabel>
+          <RadioGroup
+            row
+            aria-label="gender"
+            name="gender"
+            value={gender}
+            required
+            onChange={(e) => setGender(e.target.value)}
+          >
+            <FormControlLabel value="M" control={<Radio />} label="Male" />
+            <FormControlLabel value="F" control={<Radio />} label="Female" />
+            <FormControlLabel value="O" control={<Radio />} label="Other" />
+          </RadioGroup>
+        </FormControl>
 
-        <div className="form-group">
-          <label>Phone Number:</label>
-          <input
-            type="text"
-            name="phoneno"
-            value={employee.phoneno}
-            onChange={handleChange}
-            className={errors.phoneno && "error"}
-          />
-          {errors.phoneno && <p className="error-message">{errors.phoneno}</p>}
-        </div>
+          <Button
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 ,padding:'15px',boxShadow:'2'}}
+            onClick={handleRegister}
+            color="primary"
+          >
+            Sign Up
+          </Button>
+          
+          {errorMessage && <p className="error-message">{errorMessage}</p>}
+          {successMessage && <p className="success-message">{successMessage}</p>}
 
-        {/* Add more form fields with similar structure */}
+          <Grid container justifyContent='flex-end' >
 
-        <div className="form-group">
-          <button type="submit" className="submit-button">
-            Register
-          </button>
-        </div>
-      </form>
-    </div>
+            <Grid item sx={{padding:'15px'}}>
+              <Link href='/login' >
+                {"Already have an account? Sign In"}
+              </Link>
+            </Grid>
+          </Grid>
+        </Box>
+      </Box>
+      
+    </Container>
+   
   );
 };
 
