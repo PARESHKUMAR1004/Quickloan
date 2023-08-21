@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import AuthenticationService from "../service/AuthenticationService"
 
 import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -14,11 +13,12 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import Button from '@mui/material/Button';
 
 import {
   RadioGroup,
   Radio,
-} from "@material-ui/core";
+} from "@mui/material";
 
 
 const Login = () => {
@@ -90,13 +90,12 @@ const Login = () => {
           defaultValue="Employee"
           name="radio-buttons-group"
           row
-          
         >
-        <FormControlLabel value="Employee" control={<Radio color="default" />} label="Employee" 
+        <FormControlLabel value="Employee" control={<Radio color="primary" />} label="Employee" 
         checked={userTypePath === "loginEmployee"}
         onChange={() => setUserTypePath("loginEmployee")}
         />
-        <FormControlLabel value="Admin" control={<Radio color="default" />} label="Admin"
+        <FormControlLabel value="Admin" control={<Radio color="primary" />} label="Admin"
         checked={userTypePath === "loginAdmin"}
         onChange={() => setUserTypePath("loginAdmin")}
         />
@@ -127,9 +126,7 @@ const Login = () => {
             value={password}
             onChange={(e)=>setPassword(e.target.value)}
           />
-          
           <Button
-            
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 ,padding:'15px',boxShadow:'2'}}
@@ -138,6 +135,7 @@ const Login = () => {
           >
             Sign In
           </Button>
+          
           {errorMessage && <p className="error-message">{errorMessage}</p>}
           {successMessage && <p className="success-message">{successMessage}</p>}
 
