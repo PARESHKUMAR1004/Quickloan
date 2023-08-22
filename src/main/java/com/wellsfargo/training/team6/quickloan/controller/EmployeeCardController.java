@@ -31,6 +31,11 @@ public class EmployeeCardController {
 		return empCardService.getCardByEmpId(empId);
 	}
 	
+	@PostMapping("/saveEmpCard")
+	public EmployeeCard saveEmployeeCard(@Validated @RequestBody EmployeeCard empCard) {
+		return empCardService.saveEmployeeCard(empCard);
+	}
+	
 	@PostMapping("/updateStatus/{id}")
 	public EmployeeCard updateCardStatus(@PathVariable(value="id") Long empCardId) throws ResourceNotFoundException {
 		EmployeeCard empCard = empCardService.getEmployeeCardById(empCardId).orElseThrow(
