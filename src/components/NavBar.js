@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
@@ -8,8 +8,10 @@ import Navigation from "./Navigation";
 import { useTheme } from "@mui/material/styles";
 import { Menu, Close } from "@mui/icons-material";
 import Button from "@mui/material/Button";
+import { AuthContext } from "../service/AuthContext";
 
 const NavBar = () => {
+  const { isUserAuthenticated, logout } = useContext(AuthContext);
   const [visibleMenu, setVisibleMenu] = useState(false);
   const { breakpoints } = useTheme();
   const matchMobileView = useMediaQuery(breakpoints.down("md"));
@@ -52,14 +54,20 @@ const NavBar = () => {
           >
             <Box /> {/* Magic space */}
             <Navigation />
-            <Box sx={{ "& button:first-of-type": { mr: 2 } }}>
-              <Link to="/login">
-                <Button variant="outlined">Log In</Button>
-              </Link>
-              <Link to="/register">
-                <Button variant="contained">Register</Button>
-              </Link>
-            </Box>
+            
+            {isUserAuthenticated ? 
+              <Button variant="outlined" onClick={logout}>Log Out</Button> 
+            : 
+              <Box sx={{ "& button:first-of-type": { mr: 2 } }}>
+                <Link to="/login">
+                  <Button variant="outlined">Log In</Button>
+                </Link>
+                <Link to="/register">
+                  <Button variant="contained">Register</Button>
+                </Link>
+              </Box>
+              }
+            
             {matchMobileView && <br></br>}{" "}
             {/* Given because otherwise register & Login were not visible */}
             {visibleMenu && matchMobileView && (

@@ -1,7 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-
-import AuthenticationService from "../service/AuthenticationService"
 
 import Avatar from '@mui/material/Avatar';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -19,11 +17,13 @@ import Button from '@mui/material/Button';
 import { LockOpen } from "@mui/icons-material";
 
 import { RadioGroup, Radio, FormControlLabel, FormControl, FormLabel } from "@mui/material"
+import { AuthContext } from "../service/AuthContext";
 
 
 
 const EmployeeRegister = () => {
   const history = useNavigate();
+  const { register } = useContext(AuthContext);
 
 
   const [fname, setFirstName] = useState('');
@@ -58,6 +58,10 @@ const EmployeeRegister = () => {
       setErrorMessage("Password is required");
       return;
     }
+    else if (password.length < 6) {
+      setErrorMessage('Password must be at least 6 characters.');
+      return;
+    }
     else if(!designation){
       setErrorMessage("Designation is required");
       return;
@@ -78,6 +82,10 @@ const EmployeeRegister = () => {
       setErrorMessage("Phone no is required");
       return;
     }
+    else if (!/^\d{10}$/.test(phoneno)) {
+      setErrorMessage('Invalid phone number. Please enter a 10-digit number.');
+      return;
+    } 
     else if(!gender){
       setErrorMessage("Please select your gender");
       return;
@@ -95,8 +103,7 @@ const EmployeeRegister = () => {
       gender
     };
     try {
-      console.log(user);
-      const registerSuccess = await AuthenticationService.registerEmployee(user);
+      const registerSuccess = await register(user);
       console.log("API response:", registerSuccess.data);
       if (registerSuccess) {
         setErrorMessage("");
@@ -105,7 +112,7 @@ const EmployeeRegister = () => {
           history("/login");
         }, 2000);
       } else {
-        setErrorMessage("Invalid email or password.");
+        setErrorMessage("Invalid Registration.");
       }
     } catch (error) {
       console.error("Registration error", error);

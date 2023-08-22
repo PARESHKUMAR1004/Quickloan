@@ -12,6 +12,8 @@ import NavBar from "./components/NavBar";
 import Loans from "./components/Loans";
 import FAQ from "./components/FAQ";
 
+import { AuthProvider } from "./service/AuthContext";
+
 /*
 	React Router is a standard library for routing in React. 
 	It enables the navigation among views of various components in a React Application, allows 
@@ -28,6 +30,7 @@ function App() {
   return (
     <div className="App">
       <Router>
+      <AuthProvider>
         <ThemeProvider theme={theme}>
           <NavBar />
           <Routes>
@@ -54,33 +57,8 @@ function App() {
             </Typography>
           </Box>
         </ThemeProvider>
+        </AuthProvider>
       </Router>
-
-      {/* <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <h1>Quickloans</h1>
-      </header>
-
-      <section>
-      <div style={{ backgroundImage: "url(/images/lms1.jpg)",
-                    backgroundRepeat: 'no-repeat',
-                    backgroundSize:'cover', minHeight:'100vh',minWidth:'100vw'}}>
-          <Router>
-            <NavBar></NavBar>
-            <Routes>
-              <Route path='/' exact Component={Home}></Route>
-              <Route path='/register/employee' Component={EmployeeRegister}></Route>
-              <Route path='/login/employee' Component={EmployeeLogin}></Route>
-              <Route path='/register/admin' Component={AdminRegister}></Route>
-    
-              <Route path='/login/admin' Component={AdminLogin}></Route>
-              <Route path='/items' Component={Items}></Route>
-            </Routes>
-          </Router>
-        </div>
-      </section>
-
-      */}
     </div>
   );
 }

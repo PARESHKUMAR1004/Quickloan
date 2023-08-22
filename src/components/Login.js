@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
-import AuthenticationService from "../service/AuthenticationService"
+// import AuthenticationService from "../service/AuthenticationService"
 
 import Avatar from '@mui/material/Avatar';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -19,10 +19,12 @@ import {
   RadioGroup,
   Radio,
 } from "@mui/material";
+import { AuthContext } from "../service/AuthContext";
 
 
 const Login = () => {
   const history = useNavigate();
+  const { login } = useContext(AuthContext);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -41,7 +43,7 @@ const Login = () => {
       password,
     };
     try {
-      const loginSuccess = await AuthenticationService.login(
+      const loginSuccess = await login(
         user,
         userTypePath
       );
