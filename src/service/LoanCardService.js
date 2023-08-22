@@ -4,23 +4,23 @@ const LOANCARDS_REST_API_URL='http://localhost:8085/quickloan/api/loancards';
 
 class LoancardService{
 
-   static getProducts(){
+   static getLoanCards(){
         return axios.get(LOANCARDS_REST_API_URL);
     }
 
-    static createProduct(loanCard){
+    static createLoanCard(loanCard){
         return axios.post('http://localhost:8085/quickloan/api/add/loancard',loanCard);
     }
 
-    static getProductById(loanCardId){
+    static getLoanCardById(loanCardId){
         return axios.get(LOANCARDS_REST_API_URL+'/'+loanCardId);
     }
 
-    static updateProduct(loanCard,loanCardId){
+    static updateLoanCard(loanCard,loanCardId){
         return axios.put(LOANCARDS_REST_API_URL+'/'+loanCardId,loanCard);
     }
 
-    static deleteProduct(loanCardId){
+    static deleteLoanCard(loanCardId){
         return axios.delete(LOANCARDS_REST_API_URL+'/'+loanCardId);
     }
 
