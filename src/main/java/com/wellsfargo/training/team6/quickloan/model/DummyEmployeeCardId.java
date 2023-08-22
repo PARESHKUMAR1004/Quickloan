@@ -3,14 +3,17 @@
 //import java.io.Serializable;
 //import java.util.Objects;
 //
-//public class EmployeeCardCompositeId implements Serializable {
-//	
-//	private long employeeid;
-//	private long loan_id;
+//import jakarta.persistence.Embeddable;
+//
+//@Embeddable
+//public class DummyEmployeeCardId implements Serializable {
+//	private Long employeeid;
+//	private Long loan_id;
 //	@Override
 //	public int hashCode() {
 //		return Objects.hash(employeeid, loan_id);
 //	}
+//	
 //	@Override
 //	public boolean equals(Object obj) {
 //		if (this == obj)
@@ -19,26 +22,34 @@
 //			return false;
 //		if (getClass() != obj.getClass())
 //			return false;
-//		EmployeeCardCompositeId other = (EmployeeCardCompositeId) obj;
+//		DummyEmployeeCardId other = (DummyEmployeeCardId) obj;
 //		return employeeid == other.employeeid && loan_id == other.loan_id;
 //	}
-//	public EmployeeCardCompositeId(long employeeid, long loan_id) {
-//		super();
-//		this.employeeid = employeeid;
-//		this.loan_id = loan_id;
-//	}
-//	public long getEmployeeid() {
-//		return employeeid;
-//	}
-//	public void setEmployeeid(long employeeid) {
-//		this.employeeid = employeeid;
-//	}
-//	public long getLoan_id() {
-//		return loan_id;
-//	}
-//	public void setLoan_id(long loan_id) {
-//		this.loan_id = loan_id;
+//	
+//	public DummyEmployeeCardId() {
+//		
 //	}
 //	
+//	public DummyEmployeeCardId(Long employeeid, Long loan_id) {
+//		this.employeeid = employeeid;
+//		this.loan_id = loan_id;
+//	}
 //
+//	public Long getEmployeeid() {
+//		return employeeid;
+//	}
+//
+//	public void setEmployeeid(Long employeeid) {
+//		this.employeeid = employeeid;
+//	}
+//
+//	public Long getLoan_id() {
+//		return loan_id;
+//	}
+//
+//	public void setLoan_id(Long loan_id) {
+//		this.loan_id = loan_id;
+//	}
 //}
+//
+//

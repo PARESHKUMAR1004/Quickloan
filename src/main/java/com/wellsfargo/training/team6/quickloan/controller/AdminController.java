@@ -47,14 +47,8 @@ public class AdminController {
 		String email=A.getEmail();
 		String password=A.getPassword();
 		
-		
 		Admin foundAdmin = aservice.findAdmin(email).orElseThrow(() ->
 		new ResourceNotFoundException("Admin not found for this email :: "));
-		
-		
-		
-		
-
 		
 		if(email.equals(foundAdmin.getEmail()) && password.equals(foundAdmin.getPassword()))
 		{

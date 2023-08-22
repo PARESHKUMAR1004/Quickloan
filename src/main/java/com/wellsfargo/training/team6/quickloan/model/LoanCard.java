@@ -8,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,18 +23,17 @@ public class LoanCard {
 	
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long loan_id;
+	@SequenceGenerator(name="loan_id", initialValue=1000, allocationSize=1)
+	@GeneratedValue(strategy=GenerationType.IDENTITY, generator="loan_id")
+	private Long loanId;
 	
+	@Column(name="loan_type", nullable=false)
+	private String loanType;
 	
-	@Column(nullable=false)
-	private String loan_type;
+	@Column(name="loan_duration", nullable=false)
+	private int loanDuration;
 	
-	
-	@Column(nullable=false)
-	private int loan_duration;
-	
-	@OneToMany(mappedBy="LoanCard")
+	@OneToMany(mappedBy="loanCard")
 	private Set<EmployeeCard> EmployeeCard;
 
 }

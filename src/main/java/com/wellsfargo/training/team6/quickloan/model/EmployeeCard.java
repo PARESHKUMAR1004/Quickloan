@@ -41,25 +41,19 @@ public class EmployeeCard {
 	
 	@ManyToOne
 	@JoinColumn(name="loan_id", nullable=false)
-	private LoanCard LoanCard;
-	
-	
+	private LoanCard loanCard;
 	
 	@ManyToOne
 	@JoinColumn(name="employeeid", nullable=false)
-	private Employee Employee;
+	private Employee employee;
 	
-	
+	@Column(name="card_issue_date", nullable=false)
+	@JsonFormat(pattern="yyyy-MM-dd")
+	private Date cardIssueDate;
 	
 	@Column(nullable=false)
-	@JsonFormat(pattern="yyyy-MM-dd")
-	private Date card_issue_date;
+	private char status;
 	
-	
-	
-	
-	
-	
-	
-
+	@Column(nullable=false)
+	private Integer value;
 }

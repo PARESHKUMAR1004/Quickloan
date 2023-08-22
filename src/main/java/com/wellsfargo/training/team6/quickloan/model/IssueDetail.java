@@ -25,20 +25,20 @@ import lombok.Setter;
 public class IssueDetail {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long issue_id;
+	@Column(name="issue_id")
+	private Long issueId;
 	
-	@Column(nullable=false)
+	@Column(name="issue_date", nullable=false)
 	@JsonFormat(pattern="yyyy-MM-dd")
-	private Date issue_date;
+	private Date issueDate;
 	
 	
 	@ManyToOne
 	@JoinColumn(name="employeeid",nullable=false)
-	private Employee Employee;
+	private Employee employee;
 	
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name="item_id",nullable=false)
 	private Item item;
-	
 
 }

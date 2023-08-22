@@ -3,10 +3,12 @@ package com.wellsfargo.training.team6.quickloan.model;
 import java.nio.charset.StandardCharsets;
 import java.sql.Date;
 import java.util.Base64;
+import java.util.List;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -54,24 +56,14 @@ public class Employee {
 	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date date_of_joining;
 	
+	@OneToMany(mappedBy="employee", cascade = CascadeType.ALL)
+	private List<IssueDetail> issues;
+	
+	@OneToMany(mappedBy="employee")
+	private Set<EmployeeCard> employeeCard;
 	
 	private String password;
 	
-	@OneToMany(mappedBy="Employee")
-	private Set<IssueDetail> issues;
-	
-	@OneToMany(mappedBy="Employee")
-	private Set<EmployeeCard> EmployeeCard;
-	
-	
-
-
-	
-
-
-
-
-
 	public Employee(Long employeeid, String fname, String lname, String designation, String department, String phoneno,
 			String email, char gender, Date date_of_birth, Date date_of_joining, String password) {
 		super();
