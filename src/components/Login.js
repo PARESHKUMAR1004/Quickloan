@@ -83,7 +83,7 @@ const Login = () => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          Login
         </Typography>
         <RadioGroup
           aria-labelledby="demo-radio-buttons-group-label"
@@ -133,11 +133,11 @@ const Login = () => {
             onClick={handleLogin}
             color="primary"
           >
-            Sign In
+            Login
           </Button>
           
-          {errorMessage && <p className="error-message">{errorMessage}</p>}
-          {successMessage && <p className="success-message">{successMessage}</p>}
+          {errorMessage && <p className="error-message" style={{color:'red'}}>{errorMessage}</p>}
+          {successMessage && <p className="success-message" style={{color:'green'}} >{successMessage}</p>}
 
           <Grid container justifyContent='flex-end' >
 

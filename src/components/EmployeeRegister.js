@@ -18,7 +18,7 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import { LockOpen } from "@mui/icons-material";
 
-import { RadioGroup, Radio, FormControlLabel, FormControl, FormLabel} from "@mui/material"
+import { RadioGroup, Radio, FormControlLabel, FormControl, FormLabel } from "@mui/material"
 
 
 
@@ -38,16 +38,50 @@ const EmployeeRegister = () => {
   const [gender, setGender] = useState('');
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-  
 
-  const handleRegister= async () => {
-    /*
-    if (!email || !password) {
-      setErrorMessage("Please enter both email and password.");
+
+  const handleRegister = async () => {
+
+    if (!fname) {
+      setErrorMessage("First Name is required");
       return;
     }
-    */
-
+    else if(!lname){
+      setErrorMessage("Last Name is required");
+      return;
+    }
+    else if(!email){
+      setErrorMessage("Email is required");
+      return;
+    }
+    else if(!password){
+      setErrorMessage("Password is required");
+      return;
+    }
+    else if(!designation){
+      setErrorMessage("Designation is required");
+      return;
+    }
+    else if(!department){
+      setErrorMessage("Department is required");
+      return;
+    }
+    else if(!date_of_birth){
+      setErrorMessage("Date of birth is required");
+      return;
+    }
+    else if(!date_of_joining){
+      setErrorMessage("Date of joining is required");
+      return;
+    }
+    else if(!phoneno){
+      setErrorMessage("Phone no is required");
+      return;
+    }
+    else if(!gender){
+      setErrorMessage("Please select your gender");
+      return;
+    }
     const user = {
       fname,
       lname,
@@ -68,7 +102,7 @@ const EmployeeRegister = () => {
         setErrorMessage("");
         setSuccessMessage("Registration successful. Redirecting...");
         setTimeout(() => {
-          history("/items");
+          history("/login");
         }, 2000);
       } else {
         setErrorMessage("Invalid email or password.");
@@ -80,8 +114,8 @@ const EmployeeRegister = () => {
   };
 
   return (
-    
-    
+
+
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <Box
@@ -90,48 +124,48 @@ const EmployeeRegister = () => {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          padding:'25px',
-          bgcolor:'white',
-          boxShadow:'2',
-          margin:'10px',
-          borderRadius:'5px'
+          padding: '25px',
+          bgcolor: 'white',
+          boxShadow: '2',
+          margin: '10px',
+          borderRadius: '5px'
         }}
       >
         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
           <LockOpen />
         </Avatar>
         <Typography component="h1" variant="h5">
-         Employee Sign Up 
+          Employee Registration
         </Typography>
         <br></br>
         <Box component="form" sm={{ mt: 1 }}>
-        <Stack spacing={2} direction="row" sx={{marginBottom: 1}}>
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="fname"
-            label="First Name"
-            name="fname"
-            
-            autoFocus
-            value={fname}
-            onChange={(e)=>setFirstName(e.target.value)}
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="lname"
-            label="Last Name"
-            name="lname"
-            
-            autoFocus
-            value={lname}
-            onChange={(e)=>setLastName(e.target.value)}
-          />
+          <Stack spacing={2} direction="row" sx={{ marginBottom: 1 }}>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="fname"
+              label="First Name"
+              name="fname"
+
+              autoFocus
+              value={fname}
+              onChange={(e) => setFirstName(e.target.value)}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="lname"
+              label="Last Name"
+              name="lname"
+
+
+              value={lname}
+              onChange={(e) => setLastName(e.target.value)}
+            />
           </Stack>
-         
+
           <TextField
             margin="normal"
             required
@@ -140,9 +174,9 @@ const EmployeeRegister = () => {
             label="Email Address"
             name="email"
             autoComplete="email"
-            autoFocus
+
             value={email}
-            onChange={(e)=>setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <TextField
             margin="normal"
@@ -154,113 +188,114 @@ const EmployeeRegister = () => {
             id="password"
             autoComplete="current-password"
             value={password}
-            onChange={(e)=>setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
           />
-         
-         <Stack spacing={2} direction="row" sx={{marginBottom: 2, marginTop:1}}>
-           <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="designation"
-            label="Designation"
-            name="designation"
-            autoComplete="designation"
-            autoFocus
-            value={designation}
-            onChange={(e)=>setDesignation(e.target.value)}
-          />
+
+          <Stack spacing={2} direction="row" sx={{ marginBottom: 2, marginTop: 1 }}>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="designation"
+              label="Designation"
+              name="designation"
+              autoComplete="designation"
+
+              value={designation}
+              onChange={(e) => setDesignation(e.target.value)}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="department"
+              label="Department"
+              name="department"
+              autoComplete="department"
+
+              value={department}
+              onChange={(e) => setDepartment(e.target.value)}
+            />
+          </Stack>
+          <Stack spacing={2} direction="row" sx={{ marginBottom: 1, marginTop: 1 }}>
+            <TextField
+              label="Date of Birth"
+              id="date_of_birth"
+              name="date_of_birth"
+              type="date"
+
+              value={date_of_birth}
+              onChange={(e) => setDOB(e.target.value)}
+              fullWidth
+              margin="normal"
+              required
+
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+            <TextField
+              label="Date of Joining"
+              id="date_of_joining"
+              name="date_of_joining"
+              type="date"
+
+              value={date_of_joining}
+              onChange={(e) => setDOJ(e.target.value)}
+              fullWidth
+              margin="normal"
+              required
+
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+          </Stack>
           <TextField
-            margin="normal"
-            required
+            label="Phone Number"
+            value={phoneno}
+            id="phoneno"
+            name="phoneno"
+            onChange={(e) => setPhone(e.target.value)}
             fullWidth
-            id="department"
-            label="Department"
-            name="department"
-            autoComplete="department"
-            autoFocus
-            value={department}
-            onChange={(e)=>setDepartment(e.target.value)}
+            margin="normal"
+
+            required
           />
-         </Stack>
-          <Stack spacing={2} direction="row" sx={{marginBottom: 1, marginTop: 1}}>
-          <TextField
-          label="Date of Birth"
-          id="date_of_birth"
-          name="date_of_birth"
-          type="date"
-          autoFocus
-          value={date_of_birth}
-          onChange={(e) => setDOB(e.target.value)}
-          fullWidth
-          margin="normal"
-          required
-          
-          InputLabelProps={{
-            shrink: true,
-          }}
-        />
-        <TextField
-           label="Date of Joining"
-           id="date_of_joining"
-           name="date_of_joining"
-           type="date"
-           autoFocus
-           value={date_of_joining}
-           onChange={(e) => setDOJ(e.target.value)}
-           fullWidth
-           margin="normal"
-           required
-           
-           InputLabelProps={{
-             shrink: true,
-           }}
-        />
-         </Stack>
-        <TextField
-          label="Phone Number"
-          value={phoneno}
-          id="phoneno"
-          name="phoneno"
-          onChange={(e) => setPhone(e.target.value)}
-          fullWidth
-          margin="normal"
-          autoFocus
-          required
-        />
-     
+
           <FormControl component="fieldset">
-          <FormLabel component="legend">Gender</FormLabel>
-          <RadioGroup
-            row
-            aria-label="gender"
-            name="gender"
-            value={gender}
-            required
-            onChange={(e) => setGender(e.target.value)}
-          >
-            <FormControlLabel value="M" control={<Radio />} label="Male" />
-            <FormControlLabel value="F" control={<Radio />} label="Female" />
-            <FormControlLabel value="O" control={<Radio />} label="Other" />
-          </RadioGroup>
-        </FormControl>
+            <FormLabel component="legend" required>Gender</FormLabel>
+            <RadioGroup
+              row
+              aria-label="gender"
+              name="gender"
+              value={gender}
+              
+              defaultValue="M"
+              onChange={(e) => setGender(e.target.value)}
+            >
+              <FormControlLabel value="M" control={<Radio />} label="Male" />
+              <FormControlLabel value="F" control={<Radio />} label="Female" />
+              <FormControlLabel value="O" control={<Radio />} label="Other" />
+            </RadioGroup>
+          </FormControl>
 
           <Button
             fullWidth
             variant="contained"
-            sx={{ mt: 3, mb: 2 ,padding:'15px',boxShadow:'2'}}
+            sx={{ mt: 3, mb: 2, padding: '15px', boxShadow: '2' }}
             onClick={handleRegister}
             color="primary"
           >
-            Sign Up
+            Register
           </Button>
-          
-          {errorMessage && <p className="error-message">{errorMessage}</p>}
-          {successMessage && <p className="success-message">{successMessage}</p>}
+
+          {errorMessage && <p className="error-message" style={{ color: 'red' }}>{errorMessage}</p>}
+          {successMessage && <p className="success-message" style={{ color: 'green' }}>{successMessage}</p>}
 
           <Grid container justifyContent='flex-end' >
 
-            <Grid item sx={{padding:'15px'}}>
+            <Grid item sx={{ padding: '15px' }}>
               <Link href='/login' >
                 {"Already have an account? Sign In"}
               </Link>
@@ -268,9 +303,9 @@ const EmployeeRegister = () => {
           </Grid>
         </Box>
       </Box>
-      
+
     </Container>
-   
+
   );
 };
 
