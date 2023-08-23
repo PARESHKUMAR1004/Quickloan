@@ -10,9 +10,12 @@ import Login from "./components/Login";
 import Items from "./components/Items";
 import NavBar from "./components/NavBar";
 import Loans from "./components/Loans";
-import FAQ from "./components/FAQ";
+
 
 import { AuthProvider } from "./service/AuthContext";
+import ProfilePage from "./components/ProfilePage";
+// import ProfilePageNew from "./components/ProfilePageNew";
+import About from "./components/About";
 
 /*
 	React Router is a standard library for routing in React. 
@@ -42,7 +45,9 @@ function App() {
               <Route path='/login/admin' Component={AdminLogin}></Route> */}
             <Route path="/items" Component={Items}></Route>
             <Route path="/loans" Component={Loans}></Route>
-            <Route path="/faqs" Component={FAQ}></Route>
+            <Route path="/aboutus" Component={About}></Route>
+            {/* <Route path="/profile" Component={ProfilePageNew}></Route> */}
+            {/* <Route path="/about" Component={About}></Route> */}
           </Routes>
           <Box
             component="footer"
@@ -54,7 +59,7 @@ function App() {
             }}
           >
             <Typography variant="subtitle1" sx={{ letterSpacing: 1, mb: 2 }}>
-              &copy; All Rights Reserved to Wells Fargo
+              &copy; All Rights Reserved to Quickloans
             </Typography>
           </Box>
         </ThemeProvider>

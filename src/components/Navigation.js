@@ -16,8 +16,8 @@ const components = [
     path: "/items", // '/testimonial',
   },
   {
-    label: "FAQs",
-    path: "/faqs", // '/mentors',
+    label: "About Us",
+    path: "/aboutus", // '/mentors',
   },
 ];
 
