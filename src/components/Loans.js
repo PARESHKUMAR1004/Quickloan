@@ -18,10 +18,13 @@ import {
   Typography,
   IconButton,
   Tooltip,
+  MenuItem,
 } from '@mui/material';
+//import InputAdornment from '@mui/material/InputAdornment';
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import RemoveIcon from '@mui/icons-material/Remove';
 
 import LoancardService from '../service/LoanCardService';
 
@@ -30,8 +33,8 @@ function Loans() {
   const [openAddModal, setOpenAddModal] = useState(false);
   const [openEditModal, setOpenEditModal] = useState(false);
   const [selectedLoan,setSelectedLoan]=useState(null);
-  const [newLoan, setNewLoan] = useState({loan_id:'', loan_type: '', loan_duration: '' });
-
+  const [newLoan, setNewLoan] = useState({loan_id:'', loan_type: '', loan_duration: 2 });
+  const loanTypes=['Furniture','Stationery','Crockery'];
   useEffect(() => {
     async function fetchLoans() {
       try {
@@ -45,6 +48,12 @@ function Loans() {
     }
     fetchLoans();
   }, []);
+
+
+  
+
+   
+
 
   const handleOpenAddModal = () => {
     setOpenAddModal(true);
@@ -69,6 +78,27 @@ function Loans() {
       console.error('Error adding loan:', error);
     }
   };
+
+  const handleDecreaseDuration = () => {
+    if (newLoan.loan_duration > 2) {
+      setNewLoan({ ...newLoan, loan_duration: newLoan.loan_duration - 1 });
+    }
+  };
+
+  const handleIncreaseDuration = () => {
+    setNewLoan({ ...newLoan, loan_duration: newLoan.loan_duration + 1 });
+  };
+
+  const handleEditDecreaseDuration = () => {
+    if (selectedLoan.loan_duration >= 2) {
+      setSelectedLoan({ ...selectedLoan, loan_duration: selectedLoan.loan_duration - 1 });
+    }
+  };
+
+  const handleEditIncreaseDuration = () => {
+    setSelectedLoan({ ...selectedLoan, loan_duration: selectedLoan.loan_duration + 1 });
+  };
+
 
   const handleOpenEditModal = (loan) => {
     setSelectedLoan(loan);
@@ -170,16 +200,38 @@ function Loans() {
               label="Type"
               fullWidth
               margin="dense"
+              select
               value={newLoan.loan_type}
               onChange={(e) => setNewLoan({ ...newLoan, loan_type: e.target.value })}
-            />
-            <TextField
-              label="Duration"
-              fullWidth
-              margin="dense"
-              value={newLoan.loan_duration}
-              onChange={(e) => setNewLoan({ ...newLoan, loan_duration: e.target.value })}
-            />
+            >
+              {loanTypes.map((type)=> (
+                <MenuItem key={type} value={type}>
+                  {type}
+                </MenuItem>
+              ))}
+              </TextField>
+              <DialogContent>
+          <Box display="flex" flexDirection="column" gap={2}>
+            {/* ... rest of your code ... */}
+            <Box display="flex" alignItems="center" justifyContent="center">
+            <Typography variant="h5" component="span" align="center">
+                Loan Duration
+              </Typography>
+              <IconButton onClick={() => handleDecreaseDuration()} sx={{borderRadius:'50%',padding:'5px'}}>
+                <RemoveIcon />
+              </IconButton>
+              <Typography variant="h5" component="span" align="center">
+              {newLoan.loan_duration}
+              </Typography>
+             
+              <IconButton onClick={() => handleIncreaseDuration()} sx={{borderRadius:'50%',padding:'5px'}}>
+                <AddIcon />
+              </IconButton>
+            </Box>
+          </Box>
+        </DialogContent>
+            
+            
           </Box>
         </DialogContent>
         <DialogActions>
@@ -208,16 +260,31 @@ function Loans() {
               label="Type"
               fullWidth
               margin="dense"
+              select
               value={selectedLoan ? selectedLoan.loan_type : ''}
               onChange={(e) => setSelectedLoan({ ...selectedLoan, loan_type: e.target.value })}
-            />
-            <TextField
-              label="Duration"
-              fullWidth
-              margin="dense"
-              value={selectedLoan? selectedLoan.loan_duration : ''}
-              onChange={(e) => setSelectedLoan({ ...selectedLoan, loan_duration: e.target.value })}
-            />
+            >
+              {loanTypes.map((type)=> (
+                <MenuItem key={type} value={type}>
+                  {type}
+                </MenuItem>
+              ))}
+              </TextField>
+            <Box display="flex" alignItems="center" justifyContent="center">
+            <Typography variant="h5" component="span" align="center">
+                Loan Duration
+              </Typography>
+              <IconButton onClick={() => handleEditDecreaseDuration()} sx={{borderRadius:'50%',padding:'5px'}}>
+                <RemoveIcon />
+              </IconButton>
+              <Typography variant="h5" component="span" align="center">
+              {selectedLoan?selectedLoan.loan_duration : ''}
+              </Typography>
+             
+              <IconButton onClick={() => handleEditIncreaseDuration()} sx={{borderRadius:'50%',padding:'5px'}}>
+                <AddIcon />
+              </IconButton>
+            </Box>
           </Box>
         </DialogContent>
         <DialogActions>
