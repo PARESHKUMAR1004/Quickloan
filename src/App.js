@@ -50,6 +50,7 @@ function App() {
               backgroundColor: "primary.main",
               py: { xs: 2, md: 1 },
               color: "primary.contrastText",
+             
             }}
           >
             <Typography variant="subtitle1" sx={{ letterSpacing: 1, mb: 2 }}>
