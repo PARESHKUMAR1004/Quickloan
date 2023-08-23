@@ -14,12 +14,16 @@ import com.wellsfargo.training.team6.quickloan.exception.ResourceNotFoundExcepti
 import com.wellsfargo.training.team6.quickloan.model.EmployeeCard;
 import com.wellsfargo.training.team6.quickloan.model.LoanIssueSummary;
 import com.wellsfargo.training.team6.quickloan.service.EmployeeCardService;
+import com.wellsfargo.training.team6.quickloan.service.LoanApprovalService;
 
 @RestController
 public class EmployeeCardController {
 
 	@Autowired
 	private EmployeeCardService empCardService;
+	
+	@Autowired
+	private LoanApprovalService loanService;
 	
 	@GetMapping("/getStatusPendingCards")
 	public List<EmployeeCard> getStatusPendingCards() {
@@ -38,11 +42,7 @@ public class EmployeeCardController {
 	
 	@PostMapping("/updateStatus/{id}")
 	public EmployeeCard updateCardStatus(@PathVariable(value="id") Long empCardId) throws ResourceNotFoundException {
-		EmployeeCard empCard = empCardService.getEmployeeCardById(empCardId).orElseThrow(
-				() -> new ResourceNotFoundException("No employee card with id: " + empCardId));
-	
-		empCard.setStatus('Y');
-		return empCardService.saveEmployeeCard(empCard);
+		return loanService.approveLoan(empCardId);
 	}
 	
 	@GetMapping("/getLoanIssueSummary/{id}")

@@ -33,7 +33,10 @@ public class LoanCard {
 	@Column(name="loan_duration", nullable=false)
 	private int loanDuration;
 	
+	@Column(name="loan_active_status", nullable=false)
+	private boolean loanActiveStatus;
+	
 	@OneToMany(mappedBy="loanCard")
-	private Set<EmployeeCard> EmployeeCard;
+	private Set<EmployeeCard> employeeCard;
 
 }

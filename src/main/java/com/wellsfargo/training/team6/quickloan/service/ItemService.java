@@ -1,22 +1,42 @@
 package com.wellsfargo.training.team6.quickloan.service;
 
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.wellsfargo.training.team6.quickloan.model.IssueDetail;
 import com.wellsfargo.training.team6.quickloan.model.Item;
+import com.wellsfargo.training.team6.quickloan.repository.EmployeeCardRepository;
 import com.wellsfargo.training.team6.quickloan.repository.ItemRepository;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class ItemService {
 
 	@Autowired
 	private ItemRepository iRepo;
+	
+	@Autowired
+	private EmployeeCardRepository empCardRepo;
+	
+	public List<Item> getAll() {
+		return iRepo.findAll();
+	}
+	
+	public Optional<Item> getItemById(Long id) {
+		return iRepo.findById(id);
+	}
+	
+	public Item saveItem(Item item) {
+		return iRepo.save(item);
+	}
+	
+	public Item updateItemStatus(Item item) {
+		item.setIssueStatus('Y');
+		return iRepo.save(item);
+	}
 	
 	public List<String> getUniqueItemCategory() {
 		return iRepo.getUniqueItemCategory();
@@ -41,11 +61,16 @@ public class ItemService {
 		return iRepo.save(item);
 	}
 	
-	public Optional<Item> getItemById(Long id) {
-		return iRepo.findById(id);
-	}
-	
-	public Item saveItem(Item item) {
-		return iRepo.save(item);
+	@Transactional
+	public String deleteItem(Item item) {
+		if(item.getIssueStatus() == 'Y') {
+			return ("Can't delete item: " + item.getIssueStatus() + 
+					". The item is issued by an employee.");
+		}
+		
+		empCardRepo.updatePendingStatusToRejectedByItem(item);
+		iRepo.delete(item);
+		
+		return ("Item successfully deleted. Unapproved loans on this item are also rejected.");
 	}
 }

@@ -4,13 +4,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wellsfargo.training.team6.quickloan.exception.ResourceNotFoundException;
-import com.wellsfargo.training.team6.quickloan.model.Admin;
 import com.wellsfargo.training.team6.quickloan.model.Employee;
 import com.wellsfargo.training.team6.quickloan.service.EmployeeService;
 
@@ -22,13 +25,12 @@ import com.wellsfargo.training.team6.quickloan.service.EmployeeService;
 public class EmployeeController {
 	
 	@Autowired
-	public EmployeeService eservice;
-	
+	public EmployeeService empService;
 	
 	@PostMapping("/registerEmployee")
 	public ResponseEntity<String> createUser(@Validated @RequestBody Employee E)
 	{
-		Employee registeredEmployee=eservice.registerEmployee(E);
+		Employee registeredEmployee=empService.registerEmployee(E);
 		 if (registeredEmployee!= null) {
 	            return ResponseEntity.ok("Registration successful");
 	        } else {
@@ -37,21 +39,53 @@ public class EmployeeController {
 	}
 	
 	@PostMapping("/loginEmployee")
-	public Boolean loginEmployee(@Validated @RequestBody Employee E) throws ResourceNotFoundException
+	public Employee loginEmployee(@Validated @RequestBody Employee E) throws ResourceNotFoundException
 	{
-		Boolean userExists=false;
 		String email=E.getEmail();
 		String password=E.getPassword();
 		
-		Employee foundEmployee = eservice.findEmployee(email).orElseThrow(() ->
+		Employee foundEmployee = empService.findEmployeeByMail(email).orElseThrow(() ->
 		new ResourceNotFoundException("Employee not found for this id :: "));
 		
 		if(email.equals(foundEmployee.getEmail()) && password.equals(foundEmployee.getPassword()))
 		{
-			userExists=true;
+			return foundEmployee;
 		}
 		
+		return null;
+	}
+	
+	@GetMapping("/getEmployeeById/{id}")
+	public ResponseEntity<Employee> getEmployeeDetailById(@PathVariable(value="id") Long edId)
+		throws ResourceNotFoundException{
+			
+		Employee ed = empService.findEmployeeById(edId).orElseThrow(() -> new ResourceNotFoundException("Employee details Not found for this id:"+edId));
+		return ResponseEntity.ok().body(ed);
+	}
+	
+	@PutMapping("/updateEmployee/{id}")
+	public ResponseEntity<Employee> updateEmployeeDetails(@PathVariable(value="id") Long edId, @Validated @RequestBody Employee ed)
+		throws ResourceNotFoundException{
 		
-		return userExists;
+		Employee employeeDetail = empService.findEmployeeById(edId).
+				orElseThrow(() -> new ResourceNotFoundException("Employee details Not found for this id:"+ edId));
+		employeeDetail.setDesignation(ed.getDesignation());
+		employeeDetail.setDepartment(ed.getDepartment());
+		employeeDetail.setDate_of_joining(ed.getDate_of_joining());
+		employeeDetail.setEmail(ed.getEmail());
+		employeeDetail.setPhoneno(ed.getPhoneno());
+		
+		final Employee updatedEmployee= empService.saveEmployee(employeeDetail);
+		return ResponseEntity.ok().body(updatedEmployee);
+	}
+	
+	@DeleteMapping("/allEmployees/{id}")
+	public String deleteEmployeeDetails(@PathVariable(value="id") Long edId) 
+		throws ResourceNotFoundException {
+				
+		Employee emp = empService.findEmployeeById(edId).orElseThrow(
+				() -> new ResourceNotFoundException("Employee Details Not found for this id:"+edId));
+		
+		return empService.deleteEmployee(emp);
 	}
 }

@@ -2,7 +2,6 @@ package com.wellsfargo.training.team6.quickloan.service;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.sql.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +19,7 @@ public class IssueDetailService {
 	private IssueDetailRepository idRepo;
 	
 	public IssueDetail saveIssue(Item item, Employee emp) {
-		Date date = new Date(System.currentTimeMillis());
+		LocalDate date = LocalDate.now();
 		IssueDetail issue = new IssueDetail();
 		issue.setEmployee(emp);
 		issue.setItem(item);
@@ -35,6 +34,11 @@ public class IssueDetailService {
 	
 	public List<IssueItemSummary> getIssueItemSummary(Long empId) {
 		return idRepo.getIssueItemSummaryByEmpId(empId);
+	}
+	
+	public void deleteIssuesByEmploye(Employee emp) {
+		List<IssueDetail> issues = idRepo.findByEmp(emp);
+		idRepo.deleteAllInBatch(issues);
 	}
 
 

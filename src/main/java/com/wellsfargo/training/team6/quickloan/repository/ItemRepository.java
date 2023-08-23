@@ -7,9 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.wellsfargo.training.team6.quickloan.model.Item;
 
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
 
-@Repository
 public interface ItemRepository extends JpaRepository<Item, Long>{
 
 	@Query("SELECT DISTINCT i.itemCategory FROM Item i")
@@ -26,5 +24,4 @@ public interface ItemRepository extends JpaRepository<Item, Long>{
 
 	@Query("Select i.itemId FROM Item i WHERE i.itemCategory = ?1 AND i.itemMake = ?2 AND i.itemDescription = ?3 AND i.itemValuation = ?4")
 	public List<Long> getIdsByFilters(String itemCategory, String itemMake, String itemDescription, int itemValuation);
-	
 }

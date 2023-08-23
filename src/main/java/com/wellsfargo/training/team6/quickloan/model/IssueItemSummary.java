@@ -1,9 +1,5 @@
 package com.wellsfargo.training.team6.quickloan.model;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 public class IssueItemSummary {
 	private Long issueId;
 	private String itemDescription;

@@ -53,7 +53,7 @@ public class IssueDetailController {
 			) throws ResourceNotFoundException {
 		
 		Item item = itemService.issueItem(cat, make, desc, value);
-		Employee emp = empService.getEmployee(empId).orElseThrow(
+		Employee emp = empService.findEmployeeById(empId).orElseThrow(
 				() -> new ResourceNotFoundException("No employee with id: " + empId));
 		
 		IssueDetail issueDetail = issueService.saveIssue(item, emp);

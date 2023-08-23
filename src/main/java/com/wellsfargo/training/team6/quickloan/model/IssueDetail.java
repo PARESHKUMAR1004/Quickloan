@@ -1,6 +1,6 @@
 package com.wellsfargo.training.team6.quickloan.model;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -30,7 +30,7 @@ public class IssueDetail {
 	
 	@Column(name="issue_date", nullable=false)
 	@JsonFormat(pattern="yyyy-MM-dd")
-	private Date issueDate;
+	private LocalDate issueDate;
 	
 	
 	@ManyToOne

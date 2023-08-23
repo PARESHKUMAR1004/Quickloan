@@ -1,6 +1,6 @@
 package com.wellsfargo.training.team6.quickloan.model;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,5 +16,5 @@ public class LoanIssueSummary {
 	private Long loanId;
 	private String loanType;
 	private int loanDuration;
-	private Date cardIssueDate;
+	private LocalDate cardIssueDate;
 }
