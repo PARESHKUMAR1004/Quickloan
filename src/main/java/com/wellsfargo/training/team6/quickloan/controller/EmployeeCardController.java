@@ -32,7 +32,6 @@ public class EmployeeCardController {
 		return empCardService.getStatusPendingCards();
 	}
 	
-	//ERROR
 	@GetMapping("/getEmpCardsByEmpId/{id}")
 	public List<EmployeeCard> getCardByEmpId(@PathVariable(value="id") Long empId) {
 		return empCardService.getCardByEmpId(empId);

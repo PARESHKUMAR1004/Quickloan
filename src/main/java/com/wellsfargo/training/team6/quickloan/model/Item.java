@@ -44,8 +44,8 @@ public class Item {
 	@Column(name="item_valuation", nullable=false)
 	private int itemValuation;
 	
-	@OneToOne(mappedBy="item")
-	private IssueDetail issue;
+//	@OneToOne(mappedBy="item")
+//	private IssueDetail issue;
 	
 //	@OneToMany(mappedBy="item")
 //	private Set<EmployeeCard> employeeCard;

@@ -33,7 +33,6 @@ public class ItemController {
 		return itemService.saveItem(item);
 	}
 	
-	//ERROR
 	@GetMapping("/getItems")
 	public List<Item> getAllProducts() {
 		return itemService.getAll();   // Invokes service Method user defined listAll()

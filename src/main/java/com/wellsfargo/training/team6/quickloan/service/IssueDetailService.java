@@ -30,14 +30,7 @@ public class IssueDetailService {
 	}
 	
 	public List<IssueDetail> getIsssuesByEmpId(Long empId) {
-		Long temp = 1L;
-		IssueDetail issue = idRepo.findById(temp).get();
-		System.out.println(issue.getEmployee().getEmployeeId());
-		
-		List<IssueDetail> iList = new ArrayList<>();
-		return iList;
-		
-//		return idRepo.findByEmpById(empId);
+		return idRepo.findByEmpById(empId);
 	}
 	
 	public List<IssueItemSummary> getIssueItemSummary(Long empId) {

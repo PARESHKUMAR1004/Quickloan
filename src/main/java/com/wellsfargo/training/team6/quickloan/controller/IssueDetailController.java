@@ -33,7 +33,6 @@ public class IssueDetailController {
 	@Autowired
 	private ItemService itemService;
 
-	//ERROR
 	@GetMapping("/getIssues/{empId}")
 	public List<IssueDetail> getIssues(@PathVariable(value="empId") Long empId) {
 		return issueService.getIsssuesByEmpId(empId);

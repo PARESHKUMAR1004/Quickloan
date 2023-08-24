@@ -2,7 +2,9 @@ package com.wellsfargo.training.team6.quickloan.model;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -35,6 +37,7 @@ public class IssueDetail {
 	
 	@ManyToOne
 	@JoinColumn(name="employeeId", nullable=false)
+//	@JsonBackReference
 	private Employee employee;
 	
 	@OneToOne
