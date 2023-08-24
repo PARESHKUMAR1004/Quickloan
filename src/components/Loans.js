@@ -17,8 +17,8 @@ import {
   TextField,
   Typography,
   IconButton,
-  Tooltip,
-  MenuItem,
+  Tooltip
+ // MenuItem,
 } from '@mui/material';
 //import InputAdornment from '@mui/material/InputAdornment';
 import AddIcon from '@mui/icons-material/Add';
@@ -32,9 +32,9 @@ function Loans() {
   const [loans, setLoans] = useState([]);
   const [openAddModal, setOpenAddModal] = useState(false);
   const [openEditModal, setOpenEditModal] = useState(false);
-  const [selectedLoan,setSelectedLoan]=useState(null);
+  const [selectedLoan,setSelectedLoan]=useState();
   const [newLoan, setNewLoan] = useState({loan_id:'', loan_type: '', loan_duration: 2 });
-  const loanTypes=['Furniture','Stationery','Crockery'];
+  //const loanTypes=['Furniture','Stationery','Crockery'];
   useEffect(() => {
     async function fetchLoans() {
       try {
@@ -61,7 +61,7 @@ function Loans() {
 
   const handleCloseAddModal = () => {
     setOpenAddModal(false);
-    setNewLoan({ loan_id:'',loan_type: '', loan_duration: '' });
+    setNewLoan({ loan_id:'',loan_type: '', loan_duration: 2 });
   };
 
   const handleAddLoan = async () => {
@@ -197,18 +197,20 @@ function Loans() {
         <DialogContent>
           <Box display="flex" flexDirection="column" gap={2}>
             <TextField
-              label="Type"
+              label="Loan Type"
               fullWidth
               margin="dense"
-              select
-              value={newLoan.loan_type}
-              onChange={(e) => setNewLoan({ ...newLoan, loan_type: e.target.value })}
+              //select
+              value={newLoan.loan_type.toUpperCase()}
+              onChange={(e) => setNewLoan({ ...newLoan, loan_type: e.target.value.toUpperCase() })}
             >
+              {/*
               {loanTypes.map((type)=> (
                 <MenuItem key={type} value={type}>
                   {type}
                 </MenuItem>
               ))}
+              */}
               </TextField>
               <DialogContent>
           <Box display="flex" flexDirection="column" gap={2}>
@@ -257,18 +259,20 @@ function Loans() {
               disabled
             />
             <TextField
-              label="Type"
+              label="Loan Type"
               fullWidth
               margin="dense"
-              select
-              value={selectedLoan ? selectedLoan.loan_type : ''}
-              onChange={(e) => setSelectedLoan({ ...selectedLoan, loan_type: e.target.value })}
+              //select
+              value={selectedLoan ? selectedLoan.loan_type.toUpperCase() : ''}
+              onChange={(e) => setSelectedLoan({ ...selectedLoan, loan_type: e.target.value.toUpperCase() })}
             >
+              {/*
               {loanTypes.map((type)=> (
                 <MenuItem key={type} value={type}>
                   {type}
                 </MenuItem>
               ))}
+              */}
               </TextField>
             <Box display="flex" alignItems="center" justifyContent="center">
             <Typography variant="h5" component="span" align="center">
