@@ -36,7 +36,8 @@ function App() {
       <AuthProvider>
         <ThemeProvider theme={theme}>
           <NavBar />
-          <Routes>
+          <div style={{minHeight: "100vh"}}>
+      <Routes>
             <Route path="/" exact Component={Home}></Route>
             <Route path="/register" Component={EmployeeRegister}></Route>
             <Route path="/login" Component={Login}></Route>
@@ -49,6 +50,7 @@ function App() {
             <Route path="/profile" Component={Profile}></Route>
             {/* <Route path="/about" Component={About}></Route> */}
           </Routes>
+      </div>
           <Box
             component="footer"
             sx={{

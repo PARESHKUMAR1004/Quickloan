@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { styled } from '@mui/material/styles';
 import {
+  Container,
   Box,
   Button,
   Dialog,
@@ -11,6 +13,7 @@ import {
   Table,
   TableBody,
   TableCell,
+  tableCellClasses,
   TableContainer,
   TableHead,
   TableRow,
@@ -27,6 +30,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import RemoveIcon from '@mui/icons-material/Remove';
 
 import LoancardService from '../service/LoanCardService';
+import theme from '../style/themes/theme';
 
 function Loans() {
   const [loans, setLoans] = useState([]);
@@ -141,33 +145,56 @@ function Loans() {
     }
   };
 
+  const StyledTableCell = styled(TableCell)(({ theme }) => ({
+    [`&.${tableCellClasses.head}`]: {
+      backgroundColor: theme.palette.primary.main,
+      color: "white",
+      textAlign: "center",
+      fontSize: 18,
+    },
+    [`&.${tableCellClasses.body}`]: {
+      textAlign: "center",
+      fontSize: 16,
+    },
+  }));
+  
+  const StyledTableRow = styled(TableRow)(({ theme }) => ({
+    '&:nth-of-type(even)': {
+      backgroundColor: theme.palette.background.default,
+    },
+    // hide last border
+    '&:last-child td, &:last-child th': {
+      border: 0,
+    },
+  }));
+
   return (
-    <Box m={2}>
+    <Container sx={{display: "flex", flexDirection:"column", alignItems: "center"}}>
       <Typography variant="h4" gutterBottom>
         Loans
       </Typography>
       <Tooltip title="Add New Loan">
-      <Fab color="primary" onClick={handleOpenAddModal} aria-label="add" size="small">
+      <Fab color="secondary" onClick={handleOpenAddModal} aria-label="add" size="small">
         <AddIcon />
       </Fab>
       </Tooltip>
-      <TableContainer component={Paper} style={{ marginTop: '20px',marginBottom:'20px',minimumWidth:500,minimumHeight:600 }}>
+      <TableContainer component={Paper} sx={{border: "1px solid grey", boxShadow: theme.shadows[10] ,marginTop: '20px',marginBottom:'20px',minimumHeight:600, width: {xs: "100%", md: "75%"}  }}>
         <Table aria-label="loans table">
           <TableHead>
-            <TableRow>
-              <TableCell>ID</TableCell>
-              <TableCell>Type</TableCell>
-              <TableCell>Duration</TableCell>
-              <TableCell>Actions</TableCell>
-            </TableRow>
+            <StyledTableRow>
+              <StyledTableCell>Loan ID</StyledTableCell>
+              <StyledTableCell>Loan Type</StyledTableCell>
+              <StyledTableCell>Duration (in months)</StyledTableCell>
+              <StyledTableCell>Actions</StyledTableCell>
+            </StyledTableRow>
           </TableHead>
           <TableBody>
             {loans.map((loan) => (
-              <TableRow key={loan.loan_id}>
-                <TableCell>{loan.loan_id}</TableCell>
-                <TableCell>{loan.loan_type}</TableCell>
-                <TableCell>{loan.loan_duration}</TableCell>
-                <TableCell>
+              <StyledTableRow key={loan.loan_id}>
+                <StyledTableCell>{loan.loan_id}</StyledTableCell>
+                <StyledTableCell>{loan.loan_type}</StyledTableCell>
+                <StyledTableCell>{loan.loan_duration}</StyledTableCell>
+                <StyledTableCell>
                   <Tooltip title="Edit the Loan">
                     <IconButton
                       color="primary"
@@ -184,8 +211,8 @@ function Loans() {
                       <DeleteIcon />
                     </IconButton>
                   </Tooltip>
-                </TableCell>
-              </TableRow>
+                </StyledTableCell>
+              </StyledTableRow>
             ))}
           </TableBody>
         </Table>
@@ -300,7 +327,7 @@ function Loans() {
           </Button>
         </DialogActions>
       </Dialog>
-    </Box>
+    </Container>
   );
 }
 
