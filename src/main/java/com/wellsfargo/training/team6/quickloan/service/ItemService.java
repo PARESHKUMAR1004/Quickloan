@@ -1,6 +1,8 @@
 package com.wellsfargo.training.team6.quickloan.service;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +35,8 @@ public class ItemService {
 		return iRepo.save(item);
 	}
 	
-	public Item updateItemStatus(Item item) {
-		item.setIssueStatus('Y');
+	public Item updateItemStatus(Item item, char status) {
+		item.setIssueStatus(status);
 		return iRepo.save(item);
 	}
 	
@@ -62,15 +64,16 @@ public class ItemService {
 	}
 	
 	@Transactional
-	public String deleteItem(Item item) {
+	public Map<Boolean, String> deleteItem(Item item) {
 		if(item.getIssueStatus() == 'Y') {
-			return ("Can't delete item: " + item.getIssueStatus() + 
-					". The item is issued by an employee.");
+			return Collections.singletonMap(false, ("Can't delete item: " + item.getItemId() + 
+					". The item is issued by an employee."));
 		}
 		
 		empCardRepo.updatePendingStatusToRejectedByItem(item);
 		iRepo.delete(item);
 		
-		return ("Item successfully deleted. Unapproved loans on this item are also rejected.");
+		return Collections.singletonMap(true, 
+				"Item successfully deleted. Unapproved loans on this item are also rejected.");
 	}
 }

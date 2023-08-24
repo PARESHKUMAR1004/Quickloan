@@ -47,7 +47,7 @@ public class Item {
 	@OneToOne(mappedBy="item")
 	private IssueDetail issue;
 	
-	@OneToMany(mappedBy="item")
-	private Set<EmployeeCard> employeeCard;
+//	@OneToMany(mappedBy="item")
+//	private Set<EmployeeCard> employeeCard;
 	
 }

@@ -16,15 +16,23 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 
 @Entity
 @Table(name="employees")
+@NoArgsConstructor
+@Getter
+@Setter
+@AllArgsConstructor
 public class Employee {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long employeeid;
+	private Long employeeId;
 	
 	@Column(nullable=false)
 	private String fname;
@@ -39,8 +47,7 @@ public class Employee {
 	private String department;
 	
 	@Column(unique=true,nullable=false)
-	private String phoneno;
-	
+	private String phoneNo;
 	
 	@Column(unique=true,nullable=false)
 	private String email;
@@ -48,52 +55,22 @@ public class Employee {
 	@Column(nullable=false)
 	private char gender;
 	
+	@Column(name="date_of_birth", nullable=false)
+	@JsonFormat(pattern="yyyy-MM-dd")
+	private Date dateOfBirth;
+	
 	@Column(nullable=false)
 	@JsonFormat(pattern="yyyy-MM-dd")
-	private Date date_of_birth;
+	private Date dateOfJoining;
 	
-	@Column(nullable=false)
-	@JsonFormat(pattern="yyyy-MM-dd")
-	private Date date_of_joining;
+//	@OneToMany(mappedBy="employee", cascade = CascadeType.ALL)
+//	private List<IssueDetail> issues;
 	
-	@OneToMany(mappedBy="employee", cascade = CascadeType.ALL)
-	private List<IssueDetail> issues;
-	
-	@OneToMany(mappedBy="employee")
-	private Set<EmployeeCard> employeeCard;
+//	@OneToMany(mappedBy="employee")
+//	private Set<EmployeeCard> employeeCard;
 	
 	private String password;
 	
-	public Employee(Long employeeid, String fname, String lname, String designation, String department, String phoneno,
-			String email, char gender, Date date_of_birth, Date date_of_joining, String password) {
-		super();
-		this.employeeid = employeeid;
-		this.fname = fname;
-		this.lname = lname;
-		this.designation = designation;
-		this.department = department;
-		this.phoneno = phoneno;
-		this.email = email;
-		this.gender = gender;
-		this.date_of_birth = date_of_birth;
-		this.date_of_joining = date_of_joining;
-		this.password = password;
-	}
-
-
-
-
-
-
-	public String getPassword() {
-		return password;
-	}
-
-
-
-
-
-
 	public void setPassword(String password) {
 		Base64.Encoder encoder = Base64.getEncoder();  
         String normalString = password;
@@ -101,198 +78,4 @@ public class Employee {
         normalString.getBytes(StandardCharsets.UTF_8) );
         this.password = encodedString;
 	}
-
-
-
-
-
-
-	public Long getEmployeeid() {
-		return employeeid;
-	}
-
-
-
-
-
-
-	public void setEmployeeid(Long employeeid) {
-		this.employeeid = employeeid;
-	}
-
-
-
-
-
-
-
-
-	public String getFname() {
-		return fname;
-	}
-
-
-
-
-
-
-	public void setFname(String fname) {
-		this.fname = fname;
-	}
-
-
-
-
-
-
-	public String getLname() {
-		return lname;
-	}
-
-
-
-
-
-
-	public void setLname(String lname) {
-		this.lname = lname;
-	}
-
-
-
-
-
-
-	public String getDesignation() {
-		return designation;
-	}
-
-
-
-
-
-
-	public void setDesignation(String designation) {
-		this.designation = designation;
-	}
-
-
-
-
-
-
-	public String getDepartment() {
-		return department;
-	}
-
-
-
-
-
-
-	public void setDepartment(String department) {
-		this.department = department;
-	}
-
-
-
-
-
-
-	public String getPhoneno() {
-		return phoneno;
-	}
-
-
-
-
-
-
-	public void setPhoneno(String phoneno) {
-		this.phoneno = phoneno;
-	}
-
-
-
-
-
-
-	public String getEmail() {
-		return email;
-	}
-
-
-
-
-
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-
-
-
-
-
-	public char getGender() {
-		return gender;
-	}
-
-
-
-
-
-
-	public void setGender(char gender) {
-		this.gender = gender;
-	}
-
-
-
-
-
-
-	public Date getDate_of_birth() {
-		return date_of_birth;
-	}
-
-
-
-
-
-
-	public void setDate_of_birth(Date date_of_birth) {
-		this.date_of_birth = date_of_birth;
-	}
-
-
-
-
-
-
-	public Date getDate_of_joining() {
-		return date_of_joining;
-	}
-
-
-
-
-
-
-	public void setDate_of_joining(Date date_of_joining) {
-		this.date_of_joining = date_of_joining;
-	}
-
-
-
-
-
-
-	public Employee() {
-		// TODO Auto-generated constructor stub
-	}
-	
-	
-
 }

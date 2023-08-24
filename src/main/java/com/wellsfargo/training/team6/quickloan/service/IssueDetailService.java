@@ -1,6 +1,7 @@
 package com.wellsfargo.training.team6.quickloan.service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,14 @@ public class IssueDetailService {
 	}
 	
 	public List<IssueDetail> getIsssuesByEmpId(Long empId) {
-		return idRepo.findByEmployee_Employeeid(empId);
+		Long temp = 1L;
+		IssueDetail issue = idRepo.findById(temp).get();
+		System.out.println(issue.getEmployee().getEmployeeId());
+		
+		List<IssueDetail> iList = new ArrayList<>();
+		return iList;
+		
+//		return idRepo.findByEmpById(empId);
 	}
 	
 	public List<IssueItemSummary> getIssueItemSummary(Long empId) {

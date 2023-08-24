@@ -69,9 +69,11 @@ public class LoanCardController {
 		return ResponseEntity.ok().body(updatedLoanCard);
 	}
 	
-	@DeleteMapping("/deleteLoan")
-	public String deleteLoanCard(@Validated @RequestBody LoanCard lCard) {
-		return lService.deleteLoanCard(lCard);
+	@DeleteMapping("/deleteLoan/{id}")
+	public String deleteLoanCard(@PathVariable(value="id") Long id) throws ResourceNotFoundException {
+		LoanCard lc = lService.getLoanCardById(id).orElseThrow(
+				() -> new ResourceNotFoundException("No loan card with id: "+ id));
+		return lService.deleteLoanCard(lc);
 	}
 	
 }

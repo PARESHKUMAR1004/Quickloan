@@ -1,7 +1,9 @@
 package com.wellsfargo.training.team6.quickloan.service;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,9 @@ public class EmployeeService {
 	
 	@Autowired
 	private EmployeeCardService empCardService;
+	
+	@Autowired
+	private ItemService itemService;
 	
 	@Autowired
 	private IssueDetailService issueService;
@@ -48,25 +53,33 @@ public class EmployeeService {
 	//If user has active loans, admin can't delete the user.
 	//If user has no active loans, employee row along with items issued and emp card will be deleted.
 	@Transactional
-	public String deleteEmployee(Employee empl) {
-		List<EmployeeCard> empCardList = empCardService.getCardByEmpId(empl.getEmployeeid());
+	public Map<Boolean, String> deleteEmployee(Employee empl) {
+		List<EmployeeCard> empCardList = empCardService.getCardByEmpId(empl.getEmployeeId());
 		
 		LocalDate currDate = LocalDate.now();
+		
 		Long activeLoans = empCardList.stream()
-				.filter(card -> currDate.isBefore(card.getCardIssueDate().plusDays(
-						card.getLoanCard().getLoanDuration())))
+				.filter(card -> card.getLoanIssueStatus().equals("Approved") &&
+						currDate.isBefore(card.getCardIssueDate()
+								.plusDays(card.getLoanCard().getLoanDuration())))
 				.count();
+
 		if(activeLoans > 0) {
-			return ("Can't delete employee: "+ empl.getEmployeeid()
-			+ ", employee has " + activeLoans + " active loans");
+			return Collections.singletonMap(false, ("Can't delete employee: "+ empl.getEmployeeId()
+			+ ", employee has " + activeLoans + " active loans"));
+		}
+		
+		//Updating issue status of items
+		for(EmployeeCard card : empCardList) {
+			itemService.updateItemStatus(card.getItem(), 'N');
 		}
 		
 		empCardService.deleteEmpCards(empCardList);
 		issueService.deleteIssuesByEmploye(empl);
 		eRepo.delete(empl);
 		
-		return ("Deleted employee: " + empl.getEmployeeid()
-		+ " and corresponding employee card and issue detail data");
+		return Collections.singletonMap(true, ("Deleted employee: " + empl.getEmployeeId()
+		+ " and corresponding employee card and issue detail data"));
 	}
 
 }

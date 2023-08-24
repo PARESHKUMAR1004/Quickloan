@@ -45,13 +45,15 @@ public class LoanCardService {
 		LocalDate currDate = LocalDate.now();
 		
 		List<EmployeeCard> inactiveEmpCardList = empCardList.stream()
-				.filter(card -> currDate.isAfter(
-						card.getCardIssueDate().plusDays(card.getLoanCard().getLoanDuration())))
+				.filter(card -> card.getLoanIssueStatus().equals("Approved") && 
+						currDate.isAfter(card.getCardIssueDate()
+								.plusDays(card.getLoanCard().getLoanDuration())))
 				.collect(Collectors.toList());
 		
 		int activeLoans = empCardList.size() - inactiveEmpCardList.size();
 
 		if(activeLoans > 0) {
+			empCardService.updatePendingStatusToRejectedByLoan(lCard);
 			lCard.setLoanActiveStatus(false);
 			lRepo.save(lCard);
 			return ("There are " + activeLoans + " active issued loans to employees."
@@ -60,8 +62,10 @@ public class LoanCardService {
 					+ "so no new employees can avail this loan.");
 		} 
 
-		//TODO: Reject all pending loans
-		empCardService.deleteEmpCards(inactiveEmpCardList);
+		if(empCardList.isEmpty()) {
+			empCardService.deleteEmpCards(empCardList);
+		}
+
 		lRepo.delete(lCard);
 
 		return "There are no active issued loans for this card. "

@@ -1,6 +1,7 @@
 package com.wellsfargo.training.team6.quickloan.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +33,8 @@ public class ItemController {
 		return itemService.saveItem(item);
 	}
 	
-	@GetMapping("/items")
+	//ERROR
+	@GetMapping("/getItems")
 	public List<Item> getAllProducts() {
 		return itemService.getAll();   // Invokes service Method user defined listAll()
 	}
@@ -64,10 +66,10 @@ public class ItemController {
 	}
 	
 	@DeleteMapping("/deleteItem/{id}")
-	public String deleteItem(@PathVariable(value="id") Long id) throws ResourceNotFoundException {
+	public Map<Boolean, String> deleteItem(@PathVariable(value="id") Long id) throws ResourceNotFoundException {
 		
 		Item it = itemService.getItemById(id).orElseThrow(
-				() -> new ResourceNotFoundException("No item with id: " + id));
+				() -> new ResourceNotFoundException("No item found with id: " + id));
 		
 		return itemService.deleteItem(it);
 	}

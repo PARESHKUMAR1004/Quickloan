@@ -16,8 +16,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
-
 @Entity
 @Table(name="employee_cards")
 @NoArgsConstructor
@@ -34,20 +32,18 @@ public class EmployeeCard {
 	private LoanCard loanCard;
 	
 	@ManyToOne
-	@JoinColumn(name="employeeid", nullable=false)
+	@JoinColumn(name="employeeId", nullable=false)
 	private Employee employee;
 	
 	@ManyToOne
 	@JoinColumn(name="itemId", nullable=false)
 	private Item item;
 	
-	@Column(name="card_issue_date", nullable=false)
+	@Column(name="card_issue_date")
 	@JsonFormat(pattern="yyyy-MM-dd")
 	private LocalDate cardIssueDate;
 	
-	@Column(nullable=false)
+	//Approved Pending Rejected
+	@Column(name="loan_issue_status", nullable=false)
 	private String loanIssueStatus;
-	
-	@Column(nullable=false)
-	private Integer value;
 }

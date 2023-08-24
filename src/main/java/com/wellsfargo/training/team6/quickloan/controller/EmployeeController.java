@@ -1,5 +1,8 @@
 package com.wellsfargo.training.team6.quickloan.controller;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -16,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.wellsfargo.training.team6.quickloan.exception.ResourceNotFoundException;
 import com.wellsfargo.training.team6.quickloan.model.Employee;
 import com.wellsfargo.training.team6.quickloan.service.EmployeeService;
-
 
 
 @CrossOrigin(origins="http://localhost:3000")
@@ -39,10 +41,10 @@ public class EmployeeController {
 	}
 	
 	@PostMapping("/loginEmployee")
-	public Employee loginEmployee(@Validated @RequestBody Employee E) throws ResourceNotFoundException
+	public Employee loginEmployee(@Validated @RequestBody Employee e) throws ResourceNotFoundException
 	{
-		String email=E.getEmail();
-		String password=E.getPassword();
+		String email=e.getEmail();
+		String password=e.getPassword();
 		
 		Employee foundEmployee = empService.findEmployeeByMail(email).orElseThrow(() ->
 		new ResourceNotFoundException("Employee not found for this id :: "));
@@ -71,21 +73,26 @@ public class EmployeeController {
 				orElseThrow(() -> new ResourceNotFoundException("Employee details Not found for this id:"+ edId));
 		employeeDetail.setDesignation(ed.getDesignation());
 		employeeDetail.setDepartment(ed.getDepartment());
-		employeeDetail.setDate_of_joining(ed.getDate_of_joining());
+		employeeDetail.setDateOfJoining(ed.getDateOfJoining());
 		employeeDetail.setEmail(ed.getEmail());
-		employeeDetail.setPhoneno(ed.getPhoneno());
+		employeeDetail.setPhoneNo(ed.getPhoneNo());
 		
 		final Employee updatedEmployee= empService.saveEmployee(employeeDetail);
 		return ResponseEntity.ok().body(updatedEmployee);
 	}
 	
-	@DeleteMapping("/allEmployees/{id}")
-	public String deleteEmployeeDetails(@PathVariable(value="id") Long edId) 
+	@DeleteMapping("/deleteEmployee/{id}")
+	public Map<Boolean, String> deleteEmployeeDetails(@PathVariable(value="id") Long edId) 
 		throws ResourceNotFoundException {
 				
 		Employee emp = empService.findEmployeeById(edId).orElseThrow(
 				() -> new ResourceNotFoundException("Employee Details Not found for this id:"+edId));
 		
 		return empService.deleteEmployee(emp);
+	}
+	
+	@GetMapping("/employees")
+	public List<Employee> findAllEmployee() {
+		return empService.listAll();
 	}
 }

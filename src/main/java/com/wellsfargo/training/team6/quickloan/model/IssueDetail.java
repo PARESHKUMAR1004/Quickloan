@@ -34,7 +34,7 @@ public class IssueDetail {
 	
 	
 	@ManyToOne
-	@JoinColumn(name="employeeid",nullable=false)
+	@JoinColumn(name="employeeId", nullable=false)
 	private Employee employee;
 	
 	@OneToOne

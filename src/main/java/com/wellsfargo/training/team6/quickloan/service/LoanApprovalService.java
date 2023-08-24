@@ -1,5 +1,7 @@
 package com.wellsfargo.training.team6.quickloan.service;
 
+import java.time.LocalDate;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,9 @@ public class LoanApprovalService {
 	
 	@Autowired
 	private ItemRepository iRepo;
+	
+	@Autowired
+	private IssueDetailService issueService;
 
 	@Transactional
 	public EmployeeCard approveLoan(Long empCardId) throws ResourceNotFoundException {
@@ -28,13 +33,16 @@ public class LoanApprovalService {
 				() -> new ResourceNotFoundException("No employee card with id: " + empCardId));
 	
 		empCard.setLoanIssueStatus("Approved");
+		empCard.setCardIssueDate(LocalDate.now());
 		empCard = eRepo.save(empCard);
 		
 		Item item = empCard.getItem();
 		
 		eRepo.updatePendingStatusToRejectedByItem(item);
 		item.setIssueStatus('Y');
-		iRepo.save(item);
+		item = iRepo.save(item);
+		
+		issueService.saveIssue(item, empCard.getEmployee());
 		
 		return empCard;
 	}
