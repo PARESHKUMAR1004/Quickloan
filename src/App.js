@@ -13,9 +13,9 @@ import Loans from "./components/Loans";
 
 
 import { AuthProvider } from "./service/AuthContext";
-import ProfilePage from "./components/ProfilePage";
-// import ProfilePageNew from "./components/ProfilePageNew";
+
 import About from "./components/About";
+import Profile from "./components/Profile";
 
 /*
 	React Router is a standard library for routing in React. 
@@ -46,7 +46,7 @@ function App() {
             <Route path="/items" Component={Items}></Route>
             <Route path="/loans" Component={Loans}></Route>
             <Route path="/aboutus" Component={About}></Route>
-            {/* <Route path="/profile" Component={ProfilePageNew}></Route> */}
+            <Route path="/profile" Component={Profile}></Route>
             {/* <Route path="/about" Component={About}></Route> */}
           </Routes>
           <Box

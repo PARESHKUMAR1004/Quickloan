@@ -52,7 +52,7 @@ const Login = () => {
         setErrorMessage("");
         setSuccessMessage("Login successful. Redirecting...");
         setTimeout(() => {
-          history("/items");
+          history("/profile");
         }, 2000);
       } else {
         setErrorMessage("Invalid email or password.");
