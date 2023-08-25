@@ -1,6 +1,7 @@
 package com.wellsfargo.training.team6.quickloan.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wellsfargo.training.team6.quickloan.exception.ResourceNotFoundException;
+import com.wellsfargo.training.team6.quickloan.exception.TransactionalException;
 import com.wellsfargo.training.team6.quickloan.model.LoanCard;
 import com.wellsfargo.training.team6.quickloan.service.LoanCardService;
 
@@ -62,7 +64,7 @@ public class LoanCardController {
 		LoanCard loancard = lService.getLoanCardById(lcId).orElseThrow(
 				() -> new ResourceNotFoundException("LoanCard Not found for this id:"+lcId));
 		
-		loancard.setLoanType(lc.getLoanType());
+//		loancard.setLoanType(lc.getLoanType());
 		loancard.setLoanDuration(lc.getLoanDuration());
 		
 		final LoanCard updatedLoanCard = lService.saveLoanCard(loancard);
@@ -70,7 +72,9 @@ public class LoanCardController {
 	}
 	
 	@DeleteMapping("/deleteLoan/{id}")
-	public String deleteLoanCard(@PathVariable(value="id") Long id) throws ResourceNotFoundException {
+	public Map<Boolean, String> deleteLoanCard(@PathVariable(value="id") Long id) 
+			throws TransactionalException, ResourceNotFoundException {
+		
 		LoanCard lc = lService.getLoanCardById(id).orElseThrow(
 				() -> new ResourceNotFoundException("No loan card with id: "+ id));
 		return lService.deleteLoanCard(lc);

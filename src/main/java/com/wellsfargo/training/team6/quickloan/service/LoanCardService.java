@@ -1,7 +1,9 @@
 package com.wellsfargo.training.team6.quickloan.service;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -24,6 +26,7 @@ public class LoanCardService {
 	private EmployeeCardService empCardService;
 	
 	public LoanCard saveLoanCard(LoanCard lCard) {
+		lCard.setLoanActiveStatus(true);
 		return lRepo.save(lCard);
 	}
 	
@@ -40,7 +43,7 @@ public class LoanCardService {
 	}
 	
 	@Transactional
-	public String deleteLoanCard(LoanCard lCard) {
+	public Map<Boolean, String> deleteLoanCard(LoanCard lCard) {
 		List<EmployeeCard> empCardList = empCardService.findIssuedByLoanCard(lCard);
 		LocalDate currDate = LocalDate.now();
 		
@@ -56,10 +59,10 @@ public class LoanCardService {
 			empCardService.updatePendingStatusToRejectedByLoan(lCard);
 			lCard.setLoanActiveStatus(false);
 			lRepo.save(lCard);
-			return ("There are " + activeLoans + " active issued loans to employees."
+			return Collections.singletonMap(false, ("There are " + activeLoans + " active issued loans to employees."
 					+ " Can't delete the loan card to preserve integrity. "
 					+ "Instead, the active status of the loan card is set to false, "
-					+ "so no new employees can avail this loan.");
+					+ "so no new employees can avail this loan."));
 		} 
 
 		if(empCardList.isEmpty()) {
@@ -68,8 +71,8 @@ public class LoanCardService {
 
 		lRepo.delete(lCard);
 
-		return "There are no active issued loans for this card. "
+		return Collections.singletonMap(true, ("There are no active issued loans for this card. "
 				+ "Deleted the loan card from database. Corresponding "
-				+ "employee card data is also deleted.";
+				+ "employee card data is also deleted."));
 	}
 }

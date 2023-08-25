@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wellsfargo.training.team6.quickloan.exception.ResourceNotFoundException;
+import com.wellsfargo.training.team6.quickloan.exception.TransactionalException;
 import com.wellsfargo.training.team6.quickloan.model.Employee;
 import com.wellsfargo.training.team6.quickloan.service.EmployeeService;
 
@@ -58,10 +61,10 @@ public class EmployeeController {
 	}
 	
 	@GetMapping("/getEmployeeById/{id}")
-	public ResponseEntity<Employee> getEmployeeDetailById(@PathVariable(value="id") Long edId)
-		throws ResourceNotFoundException{
-			
+	public ResponseEntity<Employee> getEmployeeDetailById(@PathVariable(value="id") Long edId) 
+			throws ResourceNotFoundException {
 		Employee ed = empService.findEmployeeById(edId).orElseThrow(() -> new ResourceNotFoundException("Employee details Not found for this id:"+edId));
+
 		return ResponseEntity.ok().body(ed);
 	}
 	
@@ -71,11 +74,17 @@ public class EmployeeController {
 		
 		Employee employeeDetail = empService.findEmployeeById(edId).
 				orElseThrow(() -> new ResourceNotFoundException("Employee details Not found for this id:"+ edId));
+		
 		employeeDetail.setDesignation(ed.getDesignation());
 		employeeDetail.setDepartment(ed.getDepartment());
 		employeeDetail.setDateOfJoining(ed.getDateOfJoining());
 		employeeDetail.setEmail(ed.getEmail());
 		employeeDetail.setPhoneNo(ed.getPhoneNo());
+		employeeDetail.setDateOfBirth(ed.getDateOfBirth());
+		employeeDetail.setPassword(ed.getPassword());
+		employeeDetail.setGender(ed.getGender());
+		employeeDetail.setLname(ed.getLname());
+		employeeDetail.setFname(ed.getFname());
 		
 		final Employee updatedEmployee= empService.saveEmployee(employeeDetail);
 		return ResponseEntity.ok().body(updatedEmployee);
@@ -83,7 +92,7 @@ public class EmployeeController {
 	
 	@DeleteMapping("/deleteEmployee/{id}")
 	public Map<Boolean, String> deleteEmployeeDetails(@PathVariable(value="id") Long edId) 
-		throws ResourceNotFoundException {
+		throws TransactionalException, ResourceNotFoundException {
 				
 		Employee emp = empService.findEmployeeById(edId).orElseThrow(
 				() -> new ResourceNotFoundException("Employee Details Not found for this id:"+edId));

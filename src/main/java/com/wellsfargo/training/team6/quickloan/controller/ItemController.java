@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wellsfargo.training.team6.quickloan.exception.ResourceNotFoundException;
+import com.wellsfargo.training.team6.quickloan.exception.TransactionalException;
 import com.wellsfargo.training.team6.quickloan.model.Item;
 import com.wellsfargo.training.team6.quickloan.service.ItemService;
 
@@ -65,7 +66,8 @@ public class ItemController {
 	}
 	
 	@DeleteMapping("/deleteItem/{id}")
-	public Map<Boolean, String> deleteItem(@PathVariable(value="id") Long id) throws ResourceNotFoundException {
+	public Map<Boolean, String> deleteItem(@PathVariable(value="id") Long id) 
+			throws TransactionalException, ResourceNotFoundException {
 		
 		Item it = itemService.getItemById(id).orElseThrow(
 				() -> new ResourceNotFoundException("No item found with id: " + id));

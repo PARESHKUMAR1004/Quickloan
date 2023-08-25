@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wellsfargo.training.team6.quickloan.exception.ResourceNotFoundException;
+import com.wellsfargo.training.team6.quickloan.exception.TransactionalException;
 import com.wellsfargo.training.team6.quickloan.model.EmployeeCard;
 import com.wellsfargo.training.team6.quickloan.model.LoanIssueSummary;
 import com.wellsfargo.training.team6.quickloan.service.EmployeeCardService;
@@ -50,8 +51,14 @@ public class EmployeeCardController {
 		return empCardService.saveEmployeeCard(empId, loanId, itemId);
 	}
 	
+	@PostMapping("/rejectLoan/{id}")
+	public String rejectLoan(@PathVariable(value="id") Long id) throws ResourceNotFoundException {
+		return empCardService.rejectEmployeeCard(id);
+	}
+	
 	@PostMapping("/approveLoan/{id}")
-	public EmployeeCard updateCardStatus(@PathVariable(value="id") Long empCardId) throws ResourceNotFoundException {
+	public EmployeeCard approveLoan(@PathVariable(value="id") Long empCardId) 
+			throws TransactionalException, ResourceNotFoundException {
 		return loanService.approveLoan(empCardId);
 	}
 	

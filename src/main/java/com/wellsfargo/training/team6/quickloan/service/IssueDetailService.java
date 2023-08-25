@@ -30,7 +30,7 @@ public class IssueDetailService {
 	}
 	
 	public List<IssueDetail> getIsssuesByEmpId(Long empId) {
-		return idRepo.findByEmpById(empId);
+		return idRepo.findByEmployee_EmployeeId(empId);
 	}
 	
 	public List<IssueItemSummary> getIssueItemSummary(Long empId) {

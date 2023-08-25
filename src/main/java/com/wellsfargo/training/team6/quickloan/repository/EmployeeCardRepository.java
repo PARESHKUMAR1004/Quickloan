@@ -16,7 +16,7 @@ import jakarta.transaction.Transactional;
 
 public interface EmployeeCardRepository extends JpaRepository<EmployeeCard, Long> {
 	
-	@Query("SELECT ec FROM EmployeeCard ec WHERE ec.employee.employeeId = :employeeId")
+//	@Query("SELECT ec FROM EmployeeCard ec WHERE ec.employee.employeeId = :employeeId")
 	public List<EmployeeCard> findByEmployee_EmployeeId(Long employeeId);
 	
 	public List<EmployeeCard> findByLoanIssueStatus(String status);

@@ -12,8 +12,8 @@ import com.wellsfargo.training.team6.quickloan.model.IssueItemSummary;
 public interface IssueDetailRepository extends JpaRepository<IssueDetail, Long> {
 
 	
-	@Query("SELECT i FROM IssueDetail i WHERE i.employee.employeeId = ?1")
-	public List<IssueDetail> findByEmpById(Long id);
+//	@Query("SELECT i FROM IssueDetail i WHERE i.employee.employeeId = ?1")
+	public List<IssueDetail> findByEmployee_EmployeeId(Long id);
 	
 	@Query("SELECT i FROM IssueDetail i WHERE i.employee = ?1")
 	public List<IssueDetail> findByEmp(Employee emp);

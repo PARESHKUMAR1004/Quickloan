@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.wellsfargo.training.team6.quickloan.exception.TransactionalException;
 import com.wellsfargo.training.team6.quickloan.model.Item;
 import com.wellsfargo.training.team6.quickloan.repository.EmployeeCardRepository;
 import com.wellsfargo.training.team6.quickloan.repository.ItemRepository;
@@ -64,16 +65,22 @@ public class ItemService {
 	}
 	
 	@Transactional
-	public Map<Boolean, String> deleteItem(Item item) {
-		if(item.getIssueStatus() == 'Y') {
-			return Collections.singletonMap(false, ("Can't delete item: " + item.getItemId() + 
-					". The item is issued by an employee."));
+	public Map<Boolean, String> deleteItem(Item item) 
+			throws TransactionalException  {
+		try {
+			if(item.getIssueStatus() == 'Y') {
+				return Collections.singletonMap(false, ("Can't delete item: " + item.getItemId() + 
+						". The item is issued by an employee."));
+			}
+			
+			empCardRepo.updatePendingStatusToRejectedByItem(item);
+			iRepo.delete(item);
+			
+			return Collections.singletonMap(true, 
+					"Item successfully deleted. Unapproved loans on this item are also rejected.");
+		} catch (Exception e){
+			throw new TransactionalException(
+					"Transactional error in deleting the item");
 		}
-		
-		empCardRepo.updatePendingStatusToRejectedByItem(item);
-		iRepo.delete(item);
-		
-		return Collections.singletonMap(true, 
-				"Item successfully deleted. Unapproved loans on this item are also rejected.");
 	}
 }

@@ -91,4 +91,13 @@ public class EmployeeCardService {
 	public void deleteEmpCards(List<EmployeeCard> empCardList) {
 		empCardRepo.deleteAllInBatch(empCardList);
 	}
+	
+	public String rejectEmployeeCard(Long id) throws ResourceNotFoundException{
+		EmployeeCard empCard = empCardRepo.findById(id).orElseThrow(
+				() -> new ResourceNotFoundException("No employee card found for id: " + id));
+		empCard.setLoanIssueStatus("Rejected");
+		empCardRepo.save(empCard);
+		
+		return ("Employee card with id: " + id + " successfully rejected");
+	}
 }

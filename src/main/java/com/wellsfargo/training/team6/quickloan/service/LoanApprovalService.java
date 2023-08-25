@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.wellsfargo.training.team6.quickloan.exception.ResourceNotFoundException;
+import com.wellsfargo.training.team6.quickloan.exception.TransactionalException;
 import com.wellsfargo.training.team6.quickloan.model.EmployeeCard;
 import com.wellsfargo.training.team6.quickloan.model.Item;
 import com.wellsfargo.training.team6.quickloan.repository.EmployeeCardRepository;
@@ -28,22 +29,29 @@ public class LoanApprovalService {
 	private IssueDetailService issueService;
 
 	@Transactional
-	public EmployeeCard approveLoan(Long empCardId) throws ResourceNotFoundException {
-		EmployeeCard empCard = eRepo.findById(empCardId).orElseThrow(
-				() -> new ResourceNotFoundException("No employee card with id: " + empCardId));
-	
-		empCard.setLoanIssueStatus("Approved");
-		empCard.setCardIssueDate(LocalDate.now());
-		empCard = eRepo.save(empCard);
+	public EmployeeCard approveLoan(Long empCardId) 
+			throws TransactionalException, ResourceNotFoundException {
+		try {
+			EmployeeCard empCard = eRepo.findById(empCardId).orElseThrow(
+					() -> new ResourceNotFoundException("No employee card with id: " + empCardId));
 		
-		Item item = empCard.getItem();
-		
-		eRepo.updatePendingStatusToRejectedByItem(item);
-		item.setIssueStatus('Y');
-		item = iRepo.save(item);
-		
-		issueService.saveIssue(item, empCard.getEmployee());
-		
-		return empCard;
+			empCard.setLoanIssueStatus("Approved");
+			empCard.setCardIssueDate(LocalDate.now());
+			empCard = eRepo.save(empCard);
+			
+			Item item = empCard.getItem();
+			
+			eRepo.updatePendingStatusToRejectedByItem(item);
+			item.setIssueStatus('Y');
+			item = iRepo.save(item);
+			
+			issueService.saveIssue(item, empCard.getEmployee());
+			
+			return empCard;
+		} catch (ResourceNotFoundException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new TransactionalException("Transactional exception in approving loan");
+		}
 	}
 }
