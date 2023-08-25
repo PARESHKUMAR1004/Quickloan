@@ -168,12 +168,7 @@ export default function Items () {
     
                                     
 
-    if(isLoading){
-        return(<div>Loading</div>)
-    } else if(isUserAuthenticated) {
-        return (<div >
-            <h1>Hi {user.email}</h1>
-            <h1>Items List</h1>
+    
 
 
 
@@ -420,8 +415,4 @@ export default function Items () {
 
 
 
-        </div>)
-    } else {
-        return <Navigate to='/login' />
-    }
 }
