@@ -64,7 +64,7 @@ public class ItemService {
 		return iRepo.save(item);
 	}
 
-	public Item getItem(String cat, String make, String desc, int val) {
+	public Long getItem(String cat, String make, String desc, int val) {
 		List<Long> listIds = iRepo.getIdsByFilters(cat, make, desc, val);
 		Item item = iRepo.findById(listIds.get(0)).get();
 		return item.getItemId();
