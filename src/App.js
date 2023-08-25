@@ -7,6 +7,7 @@ import Typography from "@mui/material/Typography";
 import Home from "./components/Main/Home";
 import EmployeeRegister from "./components/EmployeeRegister";
 import Login from "./components/Login";
+import MainLogin from "./components/Main/MainLogin";
 import Items from "./components/Items";
 import NavBar from "./components/NavBar";
 import Loans from "./components/Loans";
@@ -42,7 +43,7 @@ function App() {
       <Routes>
             <Route path="/" exact Component={Home}></Route>
             <Route path="/register" Component={EmployeeRegister}></Route>
-            <Route path="/login" Component={Login}></Route>
+            <Route path="/login" Component={MainLogin}></Route>
             {/* <Route path='/register/admin' Component={AdminRegister}></Route>
     
               <Route path='/login/admin' Component={AdminLogin}></Route> */}
