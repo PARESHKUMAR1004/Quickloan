@@ -17,4 +17,5 @@ public class LoanIssueSummary {
 	private String loanType;
 	private int loanDuration;
 	private LocalDate cardIssueDate;
+	private String status;
 }
