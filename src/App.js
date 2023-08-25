@@ -16,6 +16,7 @@ import { AuthProvider } from "./service/AuthContext";
 
 import About from "./components/About";
 import Profile from "./components/Profile";
+import Employees from "./components/Employees";
 
 /*
 	React Router is a standard library for routing in React. 
@@ -49,6 +50,7 @@ function App() {
             <Route path="/aboutus" Component={About}></Route>
             <Route path="/profile" Component={Profile}></Route>
             {/* <Route path="/about" Component={About}></Route> */}
+            <Route path="/employees" Component={Employees}></Route>
           </Routes>
       </div>
           <Box
