@@ -100,4 +100,15 @@ public class ItemController {
 			) {
 		return itemService.getItemValuesByFilters(cat, make, desc);
 	}
+
+	@GetMapping("/getItem/{category}/{make}/{description}/{value}")
+	public Long getItem(
+			@PathVariable(value="category") String cat,
+			@PathVariable(value="make") String make,
+			@PathVariable(value="description") String desc,
+			@PathVariable(value="value") int value
+			) throws ResourceNotFoundException {
+		
+		return itemService.getItem(cat, make, desc, value);
+	}
 }
