@@ -2,13 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { styled } from '@mui/material/styles';
 import {
   Container,
-  Box,
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Fab,
   Paper,
   Table,
   TableBody,
@@ -17,19 +10,12 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  TextField,
   Typography,
   IconButton,
   Tooltip
- // MenuItem,
 } from '@mui/material';
-//import InputAdornment from '@mui/material/InputAdornment';
-import AddIcon from '@mui/icons-material/Add';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import RemoveIcon from '@mui/icons-material/Remove';
-
-import LoancardService from '../service/LoanCardService';
+import CloseIcon from '@mui/icons-material/Close';
+import CheckIcon from '@mui/icons-material/Check';
 import theme from '../style/themes/theme';
 import EmpCardService from '../service/EmpCardService';
 
@@ -119,12 +105,12 @@ function ApproveLoans() {
                 <StyledTableCell>{pendingLoan.employee.employeeId}</StyledTableCell>
                 <StyledTableCell>{pendingLoan.item.itemId}</StyledTableCell>
                 <StyledTableCell>
-                  <Tooltip title="Accept the Loan">
+                  <Tooltip title="Approve the Loan">
                     <IconButton
                       color="primary"
                       onClick={() => handleApproveLoan(pendingLoan.id)}
                     >
-                      <EditIcon />
+                      <CheckIcon />
                     </IconButton>
                   </Tooltip>
                   <Tooltip title="Reject the Loan">
@@ -132,7 +118,7 @@ function ApproveLoans() {
                       style={{color:'red'}}
                       onClick={() => handleRejectLoan(pendingLoan.id)}
                     >
-                      <DeleteIcon />
+                      <CloseIcon />
                     </IconButton>
                   </Tooltip>
                 </StyledTableCell>
