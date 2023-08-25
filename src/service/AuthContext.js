@@ -49,7 +49,7 @@ export function AuthProvider({ children }) {
                     setUserAutenticated(true);
                     localStorage.setItem("isUserAuthenticated",JSON.stringify(true));
                     setUser(response.data);
-                    localStorage.setItem("user","Admin");
+                    localStorage.setItem("user",JSON.stringify({"name":"Admin"}));
                     setuserType(1);
                     localStorage.setItem("userType",JSON.stringify(1));
                     setLoading(false);
