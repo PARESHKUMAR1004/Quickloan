@@ -4,17 +4,18 @@ import { ThemeProvider } from "@mui/material";
 import theme from "./style/themes/theme";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Home from "./components/Home";
+import Home from "./components/Main/Home";
 import EmployeeRegister from "./components/EmployeeRegister";
 import Login from "./components/Login";
 import Items from "./components/Items";
 import NavBar from "./components/NavBar";
 import Loans from "./components/Loans";
+import MainLoan from "./components/Main/MainLoan";
 
 
 import { AuthProvider } from "./service/AuthContext";
 
-import About from "./components/About";
+import About from "./components/Main/About";
 import Profile from "./components/Profile";
 
 /*
@@ -45,7 +46,7 @@ function App() {
     
               <Route path='/login/admin' Component={AdminLogin}></Route> */}
             <Route path="/items" Component={Items}></Route>
-            <Route path="/loans" Component={Loans}></Route>
+            <Route path="/loans" Component={MainLoan}></Route>
             <Route path="/aboutus" Component={About}></Route>
             <Route path="/profile" Component={Profile}></Route>
             {/* <Route path="/about" Component={About}></Route> */}
