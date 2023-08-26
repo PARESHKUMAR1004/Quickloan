@@ -1,6 +1,7 @@
 import axios from 'axios' ;
 
 const LOANCARDS_REST_API_URL='http://localhost:8085/quickloan/api/loancards';
+const BASE_URL='http://localhost:8085/quickloan/api/'
 
 class LoancardService{
 
@@ -22,6 +23,10 @@ class LoancardService{
 
     static deleteLoanCard(loanCardId){
         return axios.delete(LOANCARDS_REST_API_URL+'/'+loanCardId);
+    }
+
+    static getLoanCardByType(type){
+        return axios.get(BASE_URL+'getLoans/'+type);
     }
 
 }

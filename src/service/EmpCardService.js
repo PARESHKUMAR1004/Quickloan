@@ -16,6 +16,10 @@ class EmpCardService{
         return axios.post(BASE_URL+"approveLoan/"+id);
     }
 
+    static applyLoan(userId,loanId,itemId){
+        return axios.post(BASE_URL+"saveEmpCard/"+userId+"/"+loanId+"/"+itemId);
+    }
+
 }
 
 export default EmpCardService;
