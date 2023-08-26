@@ -3,6 +3,7 @@ import React, {useState,useContext} from 'react'
 import { AuthContext } from '../../service/AuthContext'
 import { Navigate } from 'react-router-dom';
 import Items from '../Items';
+import EmployeeItems from '../EmployeeItems';
 
 export default function MainItem(){
 
@@ -15,13 +16,10 @@ export default function MainItem(){
         )
     } else if(userType ===1){
         return (
-
             <Items/>
         )
     }
-
     else{
-
         return(
             <EmployeeItems/>
         )

@@ -48,7 +48,7 @@ export default function Items () {
     const [newItem, setNewItem] = useState({itemId:'',
                                         itemDescription: '',      
                                         itemMake: '',
-                                        issueStatus:'',
+                                        issueStatus:'N',
                                         itemCategory:'',
                                         itemValuation:0});
     useEffect(()=>{
@@ -75,7 +75,7 @@ export default function Items () {
         setNewItem({itemId:'',
                     itemDescription: '',      
                     itemMake: '',
-                    issueStatus:'',
+                    issueStatus:'N',
                     itemCategory:'',
                     itemValuation:0});
         
@@ -119,7 +119,7 @@ export default function Items () {
           const updatedItems = items.map((item) =>
             item.itemId === selectedItem.itemId ? { ...item, ...selectedItem } : item
           );
-          //console.log('Updated Loans is: ',updatedLoans)
+          
           setItems(updatedItems);
           handleCloseEditModal();
         } catch (error) {
@@ -130,12 +130,17 @@ export default function Items () {
     const handleDeleteItem = async (itemId) => {
         try {
           console.log(itemId);
-          await ItemService.deleteItem(itemId);
-          const updatedItems = items.filter((item) => item.itemId !== itemId);
-          console.log(updatedItems)
-          setItems(updatedItems);
+          const response=await ItemService.deleteItem(itemId);
+          console.log(response);
+          if(response.data.hasOwnProperty("true")){
+            const updatedItems = items.filter((item) => item.itemId !== itemId);
+            console.log(updatedItems)
+            setItems(updatedItems);
           // Show alert or notification
-          alert('Item Deleted Successfully')
+            alert('Item Deleted Successfully')
+          }else{
+            alert(response.data.false);
+          }
         } catch (error) {
           console.error('Error deleting Item:', error);
         }
@@ -260,18 +265,6 @@ export default function Items () {
                                 </TextField>
                                </Box>  
 
-                               <Box display="flex" flexDirection="column" gap={2}>
-                                <TextField
-                                    label="Item Status"
-                                    fullWidth
-                                    margin="dense"
-              //select
-                                    value={newItem.issueStatus}
-                                    onChange={(e) => setNewItem({ ...newItem,issueStatus: e.target.value.toUpperCase() })}
-                                    >
-             
-                                </TextField>
-                               </Box>
 
                                <Box display="flex" flexDirection="column" gap={2}>
                                 <TextField

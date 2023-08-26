@@ -24,6 +24,11 @@ class ItemService{
         return axios.delete(BASE_URL+'/deleteItem/'+itemId);
     }
 
+
+    static getItemsOfEmployee(employeeId){
+        return axios.get(BASE_URL+"/getIssueItemSummary/"+employeeId)
+    }
+
     static getItemCategory(){
         return axios.get(BASE_URL+"/getItemCategory")
     }
