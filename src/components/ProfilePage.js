@@ -6,8 +6,7 @@ import Typography from '@mui/material/Typography';
 import React, { useContext } from "react";
 import { Container, CssBaseline, Divider, Grid, List, ListItem } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
-import Stack from '@mui/material/Stack';
-import DeleteIcon from '@mui/icons-material/Delete';
+
 import { Edit } from '@mui/icons-material';
 import { AuthContext } from '../service/AuthContext';
 
@@ -36,10 +35,12 @@ const ProfilePage =()=>{
               {user.designation}              
             </Typography>
 
-            <Stack spacing={2} direction="row" sx={{padding:'10px', marginTop:3}}>
-                <Button variant="contained" startIcon={<Edit />} color="info">Edit</Button>
-                <Button variant="contained" startIcon={<DeleteIcon />} color="error" >Delete</Button>
-            </Stack>
+            
+        <Button variant="contained" startIcon={<Edit />} color="secondary" sx={{marginTop:'3'}}
+        href="/loans">
+
+            Apply New Loan</Button>
+                
           </CardContent>
           
         </React.Fragment>

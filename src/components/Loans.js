@@ -298,13 +298,7 @@ function Loans() {
               value={selectedLoan ? selectedLoan.loan_type.toUpperCase() : ''}
               onChange={(e) => setSelectedLoan({ ...selectedLoan, loan_type: e.target.value.toUpperCase() })}
             >
-              {/*
-              {loanTypes.map((type)=> (
-                <MenuItem key={type} value={type}>
-                  {type}
-                </MenuItem>
-              ))}
-              */}
+              
               </TextField>
             <Box display="flex" alignItems="center" flexDirection="column" justifyContent="center">
             <Typography variant="h5" component="span" align="center">

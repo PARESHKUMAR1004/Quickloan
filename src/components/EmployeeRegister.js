@@ -31,9 +31,9 @@ const EmployeeRegister = () => {
   const [designation, setDesignation] = useState('');
   const [department, setDepartment] = useState('');
   const [password, setPassword] = useState('');
-  const [date_of_birth, setDOB] = useState('');
-  const [date_of_joining, setDOJ] = useState('');
-  const [phoneno, setPhone] = useState('');
+  const [dateOfBirth, setDOB] = useState('');
+  const [dateOfJoining, setDOJ] = useState('');
+  const [phoneNo, setPhone] = useState('');
   const [email, setEmail] = useState('');
   const [gender, setGender] = useState('');
   const [errorMessage, setErrorMessage] = useState("");
@@ -70,19 +70,19 @@ const EmployeeRegister = () => {
       setErrorMessage("Department is required");
       return;
     }
-    else if(!date_of_birth){
+    else if(!dateOfBirth){
       setErrorMessage("Date of birth is required");
       return;
     }
-    else if(!date_of_joining){
+    else if(!dateOfJoining){
       setErrorMessage("Date of joining is required");
       return;
     }
-    else if(!phoneno){
+    else if(!phoneNo){
       setErrorMessage("Phone no is required");
       return;
     }
-    else if (!/^\d{10}$/.test(phoneno)) {
+    else if (!/^\d{10}$/.test(phoneNo)) {
       setErrorMessage('Invalid phone number. Please enter a 10-digit number.');
       return;
     } 
@@ -96,9 +96,9 @@ const EmployeeRegister = () => {
       designation,
       department,
       password,
-      date_of_birth,
-      date_of_joining,
-      phoneno,
+      dateOfBirth,
+      dateOfJoining,
+      phoneNo,
       email,
       gender
     };
@@ -227,11 +227,11 @@ const EmployeeRegister = () => {
           <Stack spacing={2} direction="row" sx={{ marginBottom: 1, marginTop: 1 }}>
             <TextField
               label="Date of Birth"
-              id="date_of_birth"
-              name="date_of_birth"
+              id="dateOfBirth"
+              name="dateOfBirth"
               type="date"
 
-              value={date_of_birth}
+              value={dateOfBirth}
               onChange={(e) => setDOB(e.target.value)}
               fullWidth
               margin="normal"
@@ -243,11 +243,11 @@ const EmployeeRegister = () => {
             />
             <TextField
               label="Date of Joining"
-              id="date_of_joining"
-              name="date_of_joining"
+              id="dateOfJoining"
+              name="dateOfJoining"
               type="date"
 
-              value={date_of_joining}
+              value={dateOfJoining}
               onChange={(e) => setDOJ(e.target.value)}
               fullWidth
               margin="normal"
@@ -260,9 +260,9 @@ const EmployeeRegister = () => {
           </Stack>
           <TextField
             label="Phone Number"
-            value={phoneno}
-            id="phoneno"
-            name="phoneno"
+            value={phoneNo}
+            id="phoneNo"
+            name="phoneNo"
             onChange={(e) => setPhone(e.target.value)}
             fullWidth
             margin="normal"

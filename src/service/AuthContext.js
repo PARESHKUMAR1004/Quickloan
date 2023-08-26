@@ -42,25 +42,46 @@ export function AuthProvider({ children }) {
 
     const login = async (Emp, path) => {
         setLoading(true)
-        try {
-            const response = await axios.post("http://localhost:8085/quickloan/api/" + path, Emp);
-            console.log("SAPI response:",response.data + "Hello");
-            if (response.data) {
-                setUserAutenticated(true);
-                localStorage.setItem("isUserAuthenticated",JSON.stringify(true));
-                setUser(response.data);
-                localStorage.setItem("user",JSON.stringify(response.data));
-                path === "loginAdmin" ? setuserType(1) : setuserType(0);
-                localStorage.setItem("userType",JSON.stringify(path === 'loginAdmin'? 1 : 0));
-                setLoading(false);
-                return true; 
-            } else {
-                return false;
+        if(path ==="loginAdmin"){
+            try{
+                const response = await axios.get("http://localhost:8085/quickloan/api/"+path+"/"+Emp.email+"/"+Emp.password);
+                if(response.data){
+                    setUserAutenticated(true);
+                    localStorage.setItem("isUserAuthenticated",JSON.stringify(true));
+                    setUser(response.data);
+                    localStorage.setItem("user",JSON.stringify({"name":"Admin"}));
+                    setuserType(1);
+                    localStorage.setItem("userType",JSON.stringify(1));
+                    setLoading(false);
+                    return true;
+                }else{
+                    return false;
+                }
+            }catch (error){
+                console.error("Login error", error);
+                throw new Error("An error occurred during login.");
             }
-        } catch (error) {
-            console.error("Login error", error);
-            throw new Error("An error occurred during login.");
-         }
+        }else{
+            try {
+                const response = await axios.post("http://localhost:8085/quickloan/api/" + path, Emp);
+                console.log("SAPI response:",response.data + "Hello");
+                if (response.data) {
+                    setUserAutenticated(true);
+                    localStorage.setItem("isUserAuthenticated",JSON.stringify(true));
+                    setUser(response.data);
+                    localStorage.setItem("user",JSON.stringify(response.data));
+                    setuserType(0);
+                    localStorage.setItem("userType",JSON.stringify(0));
+                    setLoading(false);
+                    return true; 
+                } else {
+                    return false;
+                }
+            } catch (error) {
+                console.error("Login error", error);
+                throw new Error("An error occurred during login.");
+             }
+        }
     }
 
     const logout = () => {

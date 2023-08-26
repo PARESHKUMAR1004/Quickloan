@@ -4,18 +4,22 @@ import { ThemeProvider } from "@mui/material";
 import theme from "./style/themes/theme";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Home from "./components/Home";
+import Home from "./components/Main/Home";
 import EmployeeRegister from "./components/EmployeeRegister";
 import Login from "./components/Login";
+import MainLogin from "./components/Main/MainLogin";
 import Items from "./components/Items";
 import NavBar from "./components/NavBar";
 import Loans from "./components/Loans";
+import MainLoan from "./components/Main/MainLoan";
 
 
 import { AuthProvider } from "./service/AuthContext";
 
-import About from "./components/About";
+import About from "./components/Main/About";
 import Profile from "./components/Profile";
+import Employees from "./components/Employees";
+import ApplyLoans from "./components/ApplyLoans";
 
 /*
 	React Router is a standard library for routing in React. 
@@ -38,17 +42,15 @@ function App() {
           <NavBar />
           <div style={{minHeight: "100vh"}}>
       <Routes>
-            <Route path="/" exact Component={Home}></Route>
-            <Route path="/register" Component={EmployeeRegister}></Route>
-            <Route path="/login" Component={Login}></Route>
-            {/* <Route path='/register/admin' Component={AdminRegister}></Route>
-    
-              <Route path='/login/admin' Component={AdminLogin}></Route> */}
-            <Route path="/items" Component={Items}></Route>
-            <Route path="/loans" Component={Loans}></Route>
-            <Route path="/aboutus" Component={About}></Route>
-            <Route path="/profile" Component={Profile}></Route>
-            {/* <Route path="/about" Component={About}></Route> */}
+            <Route path="/" exact element={<Home />}></Route>
+            <Route path="/register" element={<EmployeeRegister />}></Route>
+            <Route path="/login" element={<MainLogin />}></Route>
+            <Route path="/items" element={<Items />}></Route>
+            <Route path="/loans" element={<MainLoan />}></Route>
+            <Route path="/aboutus" element={<About />}></Route>
+            <Route path="/profile" element={<Profile />}></Route>
+            <Route path="/employees" element={<Employees />}></Route>
+            <Route path="/applyloans" element={<ApplyLoans />}></Route>
           </Routes>
       </div>
           <Box
