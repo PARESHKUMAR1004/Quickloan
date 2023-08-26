@@ -24,6 +24,25 @@ class ItemService{
         return axios.delete(BASE_URL+'/deleteItem/'+itemId);
     }
 
+    static getItemCategory(){
+        return axios.get(BASE_URL+"/getItemCategory")
+    }
+
+    static getItemMake(category){
+        return axios.get(BASE_URL+"/getItemMake/"+category);
+    }
+
+    static getItemDesc(category,make){
+        return axios.get(BASE_URL+"/getItemDesc/"+category+"/"+make);
+    }
+
+    static getItemValue(category,make,desc){
+        return axios.get(BASE_URL+"/getItemValue/"+category+"/"+make+"/"+desc);
+    }
+
+    static getItemId(category,make,desc,value){
+        return axios.get(BASE_URL+"/getItem/"+category+"/"+make+"/"+desc+"/"+value);
+    }
 }
 
 export default ItemService;
