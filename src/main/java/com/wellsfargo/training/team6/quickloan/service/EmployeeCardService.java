@@ -59,7 +59,11 @@ public class EmployeeCardService {
 				() -> new ResourceNotFoundException("LoanCard not found"));
 		Item item = itemRepo.findById(itemId).orElseThrow(
 				() -> new ResourceNotFoundException("Item not found"));
-		
+
+		if(item.getIssueStatus() == 'Y') {
+			throw new ResourceNotFoundException("No non-issued item found with id: " + itemId);
+		}
+				
 		empCard.setEmployee(emp);
 		empCard.setLoanCard(lc);
 		empCard.setItem(item);
