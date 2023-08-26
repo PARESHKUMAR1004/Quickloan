@@ -10,6 +10,6 @@ import com.wellsfargo.training.team6.quickloan.model.LoanCard;
 public interface LoanCardRepository extends JpaRepository<LoanCard, Long>{
 	
 	//custom method to get loans by type
-	@Query("SELECT L from LoanCard L WHERE L.loanActiveStatus = false")
+	@Query("SELECT L FROM LoanCard L WHERE L.loanActiveStatus = true AND L.loanType = ?1")
 	public List<LoanCard> findByLoanType(String loanType);
 }
