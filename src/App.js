@@ -18,6 +18,7 @@ import About from "./components/Main/About";
 import Profile from "./components/Profile";
 import Employees from "./components/Employees";
 import ApplyLoans from "./components/ApplyLoans";
+import MainItem from "./components/Main/MainItem";
 
 /*
 	React Router is a standard library for routing in React. 
@@ -43,7 +44,7 @@ function App() {
             <Route path="/" exact element={<Home />}></Route>
             <Route path="/register" element={<EmployeeRegister />}></Route>
             <Route path="/login" element={<MainLogin />}></Route>
-            <Route path="/items" element={<Items />}></Route>
+            <Route path="/items" element={<MainItem />}></Route>
             <Route path="/loans" element={<MainLoan />}></Route>
             <Route path="/aboutus" element={<About />}></Route>
             <Route path="/profile" element={<Profile />}></Route>

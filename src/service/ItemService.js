@@ -13,15 +13,20 @@ class ItemService{
     }
 
     static getItemById(itemId){
-        return axios.get(BASE_URL+'/'+itemId);
+        return axios.get(BASE_URL+'/items/'+itemId);
     }
 
     static updateItem(item,itemId){
-        return axios.put(BASE_URL+'/'+itemId,item);
+        return axios.put(BASE_URL+'/items/'+itemId,item);
     }
 
     static deleteItem(itemId){
-        return axios.delete(BASE_URL+'/'+itemId);
+        return axios.delete(BASE_URL+'/deleteItem/'+itemId);
+    }
+
+
+    static getItemsOfEmployee(employeeId){
+        return axios.get(BASE_URL+"/getIssueItemSummary/"+employeeId)
     }
 
     static getItemCategory(){
