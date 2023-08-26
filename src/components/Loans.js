@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { styled } from '@mui/material/styles';
+
 import {
   Container,
   Box,
@@ -24,6 +25,7 @@ import {
  // MenuItem,
 } from '@mui/material';
 //import InputAdornment from '@mui/material/InputAdornment';
+import AddCircleRoundedIcon from '@mui/icons-material/Add';
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -169,6 +171,7 @@ function Loans() {
   }));
 
   return (
+   // <CommonLayout>
     <Container sx={{display: "flex", flexDirection:"column", alignItems: "center"}}>
       <Typography variant="h4" gutterBottom>
         Loans
@@ -242,21 +245,23 @@ function Loans() {
               <DialogContent>
           <Box display="flex" flexDirection="column" gap={2}>
             {/* ... rest of your code ... */}
-            <Box display="flex" alignItems="center" justifyContent="center">
+            <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center">
             <Typography variant="h5" component="span" align="center">
                 Loan Duration
               </Typography>
               <IconButton onClick={() => handleDecreaseDuration()} sx={{borderRadius:'50%',padding:'5px'}}>
                 <RemoveIcon />
               </IconButton>
+             
               <Typography variant="h5" component="span" align="center">
               {newLoan.loan_duration}
               </Typography>
+              </Box>
              
               <IconButton onClick={() => handleIncreaseDuration()} sx={{borderRadius:'50%',padding:'5px'}}>
                 <AddIcon />
               </IconButton>
-            </Box>
+            
           </Box>
         </DialogContent>
             
@@ -295,20 +300,21 @@ function Loans() {
             >
               
               </TextField>
-            <Box display="flex" alignItems="center" justifyContent="center">
+            <Box display="flex" alignItems="center" flexDirection="column" justifyContent="center">
             <Typography variant="h5" component="span" align="center">
                 Loan Duration
               </Typography>
-              <IconButton onClick={() => handleEditDecreaseDuration()} sx={{borderRadius:'50%',padding:'5px'}}>
-                <RemoveIcon />
+             <div><IconButton onClick={() => handleEditDecreaseDuration()} sx={{borderRadius:'50%',padding:'5px'}}>
+                <RemoveIcon border=""/>
               </IconButton>
               <Typography variant="h5" component="span" align="center">
               {selectedLoan?selectedLoan.loan_duration : ''}
               </Typography>
              
               <IconButton onClick={() => handleEditIncreaseDuration()} sx={{borderRadius:'50%',padding:'5px'}}>
-                <AddIcon />
+                <AddCircleRoundedIcon />
               </IconButton>
+              </div> 
             </Box>
           </Box>
         </DialogContent>
@@ -322,6 +328,7 @@ function Loans() {
         </DialogActions>
       </Dialog>
     </Container>
+   // </CommonLayout>
   );
 }
 
