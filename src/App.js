@@ -6,11 +6,9 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Home from "./components/Main/Home";
 import EmployeeRegister from "./components/EmployeeRegister";
-import Login from "./components/Login";
 import MainLogin from "./components/Main/MainLogin";
 import Items from "./components/Items";
 import NavBar from "./components/NavBar";
-import Loans from "./components/Loans";
 import MainLoan from "./components/Main/MainLoan";
 
 
@@ -20,6 +18,7 @@ import About from "./components/Main/About";
 import Profile from "./components/Profile";
 import Employees from "./components/Employees";
 import ApplyLoans from "./components/ApplyLoans";
+import MainItem from "./components/Main/MainItem";
 
 /*
 	React Router is a standard library for routing in React. 
@@ -45,7 +44,7 @@ function App() {
             <Route path="/" exact element={<Home />}></Route>
             <Route path="/register" element={<EmployeeRegister />}></Route>
             <Route path="/login" element={<MainLogin />}></Route>
-            <Route path="/items" element={<Items />}></Route>
+            <Route path="/items" element={<MainItem />}></Route>
             <Route path="/loans" element={<MainLoan />}></Route>
             <Route path="/aboutus" element={<About />}></Route>
             <Route path="/profile" element={<Profile />}></Route>

@@ -45,12 +45,12 @@ export default function Items () {
     const [openAddModal, setOpenAddModal] = useState(false);
     const [openEditModal, setOpenEditModal] = useState(false);
     const [selectedItem,setSelectedItem]=useState();
-    const [newItem, setNewItem] = useState({item_id:'',
-                                        item_description: '',      
-                                        item_make: '',
-                                        item_status:'',
-                                        item_category:'',
-                                        item_valuation:0});
+    const [newItem, setNewItem] = useState({itemId:'',
+                                        itemDescription: '',      
+                                        itemMake: '',
+                                        issueStatus:'N',
+                                        itemCategory:'',
+                                        itemValuation:0});
     useEffect(()=>{
         async function fetchItems() {
             try {
@@ -72,12 +72,12 @@ export default function Items () {
     
     const handleCloseAddModal = () => {
         setOpenAddModal(false);
-        setNewItem({item_id:'',
-                    item_description: '',      
-                    item_make: '',
-                    item_status:'',
-                    item_category:'',
-                    item_valuation:0});
+        setNewItem({itemId:'',
+                    itemDescription: '',      
+                    itemMake: '',
+                    issueStatus:'N',
+                    itemCategory:'',
+                    itemValuation:0});
         
       };
 
@@ -86,7 +86,7 @@ export default function Items () {
         try {
             const addedItem = await ItemService.createItem(newItem)
             
-            newItem.item_id=addedItem.data.item_id;
+            newItem.itemId=addedItem.data.itemId;
       
             setItems([...items, newItem]);
             console.log('new item is',newItem)
@@ -113,13 +113,13 @@ export default function Items () {
     const handleEditItem = async () => {
         try {
           console.log(selectedItem);
-          console.log(selectedItem.item_id);
-          const updatedItem = await ItemService.updateItem(selectedItem, selectedItem.item_id);
+          console.log(selectedItem.itemId);
+          const updatedItem = await ItemService.updateItem(selectedItem, selectedItem.itemId);
           console.log(updatedItem);
           const updatedItems = items.map((item) =>
-            item.item_id === selectedItem.item_id ? { ...item, ...selectedItem } : item
+            item.itemId === selectedItem.itemId ? { ...item, ...selectedItem } : item
           );
-          //console.log('Updated Loans is: ',updatedLoans)
+          
           setItems(updatedItems);
           handleCloseEditModal();
         } catch (error) {
@@ -130,12 +130,17 @@ export default function Items () {
     const handleDeleteItem = async (itemId) => {
         try {
           console.log(itemId);
-          await ItemService.deleteItem(itemId);
-          const updatedItems = items.filter((item) => item.item_id !== itemId);
-          console.log(updatedItems)
-          setItems(updatedItems);
+          const response=await ItemService.deleteItem(itemId);
+          console.log(response);
+          if(response.data.hasOwnProperty("true")){
+            const updatedItems = items.filter((item) => item.itemId !== itemId);
+            console.log(updatedItems)
+            setItems(updatedItems);
           // Show alert or notification
-          alert('Item Deleted Successfully')
+            alert('Item Deleted Successfully')
+          }else{
+            alert(response.data.false);
+          }
         } catch (error) {
           console.error('Error deleting Item:', error);
         }
@@ -172,7 +177,7 @@ export default function Items () {
 
 
 
-
+      return(
 
             <Container sx={{display: "flex", flexDirection:"column", alignItems: "center"}}>
                 <Typography variant="h4" gutterBottom>
@@ -198,13 +203,13 @@ export default function Items () {
                     </TableHead>
                     <TableBody>
                          {items.map((item) => (
-                            <StyledTableRow key={item.item_id}>
-                                <StyledTableCell>{item.item_id}</StyledTableCell>
-                                <StyledTableCell>{item.item_description}</StyledTableCell>
-                                <StyledTableCell>{item.item_make}</StyledTableCell>
-                                <StyledTableCell>{item.item_status}</StyledTableCell>
-                                <StyledTableCell>{item.item_category}</StyledTableCell>
-                                <StyledTableCell>{item.item_valuation}</StyledTableCell>
+                            <StyledTableRow key={item.itemId}>
+                                <StyledTableCell>{item.itemId}</StyledTableCell>
+                                <StyledTableCell>{item.itemDescription}</StyledTableCell>
+                                <StyledTableCell>{item.itemMake}</StyledTableCell>
+                                <StyledTableCell>{item.issueStatus}</StyledTableCell>
+                                <StyledTableCell>{item.itemCategory}</StyledTableCell>
+                                <StyledTableCell>{item.itemValuation}</StyledTableCell>
                                 <StyledTableCell>
                                     <Tooltip title="Edit the Item">
                                      <IconButton
@@ -217,7 +222,7 @@ export default function Items () {
                                     <Tooltip title="Delete the Item">
                                         <IconButton
                                             style={{color:'red'}}
-                                             onClick={() => handleDeleteItem(item.item_id)}
+                                             onClick={() => handleDeleteItem(item.itemId)}
                                         >
                                         <DeleteIcon />
                                         </IconButton>
@@ -240,8 +245,8 @@ export default function Items () {
                                     fullWidth
                                     margin="dense"
               //select
-                                    value={newItem.item_description}
-                                    onChange={(e) => setNewItem({ ...newItem,item_description: e.target.value.toUpperCase() })}
+                                    value={newItem.itemDescription}
+                                    onChange={(e) => setNewItem({ ...newItem,itemDescription: e.target.value.toUpperCase() })}
                                     >
              
                                 </TextField>
@@ -253,25 +258,13 @@ export default function Items () {
                                     fullWidth
                                     margin="dense"
               //select
-                                    value={newItem.item_make}
-                                    onChange={(e) => setNewItem({ ...newItem,item_make: e.target.value.toUpperCase() })}
+                                    value={newItem.itemMake}
+                                    onChange={(e) => setNewItem({ ...newItem,itemMake: e.target.value.toUpperCase() })}
                                     >
              
                                 </TextField>
                                </Box>  
 
-                               <Box display="flex" flexDirection="column" gap={2}>
-                                <TextField
-                                    label="Item Status"
-                                    fullWidth
-                                    margin="dense"
-              //select
-                                    value={newItem.item_status}
-                                    onChange={(e) => setNewItem({ ...newItem,item_status: e.target.value.toUpperCase() })}
-                                    >
-             
-                                </TextField>
-                               </Box>
 
                                <Box display="flex" flexDirection="column" gap={2}>
                                 <TextField
@@ -279,8 +272,8 @@ export default function Items () {
                                     fullWidth
                                     margin="dense"
               //select
-                                    value={newItem.item_category}
-                                    onChange={(e) => setNewItem({ ...newItem,item_category: e.target.value.toUpperCase() })}
+                                    value={newItem.itemCategory}
+                                    onChange={(e) => setNewItem({ ...newItem,itemCategory: e.target.value.toUpperCase() })}
                                     >
              
                                 </TextField>
@@ -293,8 +286,8 @@ export default function Items () {
                                     fullWidth
                                     margin="dense"
               //select
-                                    value={newItem.item_valuation}
-                                    onChange={(e) => setNewItem({ ...newItem,item_valuation: e.target.value.toUpperCase() })}
+                                    value={newItem.itemValuation}
+                                    onChange={(e) => setNewItem({ ...newItem,itemValuation: e.target.value.toUpperCase() })}
                                     >
              
                                 </TextField>
@@ -320,7 +313,7 @@ export default function Items () {
                                     label="ID"
                                     fullWidth
                                     margin="dense"
-                                    value={selectedItem? selectedItem.item_id : ''}
+                                    value={selectedItem? selectedItem.itemId : ''}
                                 disabled
                                 />
 
@@ -331,8 +324,8 @@ export default function Items () {
                                       fullWidth
                                       margin="dense"
               //select
-                                      value={selectedItem ? selectedItem.item_description.toUpperCase() : ''}
-                                      onChange={(e) => setSelectedItem({ ...selectedItem, item_description: e.target.value.toUpperCase() })}
+                                      value={selectedItem ? selectedItem.itemDescription.toUpperCase() : ''}
+                                      onChange={(e) => setSelectedItem({ ...selectedItem, itemDescription: e.target.value.toUpperCase() })}
                                   />
 
 
@@ -341,8 +334,8 @@ export default function Items () {
                                       fullWidth
                                       margin="dense"
               //select
-                                      value={selectedItem ? selectedItem.item_make.toUpperCase() : ''}
-                                      onChange={(e) => setSelectedItem({ ...selectedItem, item_make: e.target.value.toUpperCase() })}
+                                      value={selectedItem ? selectedItem.itemMake.toUpperCase() : ''}
+                                      onChange={(e) => setSelectedItem({ ...selectedItem, itemMake: e.target.value.toUpperCase() })}
                                   />
 
                                   <TextField
@@ -350,8 +343,8 @@ export default function Items () {
                                       fullWidth
                                       margin="dense"
               //select
-                                      value={selectedItem ? selectedItem.item_status.toUpperCase() : ''}
-                                      onChange={(e) => setSelectedItem({ ...selectedItem, item_status: e.target.value.toUpperCase() })}
+                                      value={selectedItem ? selectedItem.issueStatus.toUpperCase() : ''}
+                                      onChange={(e) => setSelectedItem({ ...selectedItem, issueStatus: e.target.value.toUpperCase() })}
                                   />
 
                                   <TextField
@@ -359,8 +352,8 @@ export default function Items () {
                                       fullWidth
                                       margin="dense"
               //select
-                                      value={selectedItem ? selectedItem.item_category.toUpperCase() : ''}
-                                      onChange={(e) => setSelectedItem({ ...selectedItem, item_category: e.target.value.toUpperCase() })}
+                                      value={selectedItem ? selectedItem.itemCategory.toUpperCase() : ''}
+                                      onChange={(e) => setSelectedItem({ ...selectedItem, itemCategory: e.target.value.toUpperCase() })}
                                   />
 
 
@@ -369,8 +362,8 @@ export default function Items () {
                                       fullWidth
                                       margin="dense"
               //select
-                                      value={selectedItem ? selectedItem.item_valuation : ''}
-                                      onChange={(e) => setSelectedItem({ ...selectedItem, item_valuation: e.target.value.toUpperCase() })}
+                                      value={selectedItem ? selectedItem.itemValuation : ''}
+                                      onChange={(e) => setSelectedItem({ ...selectedItem, itemValuation: e.target.value.toUpperCase() })}
                                   />  
 
 
@@ -412,6 +405,7 @@ export default function Items () {
 
 
       </Container>
+      );
 
 
 

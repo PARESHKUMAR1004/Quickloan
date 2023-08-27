@@ -26,7 +26,9 @@ const NavBar = () => {
             justifyContent: "space-between",
           }}
         >
+          <Link to='/'>
           <img src="images/logo.png" alt="logo" />
+          </Link>
           <Box sx={{ ml: "auto", display: { xs: "inline-flex", md: "none" } }}>
             <IconButton onClick={() => setVisibleMenu(!visibleMenu)}>
               <Menu />
