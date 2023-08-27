@@ -17,21 +17,14 @@ import MainLoan from "./components/Main/MainLoan";
 import { AuthProvider } from "./service/AuthContext";
 
 import About from "./components/Main/About";
-import Profile from "./components/Profile";
+
 import Employees from "./components/Employees";
 import ApplyLoans from "./components/ApplyLoans";
+import MainEmployee from "./components/Main/MainEmployee";
+import MainProfile from "./components/Main/MainProfile";
+import MainItem from "./components/Main/MainItem";
+import MainApplyLoan from "./components/Main/MainApplyLoan";
 
-/*
-	React Router is a standard library for routing in React. 
-	It enables the navigation among views of various components in a React Application, allows 
-  changing the browser URL, and keeps the UI in sync with the URL. 
-	React Router is a JavaScript framework that lets us handle client and server-side routing in 
-  React applications. 
-	It enables the creation of single-page web or mobile apps that allow navigating without refreshing the page. 
-	It also allows us to use browser history features while preserving the right application view.
-  Use Version-6 of Router
-  > npm install rect-router-dom --save
-*/
 
 function App() {
   return (
@@ -45,12 +38,12 @@ function App() {
             <Route path="/" exact element={<Home />}></Route>
             <Route path="/register" element={<EmployeeRegister />}></Route>
             <Route path="/login" element={<MainLogin />}></Route>
-            <Route path="/items" element={<Items />}></Route>
+            <Route path="/items" element={<MainItem />}></Route>
             <Route path="/loans" element={<MainLoan />}></Route>
             <Route path="/aboutus" element={<About />}></Route>
-            <Route path="/profile" element={<Profile />}></Route>
-            <Route path="/employees" element={<Employees />}></Route>
-            <Route path="/applyloans" element={<ApplyLoans />}></Route>
+            <Route path="/profile" element={<MainProfile/>}></Route>
+            <Route path="/employees" element={<MainEmployee/>}></Route>
+            <Route path="/applyloans" element={<MainApplyLoan />}></Route>
           </Routes>
       </div>
           <Box

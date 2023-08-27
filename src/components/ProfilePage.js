@@ -37,7 +37,7 @@ const ProfilePage =()=>{
 
             
         <Button variant="contained" startIcon={<Edit />} color="secondary" sx={{marginTop:'3'}}
-        href="/loans">
+        href="/applyloans">
 
             Apply New Loan</Button>
                 

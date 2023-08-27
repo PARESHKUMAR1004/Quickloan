@@ -30,4 +30,10 @@ import {
   import DeleteIcon from '@mui/icons-material/Delete';
   import RemoveIcon from '@mui/icons-material/Remove';
 
-
+export default function EmployeeItems(){
+    return(
+        <div>
+            <h1>Employee Item List</h1>
+        </div>
+    )
+}

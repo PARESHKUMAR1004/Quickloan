@@ -5,7 +5,7 @@ import { Navigate } from 'react-router-dom';
 import ApplyLoans from '../ApplyLoans';
 
 
-export default function MainLoan(){
+export default function MainApplyLoan(){
     const { isLoading,isUserAuthenticated, userType } = useContext(AuthContext);
 
     if(isLoading){
