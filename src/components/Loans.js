@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { styled } from '@mui/material/styles';
 
+
 import {
   Container,
   Box,
@@ -39,13 +40,15 @@ function Loans() {
   const [openAddModal, setOpenAddModal] = useState(false);
   const [openEditModal, setOpenEditModal] = useState(false);
   const [selectedLoan,setSelectedLoan]=useState();
-  const [newLoan, setNewLoan] = useState({loan_id:'', loan_type: '', loan_duration: 2 });
+  const [newLoan, setNewLoan] = useState({loanId:'', loanType: '', loanDuration: 2, loanActiveStatus :1 });
   //const loanTypes=['Furniture','Stationery','Crockery'];
   useEffect(() => {
     async function fetchLoans() {
       try {
         LoancardService.getLoanCards().then((response) => {
+          console.log(response.data);
           setLoans(response.data);
+         
       });
         
       } catch (error) {
@@ -67,14 +70,18 @@ function Loans() {
 
   const handleCloseAddModal = () => {
     setOpenAddModal(false);
-    setNewLoan({ loan_id:'',loan_type: '', loan_duration: 2 });
+    setNewLoan({ loanId:'',loanType: '', loanDuration: 2,loanActiveStatus:1 });
   };
 
   const handleAddLoan = async () => {
     try {
       const addedLoan = await LoancardService.createLoanCard(newLoan);
       
-      newLoan.loan_id=addedLoan.data.loan_id;
+      newLoan.loanId=addedLoan.data.loanId;
+      newLoan.loanActiveStatus=addedLoan.data.loanActiveStatus;
+      console.log(newLoan.loanActiveStatus);
+
+      
 
       setLoans([...loans, newLoan]);
       console.log('new loan is',newLoan)
@@ -86,30 +93,34 @@ function Loans() {
   };
 
   const handleDecreaseDuration = () => {
-    if (newLoan.loan_duration > 2) {
-      setNewLoan({ ...newLoan, loan_duration: newLoan.loan_duration - 1 });
+    if (newLoan.loanDuration > 2) {
+      setNewLoan({ ...newLoan, loanDuration: newLoan.loanDuration - 1 });
     }
   };
 
   const handleIncreaseDuration = () => {
-    setNewLoan({ ...newLoan, loan_duration: newLoan.loan_duration + 1 });
+    setNewLoan({ ...newLoan, loanDuration: newLoan.loanDuration + 1 });
   };
 
   const handleEditDecreaseDuration = () => {
-    if (selectedLoan.loan_duration >= 2) {
-      setSelectedLoan({ ...selectedLoan, loan_duration: selectedLoan.loan_duration - 1 });
+    if (selectedLoan.loanDuration >= 2) {
+      setSelectedLoan({ ...selectedLoan, loanDuration: selectedLoan.loanDuration - 1 });
     }
   };
 
   const handleEditIncreaseDuration = () => {
-    setSelectedLoan({ ...selectedLoan, loan_duration: selectedLoan.loan_duration + 1 });
+    setSelectedLoan({ ...selectedLoan, loanDuration: selectedLoan.loanDuration + 1 });
   };
 
 
   const handleOpenEditModal = (loan) => {
-    setSelectedLoan(loan);
+      if(loan.loanActiveStatus.toString()!=="false")
+      {
+        setSelectedLoan(loan);
     
-    setOpenEditModal(true);
+        setOpenEditModal(true);
+      }
+   
   };
   const handleCloseEditModal = () => {
    setSelectedLoan(null);
@@ -119,11 +130,11 @@ function Loans() {
   const handleEditLoan = async () => {
     try {
       console.log(selectedLoan);
-      console.log(selectedLoan.loan_id);
-      const updatedLoan = await LoancardService.updateLoanCard(selectedLoan, selectedLoan.loan_id);
+      console.log(selectedLoan.loanId);
+      const updatedLoan = await LoancardService.updateLoanCard(selectedLoan, selectedLoan.loanId);
       console.log(updatedLoan);
       const updatedLoans = loans.map((loan) =>
-        loan.loan_id === selectedLoan.loan_id ? { ...loan, ...selectedLoan } : loan
+        loan.loanId === selectedLoan.loanId ? { ...loan, ...selectedLoan } : loan
       );
       console.log('Updated Loans is: ',updatedLoans)
       setLoans(updatedLoans);
@@ -134,17 +145,38 @@ function Loans() {
   };
 
   const handleDeleteLoan = async (loanId) => {
-    try {
-      console.log(loanId);
-      await LoancardService.deleteLoanCard(loanId);
-      const updatedLoans = loans.filter((loan) => loan.loan_id !== loanId);
-      console.log(updatedLoans)
-      setLoans(updatedLoans);
-      // Show alert or notification
-      alert('Loan Deleted Successfully')
-    } catch (error) {
-      console.error('Error deleting loan:', error);
+
+    const confirmDelete=window.confirm('Are you sure you want to delete this loan card ?');
+    if(confirmDelete)
+    {
+      try {
+        console.log(loanId);
+        const msg=await LoancardService.deleteLoanCard(loanId);
+        console.log(msg.data);
+        const isSuccess=Object.keys(msg.data)[0]==='true';
+        console.log(isSuccess);
+        const message=msg.data[isSuccess];
+  
+        console.log(message);
+        if(isSuccess)
+        {
+          const updatedLoans = loans.filter((loan) => loan.loanId !== loanId);
+        console.log(updatedLoans)
+        setLoans(updatedLoans);
+         alert(message);
+
+        }
+        else{
+          alert(message);
+        }
+        
+        // Show alert or notification
+        //alert('Loan Deleted Successfully')
+      } catch (error) {
+        console.error('Error deleting loan:', error);
+      }
     }
+   
   };
 
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -172,6 +204,7 @@ function Loans() {
 
   return (
    // <CommonLayout>
+ 
     <Container sx={{display: "flex", flexDirection:"column", alignItems: "center"}}>
       <Typography variant="h4" gutterBottom>
         Loans
@@ -188,20 +221,24 @@ function Loans() {
               <StyledTableCell>Loan ID</StyledTableCell>
               <StyledTableCell>Loan Type</StyledTableCell>
               <StyledTableCell>Duration (in months)</StyledTableCell>
+              <StyledTableCell>Loan Status</StyledTableCell>
               <StyledTableCell>Actions</StyledTableCell>
             </StyledTableRow>
           </TableHead>
-          <TableBody>
+          <TableBody >
             {loans.map((loan) => (
-              <StyledTableRow key={loan.loan_id}>
-                <StyledTableCell>{loan.loan_id}</StyledTableCell>
-                <StyledTableCell>{loan.loan_type}</StyledTableCell>
-                <StyledTableCell>{loan.loan_duration}</StyledTableCell>
+              <StyledTableRow key={loan.loanId}>
+                <StyledTableCell>{loan.loanId}</StyledTableCell>
+                <StyledTableCell>{loan.loanType}</StyledTableCell>
+                <StyledTableCell>{loan.loanDuration}</StyledTableCell>
+                <StyledTableCell>{loan.loanActiveStatus.toString()}</StyledTableCell>
+
                 <StyledTableCell>
                   <Tooltip title="Edit the Loan">
                     <IconButton
                       color="primary"
                       onClick={() => handleOpenEditModal(loan)}
+                      disabled={loan.loanActiveStatus.toString()!=="true"}
                     >
                       <EditIcon />
                     </IconButton>
@@ -209,7 +246,7 @@ function Loans() {
                   <Tooltip title="Delete the Loan">
                     <IconButton
                       style={{color:'red'}}
-                      onClick={() => handleDeleteLoan(loan.loan_id)}
+                      onClick={() => handleDeleteLoan(loan.loanId)}
                     >
                       <DeleteIcon />
                     </IconButton>
@@ -231,8 +268,8 @@ function Loans() {
               fullWidth
               margin="dense"
               //select
-              value={newLoan.loan_type.toUpperCase()}
-              onChange={(e) => setNewLoan({ ...newLoan, loan_type: e.target.value.toUpperCase() })}
+              value={newLoan.loanType.toUpperCase()}
+              onChange={(e) => setNewLoan({ ...newLoan, loanType: e.target.value.toUpperCase() })}
             >
               {/*
               {loanTypes.map((type)=> (
@@ -254,7 +291,7 @@ function Loans() {
               </IconButton>
              
               <Typography variant="h5" component="span" align="center">
-              {newLoan.loan_duration}
+              {newLoan.loanDuration}
               </Typography>
               </Box>
              
@@ -287,7 +324,7 @@ function Loans() {
               label="ID"
               fullWidth
               margin="dense"
-              value={selectedLoan? selectedLoan.loan_id : ''}
+              value={selectedLoan? selectedLoan.loanId : ''}
               disabled
             />
             <TextField
@@ -295,8 +332,9 @@ function Loans() {
               fullWidth
               margin="dense"
               //select
-              value={selectedLoan ? selectedLoan.loan_type.toUpperCase() : ''}
-              onChange={(e) => setSelectedLoan({ ...selectedLoan, loan_type: e.target.value.toUpperCase() })}
+              value={selectedLoan ? selectedLoan.loanType.toUpperCase() : ''}
+              
+              onChange={(e) => setSelectedLoan({ ...selectedLoan, loanType: e.target.value.toUpperCase() })}
             >
               
               </TextField>
@@ -308,7 +346,7 @@ function Loans() {
                 <RemoveIcon border=""/>
               </IconButton>
               <Typography variant="h5" component="span" align="center">
-              {selectedLoan?selectedLoan.loan_duration : ''}
+              {selectedLoan?selectedLoan.loanDuration : ''}
               </Typography>
              
               <IconButton onClick={() => handleEditIncreaseDuration()} sx={{borderRadius:'50%',padding:'5px'}}>
@@ -316,6 +354,7 @@ function Loans() {
               </IconButton>
               </div> 
             </Box>
+           
           </Box>
         </DialogContent>
         <DialogActions>

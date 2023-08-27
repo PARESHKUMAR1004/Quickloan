@@ -1,27 +1,27 @@
 import axios from 'axios' ;
 
-const LOANCARDS_REST_API_URL='http://localhost:8085/quickloan/api/loancards';
+const LOANCARDS_REST_API_URL='http://localhost:8085/quickloan/api/';
 
 class LoancardService{
 
    static getLoanCards(){
-        return axios.get(LOANCARDS_REST_API_URL);
+        return axios.get(LOANCARDS_REST_API_URL+'getAllLoans');
     }
 
     static createLoanCard(loanCard){
-        return axios.post('http://localhost:8085/quickloan/api/add/loancard',loanCard);
+        return axios.post(LOANCARDS_REST_API_URL+'saveLoanCard',loanCard);
     }
 
     static getLoanCardById(loanCardId){
-        return axios.get(LOANCARDS_REST_API_URL+'/'+loanCardId);
+        return axios.get(LOANCARDS_REST_API_URL+'getLoan'+'/'+loanCardId);
     }
 
     static updateLoanCard(loanCard,loanCardId){
-        return axios.put(LOANCARDS_REST_API_URL+'/'+loanCardId,loanCard);
+        return axios.put(LOANCARDS_REST_API_URL+'loancards'+'/'+loanCardId,loanCard);
     }
 
     static deleteLoanCard(loanCardId){
-        return axios.delete(LOANCARDS_REST_API_URL+'/'+loanCardId);
+        return axios.delete(LOANCARDS_REST_API_URL+'deleteLoan'+'/'+loanCardId);
     }
 
 }

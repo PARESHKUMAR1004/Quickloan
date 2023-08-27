@@ -15,7 +15,7 @@ export default function MainLoan(){
     } else if(isUserAuthenticated) {
         return userType === 0 ? <MyLoans /> :(<div>
             <ApproveLoans />
-            {/* <Loans /> */}
+             <Loans /> 
         </div>) 
     } else {
         return <Navigate to='/login' />
