@@ -28,7 +28,7 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
 	@ExceptionHandler(TransactionalException.class)
 	public ResponseEntity<Map<String, Object>> handleTransactionalException(
 			TransactionalException transException) {
-		
+	
 		Map<String, Object> resp = new HashMap<>();
 		resp.put("timestamp", LocalDateTime.now());
 		resp.put("status", HttpStatus.INTERNAL_SERVER_ERROR);

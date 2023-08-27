@@ -43,20 +43,4 @@ public class IssueDetailController {
 		return issueService.getIssueItemSummary(empId);
 	}
 	
-	@PostMapping("/saveIssue/{category}/{make}/{description}/{value}/{empId}")
-	public Long saveIssue(
-			@PathVariable(value="category") String cat,
-			@PathVariable(value="make") String make,
-			@PathVariable(value="description") String desc,
-			@PathVariable(value="value") int value,
-			@PathVariable(value="empId") Long empId
-			) throws ResourceNotFoundException {
-		
-		Item item = itemService.issueItem(cat, make, desc, value);
-		Employee emp = empService.findEmployeeById(empId).orElseThrow(
-				() -> new ResourceNotFoundException("No employee with id: " + empId));
-		
-		IssueDetail issueDetail = issueService.saveIssue(item, emp);
-		return issueDetail.getIssueId();
-	}
 }

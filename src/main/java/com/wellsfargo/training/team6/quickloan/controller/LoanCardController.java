@@ -42,6 +42,7 @@ public class LoanCardController {
 	@GetMapping("/getLoans/{type}")
 	public List<LoanCard> getLoanCardByType(@PathVariable(value="type") String type) 
 			throws ResourceNotFoundException {
+
 		List<LoanCard> LoanList = lService.getLoanCardsByType(type);
 		if(LoanList.isEmpty()) {
 			throw new ResourceNotFoundException("No loans with type: " + type);
@@ -54,12 +55,12 @@ public class LoanCardController {
 			throws ResourceNotFoundException {
 		
 		return lService.getLoanCardById(id).orElseThrow(
-				() -> new ResourceNotFoundException("No Loan with id: " + id));
+				() -> new ResourceNotFoundException("No loan with id: " + id));
 	}
 	
 	@PutMapping("/loancards/{id}")
 	public ResponseEntity<LoanCard> updateLoanCard(@PathVariable(value="id") Long lcId, 
-			@Validated @RequestBody LoanCard lc) throws ResourceNotFoundException{
+			@Validated @RequestBody LoanCard lc) throws ResourceNotFoundException {
 			
 		LoanCard loancard = lService.getLoanCardById(lcId).orElseThrow(
 				() -> new ResourceNotFoundException("LoanCard Not found for this id:"+lcId));

@@ -2,6 +2,7 @@ package com.wellsfargo.training.team6.quickloan.model;
 
 import java.nio.charset.StandardCharsets;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Base64;
 import java.util.List;
 import java.util.Set;

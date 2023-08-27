@@ -35,7 +35,7 @@ public class EmployeeController {
 	@PostMapping("/registerEmployee")
 	public ResponseEntity<String> createUser(@Validated @RequestBody Employee E)
 	{
-		Employee registeredEmployee=empService.registerEmployee(E);
+		Employee registeredEmployee = empService.registerEmployee(E);
 		 if (registeredEmployee!= null) {
 	            return ResponseEntity.ok("Registration successful");
 	        } else {
