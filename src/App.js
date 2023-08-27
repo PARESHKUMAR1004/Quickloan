@@ -6,11 +6,9 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Home from "./components/Main/Home";
 import EmployeeRegister from "./components/EmployeeRegister";
-import Login from "./components/Login";
 import MainLogin from "./components/Main/MainLogin";
 import Items from "./components/Items";
 import NavBar from "./components/NavBar";
-import Loans from "./components/Loans";
 import MainLoan from "./components/Main/MainLoan";
 
 

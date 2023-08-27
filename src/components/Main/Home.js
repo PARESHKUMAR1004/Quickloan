@@ -161,7 +161,7 @@ const Home = () => {
                 </Typography>
               </Box>
               <Box sx={{ "& button": { mr: 2 } }}>
-                <Link to="/loans" offset={0} duration={350}>
+                <Link to="/applyloans" offset={0} duration={350}>
                   <Button color="primary" size="large" variant="contained">
                     Apply Now
                   </Button>
