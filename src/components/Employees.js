@@ -63,11 +63,11 @@ function Employees() {
   const handleEditEmployee = async () => {
     try {
       console.log(selectedEmployee);
-      console.log(selectedEmployee.employeeid);
-      const updatedEmployee = await EmployeeService.updateEmployee(selectedEmployee, selectedEmployee.employeeid);
+      console.log(selectedEmployee.employeeId);
+      const updatedEmployee = await EmployeeService.updateEmployee(selectedEmployee, selectedEmployee.employeeId);
       console.log(updatedEmployee);
       const updatedEmployees = employees.map((employee) =>
-        employee.employeeid === selectedEmployee.employeeid ? { ...employee, ...selectedEmployee } : employee
+        employee.employeeId === selectedEmployee.employeeId ? { ...employee, ...selectedEmployee } : employee
       );
       console.log('Updated Loans is: ',updatedEmployees)
       setEmployees(updatedEmployees);
@@ -80,13 +80,18 @@ function Employees() {
   const handleDeleteEmployee = async (employeeId) => {
     try {
       console.log(employeeId);
-      await EmployeeService.deleteEmployee(employeeId);
-      const updatedEmployees = employees.filter((employee) => employee.employeeid !== employeeId);
+      const response = await EmployeeService.deleteEmployee(employeeId);
+      if(response.data.hasOwnProperty('true')){
+      const updatedEmployees = employees.filter((employee) => employee.employeeId !== employeeId);
       console.log(updatedEmployees)
       setEmployees(updatedEmployees);
       
       alert('Employee Deleted Successfully')
-    } catch (error) {
+    } else{
+      alert(response.data.false);
+    }
+   }
+    catch (error) {
       console.error('Error deleting employee:', error);
     }
   };
@@ -139,15 +144,15 @@ function Employees() {
           </TableHead>
           <TableBody>
             {employees.map((employee) => (
-              <StyledTableRow key={employee.employeeid}>
-                <StyledTableCell>{employee.employeeid}</StyledTableCell>
+              <StyledTableRow key={employee.employeeId}>
+                <StyledTableCell>{employee.employeeId}</StyledTableCell>
                 <StyledTableCell>{employee.fname + " " + employee.lname}</StyledTableCell>
                 <StyledTableCell>{employee.designation}</StyledTableCell>
                 <StyledTableCell>{employee.department}</StyledTableCell>
-                <StyledTableCell>{employee.date_of_joining}</StyledTableCell>
+                <StyledTableCell>{employee.dateOfJoining}</StyledTableCell>
                 <StyledTableCell>{employee.gender}</StyledTableCell>
-                <StyledTableCell>{employee.date_of_birth}</StyledTableCell>
-                <StyledTableCell>{employee.phoneno}</StyledTableCell>
+                <StyledTableCell>{employee.dateOfBirth}</StyledTableCell>
+                <StyledTableCell>{employee.phoneNo}</StyledTableCell>
                 <StyledTableCell>{employee.email}</StyledTableCell>
                 <StyledTableCell>
                   <Tooltip title="Edit the Employee Details">
@@ -161,7 +166,7 @@ function Employees() {
                   <Tooltip title="Delete the Employee">
                     <IconButton
                       style={{color:'red'}}
-                      onClick={() => handleDeleteEmployee(employee.employeeid)}
+                      onClick={() => handleDeleteEmployee(employee.employeeId)}
                     >
                       <DeleteIcon />
                     </IconButton>
@@ -234,17 +239,15 @@ function Employees() {
             <TextField
               label="Date of Birth"            
               margin="dense"              
-              value={selectedEmployee ? selectedEmployee.date_of_birth : ''}
-              onChange={(e) => setSelectedEmployee({ ...selectedEmployee, date_of_birth: e.target.value })}
+              value={selectedEmployee ? selectedEmployee.dateOfBirth : ''}
+              onChange={(e) => setSelectedEmployee({ ...selectedEmployee, dateOfBirth: e.target.value })}
             >              
             </TextField>
             <TextField
-              label="Date of joining"
-            
-              margin="dense"
-             
-              value={selectedEmployee ? selectedEmployee.date_of_joining : ''}
-              onChange={(e) => setSelectedEmployee({ ...selectedEmployee, date_of_joining: e.target.value })}
+              label="Date of joining"            
+              margin="dense"             
+              value={selectedEmployee ? selectedEmployee.dateOfJoining : ''}
+              onChange={(e) => setSelectedEmployee({ ...selectedEmployee, dateOfJoining: e.target.value })}
             >              
             </TextField>
             </Stack>
@@ -253,8 +256,8 @@ function Employees() {
            
               margin="dense"
 
-              value={selectedEmployee ? selectedEmployee.phoneno : ''}
-              onChange={(e) => setSelectedEmployee({ ...selectedEmployee, phoneno: e.target.value })}
+              value={selectedEmployee ? selectedEmployee.phoneNo : ''}
+              onChange={(e) => setSelectedEmployee({ ...selectedEmployee, phoneNo: e.target.value })}
             >              
             </TextField>
             <TextField

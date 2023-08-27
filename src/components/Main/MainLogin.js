@@ -8,7 +8,7 @@ export default function MainLogin(){
     const { isLoading,isUserAuthenticated } = useContext(AuthContext);
 
     if(isLoading){
-        return(<div>Loading ff</div>)
+        return(<div>Loading </div>)
     } else if(!isUserAuthenticated) {
         return (
          <Login />

@@ -66,7 +66,7 @@ const ProfilePage =()=>{
                         <Box>Employee Id</Box>
                     </Grid>
                     <Grid item xs={6}>
-                        <Box>{user.employeeid}</Box>
+                        <Box>{user.employeeId}</Box>
                     </Grid>
                     </Grid>
                     </ListItem>
@@ -99,7 +99,7 @@ const ProfilePage =()=>{
                         <Box>Date of Birth</Box>
                     </Grid>
                     <Grid item xs={6}>
-                        <Box>{user.date_of_birth}</Box>
+                        <Box>{user.dateOfBirth}</Box>
                     </Grid>
                     </Grid>
                     </ListItem>
@@ -110,7 +110,7 @@ const ProfilePage =()=>{
                         <Box>Date of Joining</Box>
                     </Grid>
                     <Grid item xs={6}>
-                        <Box>{user.date_of_joining}</Box>
+                        <Box>{user.dateOfJoining}</Box>
                     </Grid>
                     </Grid>
                     </ListItem>
@@ -121,7 +121,7 @@ const ProfilePage =()=>{
                         <Box>Email</Box>
                     </Grid>
                     <Grid item xs={6}>
-                        <Box>rod@gmail.com</Box>
+                        <Box>{user.email}</Box>
                     </Grid>
                     </Grid>
                     </ListItem>
@@ -132,7 +132,7 @@ const ProfilePage =()=>{
                         <Box>Phone No.</Box>
                     </Grid>
                     <Grid item xs={6}>
-                        <Box>1234567890</Box>
+                        <Box>{user.phoneNo}</Box>
                     </Grid>
                     </Grid>
                     </ListItem>
