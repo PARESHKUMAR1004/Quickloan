@@ -1,4 +1,4 @@
-import React,{ useContext,useState,useEffect} from 'react';
+import React,{ useState,useEffect} from 'react';
 import { styled } from '@mui/material/styles';
 
 
@@ -29,17 +29,11 @@ import {
   import AddIcon from '@mui/icons-material/Add';
   import EditIcon from '@mui/icons-material/Edit';
   import DeleteIcon from '@mui/icons-material/Delete';
-  import RemoveIcon from '@mui/icons-material/Remove';
 
-
-import { AuthContext } from '../service/AuthContext';
-import { Navigate } from 'react-router-dom';
 import ItemService from '../service/ItemService';
 import theme from '../style/themes/theme';
 
 export default function Items () {
-    const { isLoading,isUserAuthenticated, user } = useContext(AuthContext);
-
 
     const [items, setItems] = useState([]);
     const [openAddModal, setOpenAddModal] = useState(false);
@@ -99,9 +93,17 @@ export default function Items () {
 
 
     const handleOpenEditModal = (item) => {
-        setSelectedItem(item);
+        if(item.issueStatus==='Y')
+        {
+          alert("Can't Edit the Item. Item is already issued!!")
+        }
+        else{
+          setSelectedItem(item);
         
-        setOpenEditModal(true);
+          setOpenEditModal(true);
+
+        }
+        
       };
 
     const handleCloseEditModal = () => {

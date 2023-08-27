@@ -7,7 +7,6 @@ import Typography from "@mui/material/Typography";
 import Home from "./components/Main/Home";
 import EmployeeRegister from "./components/EmployeeRegister";
 import MainLogin from "./components/Main/MainLogin";
-import Items from "./components/Items";
 import NavBar from "./components/NavBar";
 import MainLoan from "./components/Main/MainLoan";
 
@@ -19,18 +18,6 @@ import Profile from "./components/Profile";
 import Employees from "./components/Employees";
 import ApplyLoans from "./components/ApplyLoans";
 import MainItem from "./components/Main/MainItem";
-
-/*
-	React Router is a standard library for routing in React. 
-	It enables the navigation among views of various components in a React Application, allows 
-  changing the browser URL, and keeps the UI in sync with the URL. 
-	React Router is a JavaScript framework that lets us handle client and server-side routing in 
-  React applications. 
-	It enables the creation of single-page web or mobile apps that allow navigating without refreshing the page. 
-	It also allows us to use browser history features while preserving the right application view.
-  Use Version-6 of Router
-  > npm install rect-router-dom --save
-*/
 
 function App() {
   return (

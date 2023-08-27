@@ -14,19 +14,23 @@ class LoancardService{
     }
 
     static getLoanCardById(loanCardId){
-        return axios.get(BASE_URL+'getLoan'+'/'+loanCardId);
+        return axios.get(BASE_URL+'getLoan/'+loanCardId);
     }
 
     static updateLoanCard(loanCard,loanCardId){
-        return axios.put(BASE_URL+'loancards'+'/'+loanCardId,loanCard);
+        return axios.put(BASE_URL+'loancards/'+loanCardId,loanCard);
     }
 
     static deleteLoanCard(loanCardId){
-        return axios.delete(BASE_URL+'deleteLoan'+'/'+loanCardId);
+        return axios.delete(BASE_URL+'deleteLoan/'+loanCardId);
     }
 
     static getLoanCardByType(type){
         return axios.get(BASE_URL+'getLoans/'+type);
+    }
+
+    static getLaonsOfEmployee(empId){
+        return axios.get(BASE_URL+'getLoanIssueSummary/'+empId);
     }
 
 }
