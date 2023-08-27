@@ -7,7 +7,6 @@ import Typography from "@mui/material/Typography";
 import Home from "./components/Main/Home";
 import EmployeeRegister from "./components/EmployeeRegister";
 import MainLogin from "./components/Main/MainLogin";
-import Items from "./components/Items";
 import NavBar from "./components/NavBar";
 import MainLoan from "./components/Main/MainLoan";
 
@@ -16,13 +15,11 @@ import { AuthProvider } from "./service/AuthContext";
 
 import About from "./components/Main/About";
 
-import Employees from "./components/Employees";
-import ApplyLoans from "./components/ApplyLoans";
+
 import MainEmployee from "./components/Main/MainEmployee";
 import MainProfile from "./components/Main/MainProfile";
 import MainItem from "./components/Main/MainItem";
 import MainApplyLoan from "./components/Main/MainApplyLoan";
-
 
 function App() {
   return (

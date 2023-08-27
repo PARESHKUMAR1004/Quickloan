@@ -3,13 +3,6 @@ import { styled } from '@mui/material/styles';
 
 import {
     Container,
-    Box,
-    Button,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogTitle,
-    Fab,
     Paper,
     Table,
     TableBody,
@@ -18,29 +11,17 @@ import {
     TableContainer,
     TableHead,
     TableRow,
-    TextField,
     Typography,
-    IconButton,
-    Tooltip
-   // MenuItem,
   } from '@mui/material';
-  //import InputAdornment from '@mui/material/InputAdornment';
-  import AddIcon from '@mui/icons-material/Add';
-  import EditIcon from '@mui/icons-material/Edit';
-  import DeleteIcon from '@mui/icons-material/Delete';
-  import RemoveIcon from '@mui/icons-material/Remove';
-
-
 
   import { AuthContext } from '../service/AuthContext';
-  import { Navigate } from 'react-router-dom';
   import ItemService from '../service/ItemService';
   import theme from '../style/themes/theme';
 
 
   export default function EmployeeItems(){
 
-    const { isLoading,isUserAuthenticated, user } = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
 
 
     const [items, setItems] = useState([]);
