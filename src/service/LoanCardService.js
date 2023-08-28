@@ -6,31 +6,61 @@ const BASE_URL='http://localhost:8085/quickloan/api/'
 class LoancardService{
 
    static getLoanCards(){
-        return axios.get(BASE_URL+'getAllLoans');
+        try{
+            return axios.get(BASE_URL+'getAllLoans');
+        }catch(error){
+            console.log(error);
+        }
     }
 
     static createLoanCard(loanCard){
-        return axios.post(BASE_URL+'saveLoanCard',loanCard);
+        try{
+            return axios.post(BASE_URL+'saveLoanCard',loanCard);
+        }catch(error){
+            console.log(error);
+        }
     }
 
     static getLoanCardById(loanCardId){
-        return axios.get(BASE_URL+'getLoan/'+loanCardId);
+        try{
+            return axios.get(BASE_URL+'getLoan/'+loanCardId);
+        }catch(error){
+            console.log(error);
+        }
+        
     }
 
     static updateLoanCard(loanCard,loanCardId){
-        return axios.put(BASE_URL+'loancards/'+loanCardId,loanCard);
+        try{
+            return axios.put(BASE_URL+'loancards/'+loanCardId,loanCard);
+        }catch(error){
+            console.log(error);
+        }
     }
 
     static deleteLoanCard(loanCardId){
-        return axios.delete(BASE_URL+'deleteLoan/'+loanCardId);
+        try{
+            return axios.delete(BASE_URL+'deleteLoan/'+loanCardId);
+        }catch(error){
+            console.log(error)
+        }
     }
 
     static getLoanCardByType(type){
-        return axios.get(BASE_URL+'getLoans/'+type);
+        try{
+            return axios.get(BASE_URL+'getLoans/'+type);
+        }catch(error){
+            console.log(error);
+        }
+        
     }
 
     static getLaonsOfEmployee(empId){
-        return axios.get(BASE_URL+'getLoanIssueSummary/'+empId);
+        try{
+            return axios.get(BASE_URL+'getLoanIssueSummary/'+empId);
+        }catch(error){
+            console.log(error);
+        }
     }
 
 }

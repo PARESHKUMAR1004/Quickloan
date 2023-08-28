@@ -51,7 +51,6 @@ export function AuthProvider({ children }) {
                     localStorage.setItem("user",JSON.stringify({"name":"Admin"}));
                     setuserType(1);
                     localStorage.setItem("userType",JSON.stringify(1));
-                    setLoading(false);
                     return true;
                 }else{
                     return false;
@@ -71,14 +70,11 @@ export function AuthProvider({ children }) {
                     localStorage.setItem("user",JSON.stringify(response.data));
                     setuserType(0);
                     localStorage.setItem("userType",JSON.stringify(0));
-                    setLoading(false);
                     return true; 
                 } else {
-                    setLoading(false);
                     return false;
                 }
             } catch (error) {
-                setLoading(false);
                 console.error("Login error", error);
                 throw new Error("An error occurred during login.");
              }
@@ -86,12 +82,10 @@ export function AuthProvider({ children }) {
     }
 
     const logout = () => {
-        setLoading(true);
         setUserAutenticated(false);
         localStorage.setItem("isUserAuthenticated",JSON.stringify(false));
         setUser(null);
         localStorage.setItem("user",JSON.stringify(null));
-        setLoading(false);
         navigate("/");
     };
   
