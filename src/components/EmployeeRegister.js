@@ -1,92 +1,77 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-
-import Avatar from '@mui/material/Avatar';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-
+import Avatar from "@mui/material/Avatar";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
 import { Stack } from "@mui/material";
-
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import Button from '@mui/material/Button';
+import Link from "@mui/material/Link";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import Button from "@mui/material/Button";
 import { LockOpen } from "@mui/icons-material";
-
-import { RadioGroup, Radio, FormControlLabel, FormControl, FormLabel } from "@mui/material"
+import {
+  RadioGroup,
+  Radio,
+  FormControlLabel,
+  FormControl,
+  FormLabel,
+} from "@mui/material";
 import { AuthContext } from "../service/AuthContext";
-
-
 
 const EmployeeRegister = () => {
   const history = useNavigate();
   const { register } = useContext(AuthContext);
 
-
-  const [fname, setFirstName] = useState('');
-  const [lname, setLastName] = useState('');
-  const [designation, setDesignation] = useState('');
-  const [department, setDepartment] = useState('');
-  const [password, setPassword] = useState('');
-  const [dateOfBirth, setDOB] = useState('');
-  const [dateOfJoining, setDOJ] = useState('');
-  const [phoneNo, setPhone] = useState('');
-  const [email, setEmail] = useState('');
-  const [gender, setGender] = useState('');
+  const [fname, setFirstName] = useState("");
+  const [lname, setLastName] = useState("");
+  const [designation, setDesignation] = useState("");
+  const [department, setDepartment] = useState("");
+  const [password, setPassword] = useState("");
+  const [dateOfBirth, setDOB] = useState("");
+  const [dateOfJoining, setDOJ] = useState("");
+  const [phoneNo, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [gender, setGender] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
 
-
   const handleRegister = async () => {
-
     if (!fname) {
       setErrorMessage("First Name is required");
       return;
-    }
-    else if(!lname){
+    } else if (!lname) {
       setErrorMessage("Last Name is required");
       return;
-    }
-    else if(!email){
+    } else if (!email) {
       setErrorMessage("Email is required");
       return;
-    }
-    else if(!password){
+    } else if (!password) {
       setErrorMessage("Password is required");
       return;
-    }
-    else if (password.length < 6) {
-      setErrorMessage('Password must be at least 6 characters.');
+    } else if (password.length < 6) {
+      setErrorMessage("Password must be at least 6 characters.");
       return;
-    }
-    else if(!designation){
+    } else if (!designation) {
       setErrorMessage("Designation is required");
       return;
-    }
-    else if(!department){
+    } else if (!department) {
       setErrorMessage("Department is required");
       return;
-    }
-    else if(!dateOfBirth){
+    } else if (!dateOfBirth) {
       setErrorMessage("Date of birth is required");
       return;
-    }
-    else if(!dateOfJoining){
+    } else if (!dateOfJoining) {
       setErrorMessage("Date of joining is required");
       return;
-    }
-    else if(!phoneNo){
+    } else if (!phoneNo) {
       setErrorMessage("Phone no is required");
       return;
-    }
-    else if (!/^\d{10}$/.test(phoneNo)) {
-      setErrorMessage('Invalid phone number. Please enter a 10-digit number.');
+    } else if (!/^\d{10}$/.test(phoneNo)) {
+      setErrorMessage("Invalid phone number. Please enter a 10-digit number.");
       return;
-    } 
-    else if(!gender){
+    } else if (!gender) {
       setErrorMessage("Please select your gender");
       return;
     }
@@ -100,7 +85,7 @@ const EmployeeRegister = () => {
       dateOfJoining,
       phoneNo,
       email,
-      gender
+      gender,
     };
     try {
       const registerSuccess = await register(user);
@@ -121,24 +106,22 @@ const EmployeeRegister = () => {
   };
 
   return (
-
-
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <Box
         sx={{
           marginTop: 8,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          padding: '25px',
-          bgcolor: 'white',
-          boxShadow: '2',
-          margin: '10px',
-          borderRadius: '5px'
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          padding: "25px",
+          bgcolor: "white",
+          boxShadow: "2",
+          margin: "10px",
+          borderRadius: "5px",
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
           <LockOpen />
         </Avatar>
         <Typography component="h1" variant="h5">
@@ -154,7 +137,6 @@ const EmployeeRegister = () => {
               id="fname"
               label="First Name"
               name="fname"
-
               autoFocus
               value={fname}
               onChange={(e) => setFirstName(e.target.value)}
@@ -166,8 +148,6 @@ const EmployeeRegister = () => {
               id="lname"
               label="Last Name"
               name="lname"
-
-
               value={lname}
               onChange={(e) => setLastName(e.target.value)}
             />
@@ -181,7 +161,6 @@ const EmployeeRegister = () => {
             label="Email Address"
             name="email"
             autoComplete="email"
-
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
@@ -198,7 +177,11 @@ const EmployeeRegister = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
 
-          <Stack spacing={2} direction="row" sx={{ marginBottom: 2, marginTop: 1 }}>
+          <Stack
+            spacing={2}
+            direction="row"
+            sx={{ marginBottom: 2, marginTop: 1 }}
+          >
             <TextField
               margin="normal"
               required
@@ -207,7 +190,6 @@ const EmployeeRegister = () => {
               label="Designation"
               name="designation"
               autoComplete="designation"
-
               value={designation}
               onChange={(e) => setDesignation(e.target.value)}
             />
@@ -219,24 +201,25 @@ const EmployeeRegister = () => {
               label="Department"
               name="department"
               autoComplete="department"
-
               value={department}
               onChange={(e) => setDepartment(e.target.value)}
             />
           </Stack>
-          <Stack spacing={2} direction="row" sx={{ marginBottom: 1, marginTop: 1 }}>
+          <Stack
+            spacing={2}
+            direction="row"
+            sx={{ marginBottom: 1, marginTop: 1 }}
+          >
             <TextField
               label="Date of Birth"
               id="dateOfBirth"
               name="dateOfBirth"
               type="date"
-
               value={dateOfBirth}
               onChange={(e) => setDOB(e.target.value)}
               fullWidth
               margin="normal"
               required
-
               InputLabelProps={{
                 shrink: true,
               }}
@@ -246,13 +229,11 @@ const EmployeeRegister = () => {
               id="dateOfJoining"
               name="dateOfJoining"
               type="date"
-
               value={dateOfJoining}
               onChange={(e) => setDOJ(e.target.value)}
               fullWidth
               margin="normal"
               required
-
               InputLabelProps={{
                 shrink: true,
               }}
@@ -266,18 +247,18 @@ const EmployeeRegister = () => {
             onChange={(e) => setPhone(e.target.value)}
             fullWidth
             margin="normal"
-
             required
           />
 
           <FormControl component="fieldset">
-            <FormLabel component="legend" required>Gender</FormLabel>
+            <FormLabel component="legend" required>
+              Gender
+            </FormLabel>
             <RadioGroup
               row
               aria-label="gender"
               name="gender"
               value={gender}
-              
               defaultValue="M"
               onChange={(e) => setGender(e.target.value)}
             >
@@ -290,29 +271,32 @@ const EmployeeRegister = () => {
           <Button
             fullWidth
             variant="contained"
-            sx={{ mt: 3, mb: 2, padding: '15px', boxShadow: '2' }}
+            sx={{ mt: 3, mb: 2, padding: "15px", boxShadow: "2" }}
             onClick={handleRegister}
             color="primary"
           >
             Register
           </Button>
 
-          {errorMessage && <p className="error-message" style={{ color: 'red' }}>{errorMessage}</p>}
-          {successMessage && <p className="success-message" style={{ color: 'green' }}>{successMessage}</p>}
+          {errorMessage && (
+            <p className="error-message" style={{ color: "red" }}>
+              {errorMessage}
+            </p>
+          )}
+          {successMessage && (
+            <p className="success-message" style={{ color: "green" }}>
+              {successMessage}
+            </p>
+          )}
 
-          <Grid container justifyContent='flex-end' >
-
-            <Grid item sx={{ padding: '15px' }}>
-              <Link href='/login' >
-                {"Already have an account? Sign In"}
-              </Link>
+          <Grid container justifyContent="flex-end">
+            <Grid item sx={{ padding: "15px" }}>
+              <Link href="/login">{"Already have an account? Sign In"}</Link>
             </Grid>
           </Grid>
         </Box>
       </Box>
-
     </Container>
-
   );
 };
 

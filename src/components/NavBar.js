@@ -26,8 +26,8 @@ const NavBar = () => {
             justifyContent: "space-between",
           }}
         >
-          <Link to='/'>
-          <img src="images/logo.png" alt="logo" />
+          <Link to="/">
+            <img src="images/logo.png" alt="logo" />
           </Link>
           <Box sx={{ ml: "auto", display: { xs: "inline-flex", md: "none" } }}>
             <IconButton onClick={() => setVisibleMenu(!visibleMenu)}>
@@ -56,10 +56,11 @@ const NavBar = () => {
           >
             <Box /> {/* Magic space */}
             <Navigation />
-            
-            {isUserAuthenticated ? 
-              <Button variant="outlined" onClick={logout}>Log Out</Button> 
-            : 
+            {isUserAuthenticated ? (
+              <Button variant="outlined" onClick={logout}>
+                Log Out
+              </Button>
+            ) : (
               <Box sx={{ "& button:first-of-type": { mr: 2 } }}>
                 <Link to="/login">
                   <Button variant="outlined">Log In</Button>
@@ -68,8 +69,7 @@ const NavBar = () => {
                   <Button variant="contained">Register</Button>
                 </Link>
               </Box>
-              }
-            
+            )}
             {matchMobileView && <br></br>}{" "}
             {/* Given because otherwise register & Login were not visible */}
             {visibleMenu && matchMobileView && (

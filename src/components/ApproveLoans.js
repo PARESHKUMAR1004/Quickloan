@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { styled } from '@mui/material/styles';
+import React, { useState, useEffect } from "react";
+import { styled } from "@mui/material/styles";
 import {
   Container,
   Paper,
@@ -12,23 +12,23 @@ import {
   TableRow,
   Typography,
   IconButton,
-  Tooltip
-} from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
-import CheckIcon from '@mui/icons-material/Check';
-import theme from '../style/themes/theme';
-import EmpCardService from '../service/EmpCardService';
+  Tooltip,
+} from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import CheckIcon from "@mui/icons-material/Check";
+import theme from "../style/themes/theme";
+import EmpCardService from "../service/EmpCardService";
 
 function ApproveLoans() {
   const [pendingLoans, setPendingLoans] = useState([]);
 
   async function fetchPendingLoans() {
     try {
-          EmpCardService.getPendingCards().then((response) => {
-          setPendingLoans(response.data);
-    });
+      EmpCardService.getPendingCards().then((response) => {
+        setPendingLoans(response.data);
+      });
     } catch (error) {
-      console.error('Error fetching pending loans:', error);
+      console.error("Error fetching pending loans:", error);
     }
   }
 
@@ -41,9 +41,9 @@ function ApproveLoans() {
       console.log(cardId);
       await EmpCardService.approveLoan(cardId);
       fetchPendingLoans();
-      alert('Loan Approved Successfully')
+      alert("Loan Approved Successfully");
     } catch (error) {
-      console.error('Error approving loan:', error);
+      console.error("Error approving loan:", error);
     }
   };
 
@@ -52,9 +52,9 @@ function ApproveLoans() {
       console.log(cardId);
       await EmpCardService.rejectLoan(cardId);
       fetchPendingLoans();
-      alert('Loan Reject Successfully')
+      alert("Loan Reject Successfully");
     } catch (error) {
-      console.error('Error rejectingng loan:', error);
+      console.error("Error rejectingng loan:", error);
     }
   };
 
@@ -70,23 +70,35 @@ function ApproveLoans() {
       fontSize: 16,
     },
   }));
-  
+
   const StyledTableRow = styled(TableRow)(({ theme }) => ({
-    '&:nth-of-type(even)': {
+    "&:nth-of-type(even)": {
       backgroundColor: theme.palette.background.default,
     },
     // hide last border
-    '&:last-child td, &:last-child th': {
+    "&:last-child td, &:last-child th": {
       border: 0,
     },
   }));
 
   return (
-    <Container sx={{display: "flex", flexDirection:"column", alignItems: "center"}}>
+    <Container
+      sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+    >
       <Typography variant="h4" gutterBottom>
         Approve Loans
       </Typography>
-      <TableContainer component={Paper} sx={{border: "1px solid grey", boxShadow: theme.shadows[10] ,marginTop: '20px',marginBottom:'20px',minimumHeight:600, width: {xs: "100%", md: "75%"}  }}>
+      <TableContainer
+        component={Paper}
+        sx={{
+          border: "1px solid grey",
+          boxShadow: theme.shadows[10],
+          marginTop: "20px",
+          marginBottom: "20px",
+          minimumHeight: 600,
+          width: { xs: "100%", md: "75%" },
+        }}
+      >
         <Table aria-label="loans table">
           <TableHead>
             <StyledTableRow>
@@ -102,7 +114,9 @@ function ApproveLoans() {
               <StyledTableRow key={pendingLoan.id}>
                 <StyledTableCell>{pendingLoan.id}</StyledTableCell>
                 <StyledTableCell>{pendingLoan.loanCard.loanId}</StyledTableCell>
-                <StyledTableCell>{pendingLoan.employee.employeeId}</StyledTableCell>
+                <StyledTableCell>
+                  {pendingLoan.employee.employeeId}
+                </StyledTableCell>
                 <StyledTableCell>{pendingLoan.item.itemId}</StyledTableCell>
                 <StyledTableCell>
                   <Tooltip title="Approve the Loan">
@@ -115,7 +129,7 @@ function ApproveLoans() {
                   </Tooltip>
                   <Tooltip title="Reject the Loan">
                     <IconButton
-                      style={{color:'red'}}
+                      style={{ color: "red" }}
                       onClick={() => handleRejectLoan(pendingLoan.id)}
                     >
                       <CloseIcon />
@@ -127,11 +141,11 @@ function ApproveLoans() {
           </TableBody>
         </Table>
       </TableContainer>
-      {pendingLoans.length === 0 && <Typography variant="h5">No Pending Loans</Typography>}
+      {pendingLoans.length === 0 && (
+        <Typography variant="h5">No Pending Loans</Typography>
+      )}
     </Container>
   );
 }
 
 export default ApproveLoans;
-
-

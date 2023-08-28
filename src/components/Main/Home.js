@@ -1,12 +1,10 @@
 import React from "react";
-// import Image from "next/image";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom";
-// import { StyledButton } from "@/components/styled-button";
 import ListIcon from "@mui/icons-material/List";
 
 const exps = [

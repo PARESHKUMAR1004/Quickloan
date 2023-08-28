@@ -1,26 +1,18 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-
-// import AuthenticationService from "../service/AuthenticationService"
-
-import Avatar from '@mui/material/Avatar';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import Button from '@mui/material/Button';
-
-import {
-  RadioGroup,
-  Radio,
-} from "@mui/material";
+import Avatar from "@mui/material/Avatar";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Link from "@mui/material/Link";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import Button from "@mui/material/Button";
+import { RadioGroup, Radio } from "@mui/material";
 import { AuthContext } from "../service/AuthContext";
-
 
 const Login = () => {
   const history = useNavigate();
@@ -43,10 +35,7 @@ const Login = () => {
       password,
     };
     try {
-      const loginSuccess = await login(
-        user,
-        userTypePath
-      );
+      const loginSuccess = await login(user, userTypePath);
       console.log("API response:", loginSuccess);
       if (loginSuccess) {
         setErrorMessage("");
@@ -64,24 +53,22 @@ const Login = () => {
   };
 
   return (
-    
-    
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <Box
         sx={{
           marginTop: 8,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          padding:'25px',
-          bgcolor:'white',
-          boxShadow:'2',
-          margin:'10px',
-          borderRadius:'5px'
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          padding: "25px",
+          bgcolor: "white",
+          boxShadow: "2",
+          margin: "10px",
+          borderRadius: "5px",
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
@@ -93,15 +80,20 @@ const Login = () => {
           name="radio-buttons-group"
           row
         >
-        <FormControlLabel value="Employee" control={<Radio color="primary" />} label="Employee" 
-        checked={userTypePath === "loginEmployee"}
-        onChange={() => setUserTypePath("loginEmployee")}
-        />
-        <FormControlLabel value="Admin" control={<Radio color="primary" />} label="Admin"
-        checked={userTypePath === "loginAdmin"}
-        onChange={() => setUserTypePath("loginAdmin")}
-        />
-    
+          <FormControlLabel
+            value="Employee"
+            control={<Radio color="primary" />}
+            label="Employee"
+            checked={userTypePath === "loginEmployee"}
+            onChange={() => setUserTypePath("loginEmployee")}
+          />
+          <FormControlLabel
+            value="Admin"
+            control={<Radio color="primary" />}
+            label="Admin"
+            checked={userTypePath === "loginAdmin"}
+            onChange={() => setUserTypePath("loginAdmin")}
+          />
         </RadioGroup>
         <Box component="form" sx={{ mt: 1 }}>
           <TextField
@@ -114,7 +106,7 @@ const Login = () => {
             autoComplete="email"
             autoFocus
             value={email}
-            onChange={(e)=>setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <TextField
             margin="normal"
@@ -126,34 +118,37 @@ const Login = () => {
             id="password"
             autoComplete="current-password"
             value={password}
-            onChange={(e)=>setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
           />
           <Button
             fullWidth
             variant="contained"
-            sx={{ mt: 3, mb: 2 ,padding:'15px',boxShadow:'2'}}
+            sx={{ mt: 3, mb: 2, padding: "15px", boxShadow: "2" }}
             onClick={handleLogin}
             color="primary"
           >
             Login
           </Button>
-          
-          {errorMessage && <p className="error-message" style={{color:'red'}}>{errorMessage}</p>}
-          {successMessage && <p className="success-message" style={{color:'green'}} >{successMessage}</p>}
 
-          <Grid container justifyContent='flex-end' >
+          {errorMessage && (
+            <p className="error-message" style={{ color: "red" }}>
+              {errorMessage}
+            </p>
+          )}
+          {successMessage && (
+            <p className="success-message" style={{ color: "green" }}>
+              {successMessage}
+            </p>
+          )}
 
-            <Grid item sx={{padding:'15px'}}>
-              <Link href='/register' >
-                {"Don't have an account? Sign Up"}
-              </Link>
+          <Grid container justifyContent="flex-end">
+            <Grid item sx={{ padding: "15px" }}>
+              <Link href="/register">{"Don't have an account? Sign Up"}</Link>
             </Grid>
           </Grid>
         </Box>
       </Box>
-      
     </Container>
-   
   );
 };
 
