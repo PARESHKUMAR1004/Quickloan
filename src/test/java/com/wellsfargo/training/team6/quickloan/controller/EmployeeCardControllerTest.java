@@ -1,15 +1,13 @@
 package com.wellsfargo.training.team6.quickloan.controller;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterEach;
@@ -17,23 +15,18 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wellsfargo.training.team6.quickloan.exception.ResourceNotFoundException;
 import com.wellsfargo.training.team6.quickloan.exception.TransactionalException;
-import com.wellsfargo.training.team6.quickloan.model.Employee;
 import com.wellsfargo.training.team6.quickloan.model.EmployeeCard;
 import com.wellsfargo.training.team6.quickloan.model.LoanCard;
 import com.wellsfargo.training.team6.quickloan.model.LoanIssueSummary;
 import com.wellsfargo.training.team6.quickloan.service.EmployeeCardService;
-import com.wellsfargo.training.team6.quickloan.service.EmployeeService;
 import com.wellsfargo.training.team6.quickloan.service.LoanApprovalService;
 
 //@WebMvcTest(EmployeeCardController.class)
@@ -83,7 +76,6 @@ public class EmployeeCardControllerTest {
 		when(empService.getCardByEmpId(1L)).thenReturn(eList);
 		
 		mockMvc.perform(MockMvcRequestBuilders.get("/api/getEmpCardsByEmpId/{id}", 1L))
-		.andDo(print())
 		.andExpect(MockMvcResultMatchers.jsonPath("$").value(Matchers.hasSize(1)))
 		.andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(1L))
 		.andExpect(MockMvcResultMatchers.jsonPath("$[0].loanCard.loanId").value(1L));
@@ -103,7 +95,6 @@ public class EmployeeCardControllerTest {
 	
 	@Test
 	public void testSaveEmpCardFailure() throws Exception {
-		Long id = 1L;
     	String errMsg = "Resource not found exception when saving employee card";
     	
     	when(empService.saveEmployeeCard(any(Long.class), 
