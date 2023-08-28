@@ -217,6 +217,7 @@ export default function Items () {
                                      <IconButton
                                         color="primary"
                                         onClick={() => handleOpenEditModal(item)}
+                                        disabled={item.issueStatus ==="Y"}
                                     >
                                     <EditIcon />
                                     </IconButton>
@@ -246,7 +247,8 @@ export default function Items () {
                                     label="Item Description"
                                     fullWidth
                                     margin="dense"
-              //select
+                                    required
+              //select             
                                     value={newItem.itemDescription}
                                     onChange={(e) => setNewItem({ ...newItem,itemDescription: e.target.value.toUpperCase() })}
                                     >
@@ -259,6 +261,7 @@ export default function Items () {
                                     label="Item Make"
                                     fullWidth
                                     margin="dense"
+                                    required
               //select
                                     value={newItem.itemMake}
                                     onChange={(e) => setNewItem({ ...newItem,itemMake: e.target.value.toUpperCase() })}
@@ -273,6 +276,7 @@ export default function Items () {
                                     label="Item Category"
                                     fullWidth
                                     margin="dense"
+                                    required
               //select
                                     value={newItem.itemCategory}
                                     onChange={(e) => setNewItem({ ...newItem,itemCategory: e.target.value.toUpperCase() })}
@@ -287,6 +291,7 @@ export default function Items () {
                                     label="Item Valuation"
                                     fullWidth
                                     margin="dense"
+                                    required
               //select
                                     value={newItem.itemValuation}
                                     onChange={(e) => setNewItem({ ...newItem,itemValuation: e.target.value.toUpperCase() })}
@@ -325,6 +330,7 @@ export default function Items () {
                                       label="Item Description"
                                       fullWidth
                                       margin="dense"
+                                      required
               //select
                                       value={selectedItem ? selectedItem.itemDescription.toUpperCase() : ''}
                                       onChange={(e) => setSelectedItem({ ...selectedItem, itemDescription: e.target.value.toUpperCase() })}
@@ -335,6 +341,7 @@ export default function Items () {
                                       label="Item Make"
                                       fullWidth
                                       margin="dense"
+                                      required
               //select
                                       value={selectedItem ? selectedItem.itemMake.toUpperCase() : ''}
                                       onChange={(e) => setSelectedItem({ ...selectedItem, itemMake: e.target.value.toUpperCase() })}
@@ -346,13 +353,15 @@ export default function Items () {
                                       margin="dense"
               //select
                                       value={selectedItem ? selectedItem.issueStatus.toUpperCase() : ''}
-                                      onChange={(e) => setSelectedItem({ ...selectedItem, issueStatus: e.target.value.toUpperCase() })}
+                                      disabled
+                                      // onChange={(e) => setSelectedItem({ ...selectedItem, issueStatus: e.target.value.toUpperCase() })}
                                   />
 
                                   <TextField
                                       label="Item Category"
                                       fullWidth
                                       margin="dense"
+                                      required
               //select
                                       value={selectedItem ? selectedItem.itemCategory.toUpperCase() : ''}
                                       onChange={(e) => setSelectedItem({ ...selectedItem, itemCategory: e.target.value.toUpperCase() })}
@@ -363,6 +372,7 @@ export default function Items () {
                                       label="Item Valuation"
                                       fullWidth
                                       margin="dense"
+                                      required
               //select
                                       value={selectedItem ? selectedItem.itemValuation : ''}
                                       onChange={(e) => setSelectedItem({ ...selectedItem, itemValuation: e.target.value.toUpperCase() })}

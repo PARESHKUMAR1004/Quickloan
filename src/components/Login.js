@@ -47,7 +47,7 @@ const Login = () => {
         user,
         userTypePath
       );
-      console.log("API response:", loginSuccess.data);
+      console.log("API response:", loginSuccess);
       if (loginSuccess) {
         setErrorMessage("");
         setSuccessMessage("Login successful. Redirecting...");

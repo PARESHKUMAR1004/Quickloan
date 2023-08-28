@@ -41,20 +41,22 @@ function Loans() {
   const [openEditModal, setOpenEditModal] = useState(false);
   const [selectedLoan,setSelectedLoan]=useState();
   const [newLoan, setNewLoan] = useState({loanId:'', loanType: '', loanDuration: 2, loanActiveStatus :1 });
-  //const loanTypes=['Furniture','Stationery','Crockery'];
-  useEffect(() => {
-    async function fetchLoans() {
-      try {
-        LoancardService.getLoanCards().then((response) => {
-          console.log(response.data);
-          setLoans(response.data);
-         
-      });
-        
-      } catch (error) {
-        console.error('Error fetching loans:', error);
-      }
+
+  async function fetchLoans() {
+    try {
+      LoancardService.getLoanCards().then((response) => {
+        console.log(response.data);
+        setLoans(response.data);
+       
+    });
+      
+    } catch (error) {
+      console.error('Error fetching loans:', error);
     }
+  }
+
+  useEffect(() => {
+    
     fetchLoans();
   }, []);
 
@@ -103,7 +105,7 @@ function Loans() {
   };
 
   const handleEditDecreaseDuration = () => {
-    if (selectedLoan.loanDuration >= 2) {
+    if (selectedLoan.loanDuration > 2) {
       setSelectedLoan({ ...selectedLoan, loanDuration: selectedLoan.loanDuration - 1 });
     }
   };
@@ -167,6 +169,7 @@ function Loans() {
 
         }
         else{
+          fetchLoans();
           alert(message);
         }
         
@@ -267,6 +270,7 @@ function Loans() {
               label="Loan Type"
               fullWidth
               margin="dense"
+              required
               //select
               value={newLoan.loanType.toUpperCase()}
               onChange={(e) => setNewLoan({ ...newLoan, loanType: e.target.value.toUpperCase() })}
@@ -331,6 +335,7 @@ function Loans() {
               label="Loan Type"
               fullWidth
               margin="dense"
+              required
               //select
               value={selectedLoan ? selectedLoan.loanType.toUpperCase() : ''}
               

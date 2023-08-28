@@ -41,7 +41,6 @@ export function AuthProvider({ children }) {
     }
 
     const login = async (Emp, path) => {
-        setLoading(true)
         if(path ==="loginAdmin"){
             try{
                 const response = await axios.get("http://localhost:8085/quickloan/api/"+path+"/"+Emp.email+"/"+Emp.password);
@@ -75,9 +74,11 @@ export function AuthProvider({ children }) {
                     setLoading(false);
                     return true; 
                 } else {
+                    setLoading(false);
                     return false;
                 }
             } catch (error) {
+                setLoading(false);
                 console.error("Login error", error);
                 throw new Error("An error occurred during login.");
              }
