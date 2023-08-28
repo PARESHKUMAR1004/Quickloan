@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -73,7 +74,11 @@ public class EmployeeService {
 			}
 			
 			//Updating issue status of items
-			for(EmployeeCard card : empCardList) {
+			List<EmployeeCard> issuedLoanCards = empCardList.stream()
+					.filter(card -> card.getLoanIssueStatus().equals("Approved"))
+					.collect(Collectors.toList());
+		
+			for(EmployeeCard card : issuedLoanCards) {
 				itemService.updateItemStatus(card.getItem(), 'N');
 			}
 			

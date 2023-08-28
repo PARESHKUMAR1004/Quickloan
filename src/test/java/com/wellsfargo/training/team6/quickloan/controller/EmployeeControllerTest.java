@@ -10,6 +10,7 @@ import java.util.Collections;
 import java.util.Optional;
 
 import org.hamcrest.Matchers;
+import org.hamcrest.core.IsNull;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -90,8 +91,18 @@ public class EmployeeControllerTest {
 		.andExpect(MockMvcResultMatchers.jsonPath("$.employeeId").value(1L));
 	}
 	
+	//Password wrong
 	@Test
 	public void testLoginFailure() throws Exception {
+		when(empService.findEmployeeByMail(any(String.class))).thenReturn(Optional.of(emp));
+	
+		mockMvc.perform(MockMvcRequestBuilders.post("/api/loginEmployee")
+				.contentType(MediaType.APPLICATION_JSON).content(empJson))
+		.andExpect(MockMvcResultMatchers.status().isOk());
+	}
+	
+	@Test
+	public void testLoginError() throws Exception {
 		
 		when(empService.findEmployeeByMail(any(String.class))).thenReturn(Optional.empty());
 	

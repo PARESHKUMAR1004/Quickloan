@@ -69,7 +69,7 @@ public class LoanCardService {
 						+ "so no new employees can avail this loan."));
 			} 
 		
-			if(empCardList.isEmpty()) {
+			if(!empCardList.isEmpty()) {
 				empCardService.deleteEmpCards(empCardList);
 			}
 		

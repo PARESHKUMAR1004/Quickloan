@@ -19,6 +19,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wellsfargo.training.team6.quickloan.exception.TransactionalException;
 import com.wellsfargo.training.team6.quickloan.model.LoanCard;
 import com.wellsfargo.training.team6.quickloan.service.LoanCardService;
@@ -43,6 +44,20 @@ public class LoanCardControllerTest {
         loanCardList = new ArrayList<>();
         loanCardList.add(new LoanCard(1L, "Electronics", 120, true));
         loanCardList.add(new LoanCard(2L, "Furniture", 60, true));
+    }
+    
+    @Test
+    public void testSaveLoan() throws Exception {
+    	when(loanCardService.saveLoanCard(any(LoanCard.class))).thenReturn(
+    			loanCardList.get(0));
+    	
+    	String loanJson = new ObjectMapper().writeValueAsString(loanCardList.get(0));
+    	
+    	mockMvc.perform(MockMvcRequestBuilders.post("/api/saveLoanCard")
+    			.contentType(MediaType.APPLICATION_JSON).content(loanJson))
+        .andExpect(MockMvcResultMatchers.status().isOk())
+        .andExpect(MockMvcResultMatchers.jsonPath("$.loanType").value("Electronics"))
+        .andExpect(MockMvcResultMatchers.jsonPath("$.loanId").value(1L));
     }
 
     @Test
@@ -116,6 +131,20 @@ public class LoanCardControllerTest {
     }
     
     @Test
+    public void testUpdateLoanFailure() throws Exception {
+    	Long id = 5L;
+    	
+    	when(loanCardService.getLoanCardById(id)).thenReturn(
+    			Optional.empty());
+    
+    	mockMvc.perform(MockMvcRequestBuilders.put("/api/loancards/{id}", id)
+    			.contentType(MediaType.APPLICATION_JSON).content("{\"loanDuration\": 150}"))
+    	.andExpect(MockMvcResultMatchers.status().isNotFound())
+    	.andExpect(MockMvcResultMatchers.jsonPath("$.message").value(
+    			"LoanCard Not found for this id:" + id));
+    }
+    
+    @Test
     public void testDeleteLoanCardSuccess() throws Exception {
     	Long id = 1L;
     	
@@ -130,6 +159,19 @@ public class LoanCardControllerTest {
     }
     
     @Test
+    public void testDeleteLoanCardResExcpetion() throws Exception {
+    	Long id = 5L;
+    	
+    	when(loanCardService.getLoanCardById(id)).thenReturn(
+    			Optional.empty());
+    
+    	mockMvc.perform(MockMvcRequestBuilders.delete("/api/deleteLoan/{id}", id))
+    	.andExpect(MockMvcResultMatchers.status().isNotFound())
+    	.andExpect(MockMvcResultMatchers.jsonPath("$.message").value(
+    			"No loan card with id: "+ id));
+    }
+    
+    @Test
     public void testDeleteLoanCardServerError() throws Exception {
     	Long id = 1L;
     	String errMsg = "Transactional exception when deleting loan card";
@@ -140,7 +182,6 @@ public class LoanCardControllerTest {
     			new TransactionalException(errMsg));
     	
     	mockMvc.perform(MockMvcRequestBuilders.delete("/api/deleteLoan/{id}", id))
-    	.andDo(print())
     	.andExpect(MockMvcResultMatchers.status().isInternalServerError())
     	.andExpect(MockMvcResultMatchers.jsonPath("$.message").value(errMsg));
     }
