@@ -41,6 +41,7 @@ export default function Items() {
     itemCategory: "",
     itemValuation: 0,
   });
+  const [errorMessage, setErrorMessage] = useState("");
   useEffect(() => {
     async function fetchItems() {
       try {
@@ -60,6 +61,7 @@ export default function Items() {
 
   const handleCloseAddModal = () => {
     setOpenAddModal(false);
+    setErrorMessage("");
     setNewItem({
       itemId: "",
       itemDescription: "",
@@ -72,16 +74,28 @@ export default function Items() {
 
   const handleAddItem = async () => {
     try {
+      if (newItem.itemCategory === "") {
+        setErrorMessage("Item Category Cannot be empty");
+        return;
+      } else if (newItem.itemMake === "") {
+        setErrorMessage("Ietm Make cannot be empty");
+        return;
+      } else if (newItem.itemDescription === "") {
+        setErrorMessage("Item Description cannot be empty");
+        return;
+      } else if (newItem.itemValuation === 0) {
+        setErrorMessage("Item Value cannot be 0");
+        return;
+      }
       const addedItem = await ItemService.createItem(newItem);
-
       newItem.itemId = addedItem.data.itemId;
-
       setItems([...items, newItem]);
       console.log("new item is", newItem);
       console.log("Added Item is", addedItem);
       handleCloseAddModal();
     } catch (error) {
       console.error("Error adding item:", error);
+      setErrorMessage("Error adding items: " + error.message);
     }
   };
 
@@ -96,12 +110,26 @@ export default function Items() {
   };
 
   const handleCloseEditModal = () => {
+    setErrorMessage("");
     setSelectedItem(null);
     setOpenEditModal(false);
   };
 
   const handleEditItem = async () => {
     try {
+      if (selectedItem.itemCategory === "") {
+        setErrorMessage("Item Category Cannot be empty");
+        return;
+      } else if (selectedItem.itemMake === "") {
+        setErrorMessage("Ietm Make cannot be empty");
+        return;
+      } else if (selectedItem.itemDescription === "") {
+        setErrorMessage("Item Description cannot be empty");
+        return;
+      } else if (selectedItem.itemValuation === 0) {
+        setErrorMessage("Item Value cannot be 0");
+        return;
+      }
       console.log(selectedItem);
       console.log(selectedItem.itemId);
       const updatedItem = await ItemService.updateItem(
@@ -114,30 +142,35 @@ export default function Items() {
           ? { ...item, ...selectedItem }
           : item
       );
-
       setItems(updatedItems);
       handleCloseEditModal();
     } catch (error) {
       console.error("Error editing  item:", error);
+      setErrorMessage("Error editing  item: " + error.message);
     }
   };
 
   const handleDeleteItem = async (itemId) => {
-    try {
-      console.log(itemId);
-      const response = await ItemService.deleteItem(itemId);
-      console.log(response);
-      if (response.data.hasOwnProperty("true")) {
-        const updatedItems = items.filter((item) => item.itemId !== itemId);
-        console.log(updatedItems);
-        setItems(updatedItems);
-        // Show alert or notification
-        alert("Item Deleted Successfully");
-      } else {
-        alert(response.data.false);
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this item ?"
+    );
+    if (confirmDelete) {
+      try {
+        console.log(itemId);
+        const response = await ItemService.deleteItem(itemId);
+        console.log(response);
+        if (response.data.hasOwnProperty("true")) {
+          const updatedItems = items.filter((item) => item.itemId !== itemId);
+          console.log(updatedItems);
+          setItems(updatedItems);
+          // Show alert or notification
+          alert("Item Deleted Successfully");
+        } else {
+          alert(response.data.false);
+        }
+      } catch (error) {
+        console.error("Error deleting Item:", error);
       }
-    } catch (error) {
-      console.error("Error deleting Item:", error);
     }
   };
 
@@ -225,8 +258,9 @@ export default function Items() {
                   </Tooltip>
                   <Tooltip title="Delete the Item">
                     <IconButton
-                      style={{ color: "red" }}
+                      style={{ color: item.issueStatus === "N" && "red" }}
                       onClick={() => handleDeleteItem(item.itemId)}
+                      disabled={item.issueStatus === "Y"}
                     >
                       <DeleteIcon />
                     </IconButton>
@@ -243,21 +277,20 @@ export default function Items() {
         <DialogContent>
           <Box display="flex" flexDirection="column" gap={2}>
             <TextField
-              label="Item Description"
+              label="Item Category"
               fullWidth
               margin="dense"
               required
               //select
-              value={newItem.itemDescription}
+              value={newItem.itemCategory}
               onChange={(e) =>
                 setNewItem({
                   ...newItem,
-                  itemDescription: e.target.value.toUpperCase(),
+                  itemCategory: e.target.value.toUpperCase(),
                 })
               }
             ></TextField>
           </Box>
-
           <Box display="flex" flexDirection="column" gap={2}>
             <TextField
               label="Item Make"
@@ -274,24 +307,22 @@ export default function Items() {
               }
             ></TextField>
           </Box>
-
           <Box display="flex" flexDirection="column" gap={2}>
             <TextField
-              label="Item Category"
+              label="Item Description"
               fullWidth
               margin="dense"
               required
               //select
-              value={newItem.itemCategory}
+              value={newItem.itemDescription}
               onChange={(e) =>
                 setNewItem({
                   ...newItem,
-                  itemCategory: e.target.value.toUpperCase(),
+                  itemDescription: e.target.value.toUpperCase(),
                 })
               }
             ></TextField>
           </Box>
-
           <Box display="flex" flexDirection="column" gap={2}>
             <TextField
               label="Item Valuation"
@@ -308,6 +339,9 @@ export default function Items() {
               }
             ></TextField>
           </Box>
+          {errorMessage !== "" && (
+            <span style={{ color: "red" }}>{errorMessage}</span>
+          )}
           <DialogActions>
             <Button onClick={handleCloseAddModal} color="primary">
               Cancel
@@ -332,23 +366,6 @@ export default function Items() {
             />
 
             <TextField
-              label="Item Description"
-              fullWidth
-              margin="dense"
-              required
-              //select
-              value={
-                selectedItem ? selectedItem.itemDescription.toUpperCase() : ""
-              }
-              onChange={(e) =>
-                setSelectedItem({
-                  ...selectedItem,
-                  itemDescription: e.target.value.toUpperCase(),
-                })
-              }
-            />
-
-            <TextField
               label="Item Make"
               fullWidth
               margin="dense"
@@ -362,17 +379,6 @@ export default function Items() {
                 })
               }
             />
-
-            <TextField
-              label="Item Status"
-              fullWidth
-              margin="dense"
-              //select
-              value={selectedItem ? selectedItem.issueStatus.toUpperCase() : ""}
-              disabled
-              // onChange={(e) => setSelectedItem({ ...selectedItem, issueStatus: e.target.value.toUpperCase() })}
-            />
-
             <TextField
               label="Item Category"
               fullWidth
@@ -386,6 +392,31 @@ export default function Items() {
                 setSelectedItem({
                   ...selectedItem,
                   itemCategory: e.target.value.toUpperCase(),
+                })
+              }
+            />
+
+            <TextField
+              label="Item Status"
+              fullWidth
+              margin="dense"
+              //select
+              value={selectedItem ? selectedItem.issueStatus.toUpperCase() : ""}
+              disabled
+            />
+            <TextField
+              label="Item Description"
+              fullWidth
+              margin="dense"
+              required
+              //select
+              value={
+                selectedItem ? selectedItem.itemDescription.toUpperCase() : ""
+              }
+              onChange={(e) =>
+                setSelectedItem({
+                  ...selectedItem,
+                  itemDescription: e.target.value.toUpperCase(),
                 })
               }
             />
@@ -406,7 +437,9 @@ export default function Items() {
             />
           </Box>
         </DialogContent>
-
+        {errorMessage !== "" && (
+          <span style={{ color: "red" }}>{errorMessage}</span>
+        )}
         <DialogActions>
           <Button onClick={handleCloseEditModal} color="primary">
             Cancel

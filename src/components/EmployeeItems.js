@@ -62,7 +62,7 @@ export default function EmployeeItems() {
       sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
     >
       <Typography variant="h4" gutterBottom>
-        Items
+        Issued Items
       </Typography>
 
       <TableContainer

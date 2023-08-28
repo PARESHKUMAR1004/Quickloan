@@ -80,22 +80,27 @@ function Employees() {
   };
 
   const handleDeleteEmployee = async (employeeId) => {
-    try {
-      console.log(employeeId);
-      const response = await EmployeeService.deleteEmployee(employeeId);
-      if (response.data.hasOwnProperty("true")) {
-        const updatedEmployees = employees.filter(
-          (employee) => employee.employeeId !== employeeId
-        );
-        console.log(updatedEmployees);
-        setEmployees(updatedEmployees);
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this employees ?"
+    );
+    if (confirmDelete) {
+      try {
+        console.log(employeeId);
+        const response = await EmployeeService.deleteEmployee(employeeId);
+        if (response.data.hasOwnProperty("true")) {
+          const updatedEmployees = employees.filter(
+            (employee) => employee.employeeId !== employeeId
+          );
+          console.log(updatedEmployees);
+          setEmployees(updatedEmployees);
 
-        alert("Employee Deleted Successfully");
-      } else {
-        alert(response.data.false);
+          alert("Employee Deleted Successfully");
+        } else {
+          alert(response.data.false);
+        }
+      } catch (error) {
+        console.error("Error deleting employee:", error);
       }
-    } catch (error) {
-      console.error("Error deleting employee:", error);
     }
   };
 

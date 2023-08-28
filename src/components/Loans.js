@@ -41,6 +41,7 @@ function Loans() {
     loanDuration: 2,
     loanActiveStatus: 1,
   });
+  const [errorMessage, setErrorMessage] = useState("");
 
   async function fetchLoans() {
     try {
@@ -63,6 +64,7 @@ function Loans() {
 
   const handleCloseAddModal = () => {
     setOpenAddModal(false);
+    setErrorMessage("");
     setNewLoan({
       loanId: "",
       loanType: "",
@@ -73,8 +75,14 @@ function Loans() {
 
   const handleAddLoan = async () => {
     try {
+      if (newLoan.loanType === "") {
+        setErrorMessage("Loan Type Cannot be empty");
+        return;
+      } else if (newLoan.loanDuration < 2) {
+        setErrorMessage("Loan Duration cannot be less than 2 months.");
+        return;
+      }
       const addedLoan = await LoancardService.createLoanCard(newLoan);
-
       newLoan.loanId = addedLoan.data.loanId;
       newLoan.loanActiveStatus = addedLoan.data.loanActiveStatus;
       console.log(newLoan.loanActiveStatus);
@@ -85,6 +93,7 @@ function Loans() {
       handleCloseAddModal();
     } catch (error) {
       console.error("Error adding loan:", error);
+      setErrorMessage("Error adding loan: " + error.message);
     }
   };
 
@@ -123,11 +132,19 @@ function Loans() {
   };
   const handleCloseEditModal = () => {
     setSelectedLoan(null);
+    setErrorMessage("");
     setOpenEditModal(false);
   };
 
   const handleEditLoan = async () => {
     try {
+      if (selectedLoan.loanType === "") {
+        setErrorMessage("Loan Type Cannot be empty");
+        return;
+      } else if (selectedLoan.loanDuration < 2) {
+        setErrorMessage("Loan Duration cannot be less than 2 months.");
+        return;
+      }
       console.log(selectedLoan);
       console.log(selectedLoan.loanId);
       const updatedLoan = await LoancardService.updateLoanCard(
@@ -145,6 +162,7 @@ function Loans() {
       handleCloseEditModal();
     } catch (error) {
       console.error("Error editing loan:", error);
+      setErrorMessage("Error editing loan: " + error.message);
     }
   };
 
@@ -171,9 +189,6 @@ function Loans() {
           fetchLoans();
           alert(message);
         }
-
-        // Show alert or notification
-        //alert('Loan Deleted Successfully')
       } catch (error) {
         console.error("Error deleting loan:", error);
       }
@@ -204,13 +219,16 @@ function Loans() {
   }));
 
   return (
-    // <CommonLayout>
-
     <Container
-      sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        marginTop: { sx: "20px", md: "4%" },
+      }}
     >
       <Typography variant="h4" gutterBottom>
-        Loans
+        Loan Cards
       </Typography>
       <Tooltip title="Add New Loan">
         <Fab
@@ -265,8 +283,12 @@ function Loans() {
                   </Tooltip>
                   <Tooltip title="Delete the Loan">
                     <IconButton
-                      style={{ color: "red" }}
+                      style={{
+                        color:
+                          loan.loanActiveStatus.toString() === "true" && "red",
+                      }}
                       onClick={() => handleDeleteLoan(loan.loanId)}
+                      disabled={loan.loanActiveStatus.toString() !== "true"}
                     >
                       <DeleteIcon />
                     </IconButton>
@@ -296,15 +318,7 @@ function Loans() {
                   loanType: e.target.value.toUpperCase(),
                 })
               }
-            >
-              {/*
-              {loanTypes.map((type)=> (
-                <MenuItem key={type} value={type}>
-                  {type}
-                </MenuItem>
-              ))}
-              */}
-            </TextField>
+            ></TextField>
             <DialogContent>
               <Box display="flex" flexDirection="column" gap={2}>
                 {/* ... rest of your code ... */}
@@ -339,6 +353,9 @@ function Loans() {
             </DialogContent>
           </Box>
         </DialogContent>
+        {errorMessage !== "" && (
+          <span style={{ color: "red" }}>{errorMessage}</span>
+        )}
         <DialogActions>
           <Button onClick={handleCloseAddModal} color="primary">
             Cancel
@@ -405,6 +422,9 @@ function Loans() {
             </Box>
           </Box>
         </DialogContent>
+        {errorMessage !== "" && (
+          <span style={{ color: "red" }}>{errorMessage}</span>
+        )}
         <DialogActions>
           <Button onClick={handleCloseEditModal} color="primary">
             Cancel
