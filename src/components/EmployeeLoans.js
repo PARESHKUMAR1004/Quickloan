@@ -105,8 +105,8 @@ export default function EmployeeLoans() {
             </StyledTableRow>
           </TableHead>
           <TableBody>
-            {loans.map((loan) => (
-              <StyledTableRow key={loan.loanId}>
+            {loans.map((loan, idx) => (
+              <StyledTableRow key={idx + loan.loanId}>
                 <StyledTableCell>{loan.loanId}</StyledTableCell>
                 <StyledTableCell>{loan.itemId}</StyledTableCell>
                 <StyledTableCell>{loan.loanType}</StyledTableCell>

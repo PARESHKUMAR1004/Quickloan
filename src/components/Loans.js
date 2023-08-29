@@ -256,7 +256,7 @@ function Loans() {
             <StyledTableRow>
               <StyledTableCell>Loan ID</StyledTableCell>
               <StyledTableCell>Loan Type</StyledTableCell>
-              <StyledTableCell>Duration (in months)</StyledTableCell>
+              <StyledTableCell>Duration (in days)</StyledTableCell>
               <StyledTableCell>Loan Status</StyledTableCell>
               <StyledTableCell>Actions</StyledTableCell>
             </StyledTableRow>
@@ -272,7 +272,10 @@ function Loans() {
                 </StyledTableCell>
 
                 <StyledTableCell>
-                  <Tooltip title="Edit the Loan">
+                  <Tooltip
+                    disabled={loan.loanActiveStatus.toString() !== "true"}
+                    title="Edit the Loan"
+                  >
                     <IconButton
                       color="primary"
                       onClick={() => handleOpenEditModal(loan)}
@@ -281,7 +284,10 @@ function Loans() {
                       <EditIcon />
                     </IconButton>
                   </Tooltip>
-                  <Tooltip title="Delete the Loan">
+                  <Tooltip
+                    disabled={loan.loanActiveStatus.toString() !== "true"}
+                    title="Delete the Loan"
+                  >
                     <IconButton
                       style={{
                         color:
@@ -385,12 +391,13 @@ function Loans() {
               required
               //select
               value={selectedLoan ? selectedLoan.loanType.toUpperCase() : ""}
-              onChange={(e) =>
-                setSelectedLoan({
-                  ...selectedLoan,
-                  loanType: e.target.value.toUpperCase(),
-                })
-              }
+              disabled
+              // onChange={(e) =>
+              //   setSelectedLoan({
+              //     ...selectedLoan,
+              //     loanType: e.target.value.toUpperCase(),
+              //   })
+              // }
             ></TextField>
             <Box
               display="flex"

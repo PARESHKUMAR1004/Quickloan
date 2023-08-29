@@ -247,7 +247,10 @@ export default function Items() {
                 <StyledTableCell>{item.itemCategory}</StyledTableCell>
                 <StyledTableCell>{item.itemValuation}</StyledTableCell>
                 <StyledTableCell>
-                  <Tooltip title="Edit the Item">
+                  <Tooltip
+                    disabled={item.issueStatus === "Y"}
+                    title="Edit the Item"
+                  >
                     <IconButton
                       color="primary"
                       onClick={() => handleOpenEditModal(item)}
@@ -256,7 +259,10 @@ export default function Items() {
                       <EditIcon />
                     </IconButton>
                   </Tooltip>
-                  <Tooltip title="Delete the Item">
+                  <Tooltip
+                    disabled={item.issueStatus === "Y"}
+                    title="Delete the Item"
+                  >
                     <IconButton
                       style={{ color: item.issueStatus === "N" && "red" }}
                       onClick={() => handleDeleteItem(item.itemId)}
