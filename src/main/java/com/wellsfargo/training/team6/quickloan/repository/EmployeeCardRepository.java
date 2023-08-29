@@ -22,7 +22,7 @@ public interface EmployeeCardRepository extends JpaRepository<EmployeeCard, Long
 	public List<EmployeeCard> findByLoanIssueStatus(String status);
 	
 	@Query("SELECT new com.wellsfargo.training.team6.quickloan.model.LoanIssueSummary"
-			+ "(l.loanId, l.loanType, l.loanDuration, e.cardIssueDate, e.loanIssueStatus) "
+			+ "(l.loanId, e.item.itemId, l.loanType, l.loanDuration, e.cardIssueDate, e.loanIssueStatus) "
 			+ "FROM EmployeeCard e JOIN e.loanCard l "
 			+ "WHERE e.employee.employeeId = :empId ")
 	public List<LoanIssueSummary> findLoanIssueSummary(Long empId);

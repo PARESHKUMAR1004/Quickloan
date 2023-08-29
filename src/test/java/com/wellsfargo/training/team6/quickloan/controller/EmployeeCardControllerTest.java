@@ -169,7 +169,7 @@ public class EmployeeCardControllerTest {
 	@Test
 	public void testGetLoanIssueSummary() throws Exception {
 		
-		LoanIssueSummary lSummary = new LoanIssueSummary(1L, "furniture", 20, 
+		LoanIssueSummary lSummary = new LoanIssueSummary(1L, 1L, "furniture", 20, 
 				LocalDate.now(), "Pending");
 		
 		when(empService.getLoanIssueSummaryByEmpId(any(Long.class))).thenReturn(

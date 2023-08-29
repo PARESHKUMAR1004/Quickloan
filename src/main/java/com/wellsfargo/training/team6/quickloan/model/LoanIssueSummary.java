@@ -14,6 +14,7 @@ import lombok.Setter;
 public class LoanIssueSummary {
 
 	private Long loanId;
+	private Long itemId;
 	private String loanType;
 	private int loanDuration;
 	private LocalDate cardIssueDate;
