@@ -40,9 +40,7 @@ const Login = () => {
       if (loginSuccess) {
         setErrorMessage("");
         setSuccessMessage("Login successful. Redirecting...");
-        setTimeout(() => {
-          history("/profile");
-        }, 2000);
+        history("/profile");
       } else {
         setErrorMessage("Invalid email or password.");
       }

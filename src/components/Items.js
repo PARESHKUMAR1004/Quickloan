@@ -231,7 +231,7 @@ export default function Items() {
               <StyledTableCell>Item ID</StyledTableCell>
               <StyledTableCell>Item Description</StyledTableCell>
               <StyledTableCell>Item Make</StyledTableCell>
-              <StyledTableCell>Item Status</StyledTableCell>
+              <StyledTableCell>Issue Status</StyledTableCell>
               <StyledTableCell>Item Category</StyledTableCell>
               <StyledTableCell>Item Value</StyledTableCell>
               <StyledTableCell>Actions</StyledTableCell>

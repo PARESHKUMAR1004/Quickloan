@@ -61,7 +61,7 @@ export default function EmployeeLoans() {
     let now = new Date();
     let date = new Date(dateIn);
     let gap = now.getTime() - date.getTime();
-    return gap > duration * 30 * 24 * 60 * 60 * 1000 ? "Completed" : "Active";
+    return gap > duration * 24 * 60 * 60 * 1000 ? "Completed" : "Active";
   };
 
   const getColor = (status) => {
@@ -97,6 +97,7 @@ export default function EmployeeLoans() {
           <TableHead>
             <StyledTableRow>
               <StyledTableCell>Loan ID</StyledTableCell>
+              <StyledTableCell>Item ID</StyledTableCell>
               <StyledTableCell>Loan Type</StyledTableCell>
               <StyledTableCell>Loan Duration</StyledTableCell>
               <StyledTableCell>Issue Date</StyledTableCell>
@@ -107,6 +108,7 @@ export default function EmployeeLoans() {
             {loans.map((loan) => (
               <StyledTableRow key={loan.loanId}>
                 <StyledTableCell>{loan.loanId}</StyledTableCell>
+                <StyledTableCell>{loan.itemId}</StyledTableCell>
                 <StyledTableCell>{loan.loanType}</StyledTableCell>
                 <StyledTableCell>{loan.loanDuration}</StyledTableCell>
                 <StyledTableCell>{loan.cardIssueDate}</StyledTableCell>
