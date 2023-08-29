@@ -47,7 +47,7 @@ const ProfilePage = () => {
           variant="contained"
           startIcon={<Edit />}
           color="secondary"
-          sx={{ marginTop: "3" }}
+          sx={{ marginTop:6 }}
           href="/applyloans"
         >
           Apply New Loan
@@ -61,8 +61,8 @@ const ProfilePage = () => {
       <List>
         <ListItem>
           <Grid container spacing={2}>
-            <Grid item xs={6}>
-              <Box> Full Name</Box>
+            <Grid item xs={6} sx={{color:'primary.main',fontWeight:'bold'}}>
+              <Box > Full Name</Box>
             </Grid>
             <Grid item xs={6}>
               <Box>{user.fname + " " + user.lname}</Box>
@@ -72,7 +72,7 @@ const ProfilePage = () => {
         <Divider light />
         <ListItem>
           <Grid container spacing={2}>
-            <Grid item xs={6}>
+            <Grid item xs={6} sx={{color:'primary.main',fontWeight:'bold'}}>
               <Box>Employee Id</Box>
             </Grid>
             <Grid item xs={6}>
@@ -83,7 +83,7 @@ const ProfilePage = () => {
         <Divider light />
         <ListItem>
           <Grid container spacing={2}>
-            <Grid item xs={6}>
+            <Grid item xs={6} sx={{color:'primary.main',fontWeight:'bold'}}>
               <Box>Department</Box>
             </Grid>
             <Grid item xs={6}>
@@ -94,7 +94,7 @@ const ProfilePage = () => {
         <Divider light />
         <ListItem>
           <Grid container spacing={2}>
-            <Grid item xs={6}>
+            <Grid item xs={6}sx={{color:'primary.main',fontWeight:'bold'}} > 
               <Box>Designation</Box>
             </Grid>
             <Grid item xs={6}>
@@ -105,7 +105,7 @@ const ProfilePage = () => {
         <Divider light />
         <ListItem>
           <Grid container spacing={2}>
-            <Grid item xs={6}>
+            <Grid item xs={6} sx={{color:'primary.main',fontWeight:'bold'}}>
               <Box>Date of Birth</Box>
             </Grid>
             <Grid item xs={6}>
@@ -116,7 +116,7 @@ const ProfilePage = () => {
         <Divider light />
         <ListItem>
           <Grid container spacing={2}>
-            <Grid item xs={6}>
+            <Grid item xs={6} sx={{color:'primary.main',fontWeight:'bold'}}>
               <Box>Date of Joining</Box>
             </Grid>
             <Grid item xs={6}>
@@ -127,7 +127,7 @@ const ProfilePage = () => {
         <Divider light />
         <ListItem>
           <Grid container spacing={2}>
-            <Grid item xs={6}>
+            <Grid item xs={6} sx={{color:'primary.main',fontWeight:'bold'}}>
               <Box>Email</Box>
             </Grid>
             <Grid item xs={6}>
@@ -138,7 +138,7 @@ const ProfilePage = () => {
         <Divider light />
         <ListItem>
           <Grid container spacing={2}>
-            <Grid item xs={6}>
+            <Grid item xs={6} sx={{color:'primary.main',fontWeight:'bold'}}>
               <Box>Phone No.</Box>
             </Grid>
             <Grid item xs={6}>
@@ -172,6 +172,7 @@ const ProfilePage = () => {
               bgcolor: "white",
               boxShadow: "2",
               borderRadius: "5px",
+              //color:'primary.light'
             }}
           >
             {list}
